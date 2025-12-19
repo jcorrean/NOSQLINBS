@@ -11,7 +11,7 @@
 %%                                                                 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[sn-basic,pdflatex]{sn-jnl}
+\documentclass[sn-apa,pdflatex]{sn-jnl}
 
 %%%% Standard Packages
 %%<additional latex packages if required can be included here>
@@ -53,12 +53,10 @@
 %% optional argument [theorem] produces theorem numbering sequence instead of independent numbers for Proposition
 \newtheorem{proposition}[theorem]{Proposition}%
 %%\newtheorem{proposition}{Proposition}% to get separate numbers for theorem and proposition etc.
-
 %% \theoremstyle{thmstyletwo}%
 \theoremstyle{remark}
 \newtheorem{example}{Example}%
 \newtheorem{remark}{Remark}%
-
 %% \theoremstyle{thmstylethree}%
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}%
@@ -98,15 +96,14 @@ science}
 
 \author*[1,2]{\fnm{Juan} \spfx{C.} \sur{Correa} }\email{\href{mailto:juan.correa@ibero.mx}{\nolinkurl{juan.correa@ibero.mx}}}
 
-\author[2]{\fnm{Second} \sur{Author} }
-
 
 
   \affil*[1]{\orgdiv{Departmento de Estudios
 Empresariales}, \orgname{Universidad
 Iberoamericana}, \orgaddress{\city{Mexico
-City}, \country{Mexico}, \postcode{1219}, \street{Street}}}
-  \affil*[2]{\orgname{Other Organisation}}
+City}, \country{Mexico}, \postcode{1219}}}
+  \affil*[2]{\orgdiv{Research and Development Unit}, \orgname{Critical
+Centrality Institute}}
 
 \abstract{\textbf{Purpose}: The abstract serves both as a general
 introduction to the topic and as a brief, non-technical summary of the
@@ -115,32 +112,28 @@ subheadings (unless expressly permitted in the journal's Instructions to
 Authors), equations or citations. As a guide the abstract should not
 exceed 200 words. Most journals do not set a hard limit however authors
 are advised to check the author instructions for the journal they are
-submitting to.
-
-\textbf{Methods:} The abstract serves both as a general introduction to
-the topic and as a brief, non-technical summary of the main results and
-their implications. The abstract must not include subheadings (unless
-expressly permitted in the journal's Instructions to Authors), equations
-or citations. As a guide the abstract should not exceed 200 words. Most
-journals do not set a hard limit however authors are advised to check
-the author instructions for the journal they are submitting to.
-
-\textbf{Results:} The abstract serves both as a general introduction to
-the topic and as a brief, non-technical summary of the main results and
-their implications. The abstract must not include subheadings (unless
-expressly permitted in the journal's Instructions to Authors), equations
-or citations. As a guide the abstract should not exceed 200 words. Most
-journals do not set a hard limit however authors are advised to check
-the author instructions for the journal they are submitting to.
-
-\textbf{Conclusion:} The abstract serves both as a general introduction
-to the topic and as a brief, non-technical summary of the main results
-and their implications. The abstract must not include subheadings
-(unless expressly permitted in the journal's Instructions to Authors),
-equations or citations. As a guide the abstract should not exceed 200
-words. Most journals do not set a hard limit however authors are advised
-to check the author instructions for the journal they are submitting
-to.\}}
+submitting to. \textbf{Methods:} The abstract serves both as a general
+introduction to the topic and as a brief, non-technical summary of the
+main results and their implications. The abstract must not include
+subheadings (unless expressly permitted in the journal's Instructions to
+Authors), equations or citations. As a guide the abstract should not
+exceed 200 words. Most journals do not set a hard limit however authors
+are advised to check the author instructions for the journal they are
+submitting to. \textbf{Results:} The abstract serves both as a general
+introduction to the topic and as a brief, non-technical summary of the
+main results and their implications. The abstract must not include
+subheadings (unless expressly permitted in the journal's Instructions to
+Authors), equations or citations. As a guide the abstract should not
+exceed 200 words. Most journals do not set a hard limit however authors
+are advised to check the author instructions for the journal they are
+submitting to. \textbf{Conclusion:} The abstract serves both as a
+general introduction to the topic and as a brief, non-technical summary
+of the main results and their implications. The abstract must not
+include subheadings (unless expressly permitted in the journal's
+Instructions to Authors), equations or citations. As a guide the
+abstract should not exceed 200 words. Most journals do not set a hard
+limit however authors are advised to check the author instructions for
+the journal they are submitting to.\}}
 
 \keywords{key, dictionary, word}
 
@@ -152,9 +145,12 @@ to.\}}
 
 \section{Introduction}\label{sec1}
 
-The Introduction section, of referenced text \citet{bib1} expands on the
-background of the work (some overlap with the Abstract is acceptable).
-The introduction should not include subheadings \citep{bib1}.
+In a recent paper, \citet{soto2025} introduced relational databases for
+behavior science and used real-world examples to illustrate how
+relational databases have been used by behavior scientists. Even though
+relational databases represent the dominant paradigm inside and outside
+academic research settings, other paradigms are gaining traction
+\citep{golino2017}
 
 Springer Nature does not impose a strict layout as standard however
 authors are advised to check the individual requirements for the journal
@@ -606,7 +602,7 @@ required. Please visit
 Nature Portfolio journals,
 (\url{https://www.springer.com/gp/authors-editors/journal-author/journal-author-helpdesk/publishing-ethics/14214})
 for Springer Nature journals, or
-(\url{https://www.biomedcentral.com/getpublished/editorial-policies/\#ethics+and+consent})
+(\href{https://www.biomedcentral.com/getpublished/editorial-policies\#ethics+and+consent}{https://www.biomedcentral.com/getpublished/editorial-policies\textbackslash\#ethics+and+consent})
 for BMC.
 
 \section{Discussion}\label{sec12}
