@@ -14,7 +14,7 @@ classoptions:
   # - referee       # Optional: Use double line spacing 
   # - lineno        # Optional: Add line numbers
   # - iicol         # Optional: Double column layour
-title: Not only relational databases for behavior science
+title: Graphs as Not Only Relational Databases for Behavior Science
 titlerunning: Article Title runing
 authors: 
   - firstname: Juan
