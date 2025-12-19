@@ -55,10 +55,7 @@ pacs:
     - "65L10"
 # abstract: |
 abstract: |
-  **Purpose**: The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.
-  **Methods:** The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.
-  **Results:** The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.
-  **Conclusion:** The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.}
+  As researchers, behavior scientists can use many options for data collection, storage, and analysis. Graphs-based data science provides a unified framework that facilitates the understanding of human behavior as a complex system. This article argues for the benefits, utility, and rigor that behavior science can gain as a discipline by adopting graphs as an alternative paradigm to relational databases. The article provides use cases from three APA's division: clinical psychology, consumer psychology, and industrial/organizational psychology.
 bibliography: bibliography.bib
 header-includes: |
   %% Per the spinger doc, new theorem styles can be included using built in style, 
@@ -90,22 +87,31 @@ knitr::opts_chunk$set(echo = FALSE,
 # Introduction {#sec1}
 
 In a recent paper, @soto2025 introduced relational databases for behavior science and used real-world examples to illustrate how relational databases have been used by behavior scientists.
-Even though relational databases represent the dominant paradigm inside and outside academic research settings, other paradigms are gaining traction [@golino2017]
+Even though relational databases represent the dominant paradigm inside and outside academic research settings, other paradigms are gaining traction [@golino2017].
 
-Springer Nature does not impose a strict layout as standard however authors are advised to check the individual requirements for the journal they are planning to submit to as there may be journal-level preferences.
-When preparing your text please also be aware that some stylistic choices are not supported in full text XML (publication version), including coloured font.
-These will not be replicated in the typeset article if it is accepted.
+Our work, in contrast, introduces graphs as an alternative paradigm to relational databases, where nodes and arcs (instead of tables and joins) represent the basic elements of any behavior that can be represented as a network or complex system.
+Networks have a long history in mathematics as "*graph theory*" [@Estrada2011].
+In sociology and social sciences, graph theory is known as "*social network analysis*" [@Wasserman1994], and psychologists have levearaged this framework to understand the structure of psychopathology [@borsboom2013].
 
-# Results {#sec2}
+# Network as a collection nodes and arcs {#sec2}
 
-Sample body text.
-Sample body text.
-Sample body text.
-Sample body text.
-Sample body text.
-Sample body text.
-Sample body text.
-Sample body text.
+One of the easiest way to grasp the idea of a network is by looking its visual representation.
+Figure [1](#fig:F1) shows the visual representations of four types of simple networks.
+
+```{r F1, echo=FALSE, fig.cap="A visual representation of four types of simple networks", fig.align="center", out.width="227px", fig.pos="H"}
+knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F1.png")
+```
+
+![Figure 1. A visual representation of four types of simple networks: non-directed unweighted network (upper left), non-directed weighted network (upper right), di- rected unweighted network (bottom left), and directed weighted network (bottom right).](images/F1-01.png){#fig:F1 width="50%" fig-pos="H"}
+
+According to @Estrada2011, a network is a collection of points (called nodes) joined together in pairs by lines (called arcs or edges).
+Scientists can model different kinds of networks from physical networks (e.g., flights between airports) to biological networks (e.g., protein-protein interactions), and social networks (e.g., who follows whom in LinkedIn or X).
+In this context, the term "social network" should not be confused with online platforms such as Facebook or Instagram, as they are technological implementations that do not necessarily represent all aspects of social networks as an academic discipline.
+
+The fundamental concepts of network science are helpful to explore nodes connections within the network and understand the structure of these links.
+For example, some networks might look loosely structured which means that it has few connections between nodes and most nodes are isolated or poorly connected.
+In other cases, the network is densely connected which means that almost all nodes connect with the rest of the nodes.
+Networks structure is fundamental to a wide range of behavioral phenomena including all kinds of spreads of a disease, all kinds of clustering, and other social behavior including propagation of rumors or fake news.
 
 # This is an example for first level head---section head {#sec3}
 
