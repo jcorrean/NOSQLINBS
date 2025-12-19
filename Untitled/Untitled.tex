@@ -144,8 +144,16 @@ to understand the structure of psychopathology \citep{borsboom2013}.
 \section{Network as a collection nodes and arcs}\label{sec2}
 
 One of the easiest way to grasp the idea of a network is by looking its
-visual representation. Figure \hyperref[fig:F1]{1} shows the visual
-representations of four types of simple networks.
+visual representation (see Figure \hyperref[fig:F1]{1}). According to
+\citet{Estrada2011}, a network is a collection of points (called nodes)
+joined together in pairs by lines (called arcs or edges). Scientists can
+model different kinds of networks from physical networks (e.g., flights
+between airports) to biological networks (e.g., protein-protein
+interactions), and social networks (e.g., who follows whom in LinkedIn
+or X). In this context, the term ``social network'' should not be
+confused with online platforms such as Facebook or Instagram, as they
+are technological implementations that do not necessarily represent all
+aspects of social networks as an academic discipline.
 
 \begin{figure}[H]
 
@@ -153,39 +161,41 @@ representations of four types of simple networks.
 
 }
 
-\caption{A visual representation of four types of simple networks}\label{fig:F1}
+\caption{A visual representation of four types of simple networks: non-directed unweighted network (upper left), non-directed weighted network (upper right), di- rected unweighted network (bottom left), and directed weighted network (bottom right).}\label{fig:F1}
 \end{figure}
 
-\begin{figure}
-\centering
-\includegraphics[width=0.5\linewidth,height=\textheight,keepaspectratio]{images/F1-01.png}
-\caption{Figure 1. A visual representation of four types of simple
-networks: non-directed unweighted network (upper left), non-directed
-weighted network (upper right), di- rected unweighted network (bottom
-left), and directed weighted network (bottom right).}\label{fig:F1}
-\end{figure}
+Graphs provide a series of fundamental concepts that facilitate how
+nodes connect and understand the structure of these links. For example,
+some networks might look loosely structured which means that it has few
+connections between nodes and most nodes are isolated or poorly
+connected. In other cases, the network is densely connected which means
+that almost all nodes connect with the rest of the nodes. Networks
+structure is fundamental to a wide range of behavioral phenomena
+including all kinds of spreads of a disease, all kinds of clustering,
+and other social behavior including propagation of rumors or fake news.
 
-According to \citet{Estrada2011}, a network is a collection of points
-(called nodes) joined together in pairs by lines (called arcs or edges).
-Scientists can model different kinds of networks from physical networks
-(e.g., flights between airports) to biological networks (e.g.,
-protein-protein interactions), and social networks (e.g., who follows
-whom in LinkedIn or X). In this context, the term ``social network''
-should not be confused with online platforms such as Facebook or
-Instagram, as they are technological implementations that do not
-necessarily represent all aspects of social networks as an academic
-discipline.
+\subsection{Configurations}\label{configurations}
 
-The fundamental concepts of network science are helpful to explore nodes
-connections within the network and understand the structure of these
-links. For example, some networks might look loosely structured which
-means that it has few connections between nodes and most nodes are
-isolated or poorly connected. In other cases, the network is densely
-connected which means that almost all nodes connect with the rest of the
-nodes. Networks structure is fundamental to a wide range of behavioral
-phenomena including all kinds of spreads of a disease, all kinds of
-clustering, and other social behavior including propagation of rumors or
-fake news.
+A configuration is a specific pattern of connections between nodes. The
+most elementary configuration is a dyad (two connected nodes). Other
+common configurations include triangles (three nodes, all connected to
+each other) and k-stars (a central node connected to k other nodes).
+These configurations, along with others, make up the larger connected
+subgraphs of a network, known as components. A component is a set of
+nodes where a path exists between every pair of nodes. A component is a
+maximal connected subgraph, where all nodes within it are reachable from
+each other, and it is not connected to any other nodes. A component can
+be as simple as a long line of connected nodes with no triangles or
+k-stars. A path is a fundamental concept that describes a sequence of
+connections between nodes. It is the route one can follow to travel from
+one node to another. Paths are essential for understanding properties
+like the shortest distance between any pair of nodes. A special type of
+path is a cycle, which is a closed path with no repeated nodes or edges
+other than the start and end nodes. A cycle has a minimum of three links
+(e.g., a triangle). From the network science perspective, geometric
+structures like squares, pentagons, or decagons can all be seen as
+cycles. The four types of configurations in a network are depicted in
+Figure 5.2.
 
 \section{This is an example for first level head---section
 head}\label{sec3}

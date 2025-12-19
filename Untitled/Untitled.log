@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.8.17)  19 DEC 2025 08:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.8.17)  19 DEC 2025 08:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -479,11 +479,7 @@ Package: listings 2020/03/24 1.8d (Carsten Heinz)
 File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count327
 \l__pdf_internal_box=\box75
-) (./Untitled.aux
-
-LaTeX Warning: Label `fig:F1' multiply defined.
-
-)
+) (./Untitled.aux)
 \openout1 = `Untitled.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 79.
@@ -649,16 +645,11 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<../F1.png, id=108, 779.91376pt x 663.47874pt>
+<../F1.png, id=114, 779.91376pt x 663.47874pt>
 File: ../F1.png Graphic file (type png)
 <use ../F1.png>
-Package pdftex.def Info: ../F1.png  used on input line 152.
+Package pdftex.def Info: ../F1.png  used on input line 160.
 (pdftex.def)             Requested size: 227.85208pt x 193.83136pt.
-<images/F1-01.png, id=110, 779.91376pt x 663.47874pt>
-File: images/F1-01.png Graphic file (type png)
-<use images/F1-01.png>
-Package pdftex.def Info: images/F1-01.png  used on input line 161.
-(pdftex.def)             Requested size: 185.99307pt x 158.22575pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -666,49 +657,44 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.202 \section
-              {Equations}\label{sec4} <../F1.png>]
+l.199 
+       <../F1.png>]
 LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 
-205.
+215.
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmtt.fd
 File: ts1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 LaTeX Font Info:    Trying to load font information for OMS+cmtt on input line 
-207.
+217.
 (/usr/share/texmf/tex/latex/R/tex/latex/omscmtt.fd
 File: omscmtt.fd 
 )
 LaTeX Font Info:    Font shape `OMS/cmtt/m/n' in size <10.03749> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 207.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 217.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[3pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.228 \begin{equation}
-                       <./images/F1-01.png>]
+[3]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 250.
+               Default added (so using `tbp') on input line 260.
 
-LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 253.
+LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 263.
 
 LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <4.015> not available
-(Font)              size <5> substituted on input line 253.
+(Font)              size <5> substituted on input line 263.
 
 
 LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <4.015> not available
-(Font)              size <5> substituted on input line 253.
+(Font)              size <5> substituted on input line 263.
 
 
 LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <4.015> not available
-(Font)              size <5> substituted on input line 253.
+(Font)              size <5> substituted on input line 263.
 
 
 LaTeX Font Warning: Font shape `U/rsfs/m/n' in size <4.015> not available
-(Font)              size <5> substituted on input line 253.
+(Font)              size <5> substituted on input line 263.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -717,12 +703,12 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 as been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.316 \end{verbatim}
+l.326 \end{verbatim}
                     pdfTeX warning (ext4): destination with the same identifier
  (name{table.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.316 \end{verbatim}
+l.326 \end{verbatim}
                     ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -730,26 +716,26 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 as been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.334 \vfill\eject
+l.344 \vfill\eject
                   ]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 352.
+               Default added (so using `tbp') on input line 362.
 
-<Untitled_files/figure-latex/fig1-1.pdf, id=161, 326.21875pt x 250.9375pt>
+<Untitled_files/figure-latex/fig1-1.pdf, id=162, 326.21875pt x 250.9375pt>
 File: Untitled_files/figure-latex/fig1-1.pdf Graphic file (type pdf)
 <use Untitled_files/figure-latex/fig1-1.pdf>
 Package pdftex.def Info: Untitled_files/figure-latex/fig1-1.pdf  used on input 
-line 382.
+line 392.
 (pdftex.def)             Requested size: 326.21794pt x 250.93687pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[6pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) 
+[6pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.391 \begin{verbatim}
+l.401 \begin{verbatim}
                        <./Untitled_files/figure-latex/fig1-1.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -757,30 +743,30 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 as been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.391 \begin{verbatim}
+l.401 \begin{verbatim}
                       ]
 LaTeX Font Info:    Trying to load font information for OMS+cmss on input line 
-428.
-LaTeX Font Info:    No file OMScmss.fd. on input line 428.
+438.
+LaTeX Font Info:    No file OMScmss.fd. on input line 438.
 
 LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbraceleft' on input line 428.
+(Font)              for symbol `textbraceleft' on input line 438.
 
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 435.
+put line 445.
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 )
 LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 4
-64.
+74.
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 464.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 474.
 
-Overfull \hbox (7.55843pt too wide) in paragraph at lines 459--470
+Overfull \hbox (7.55843pt too wide) in paragraph at lines 469--480
 []$[]$ 
  []
 
@@ -789,10 +775,10 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [8]
 
-Package natbib Warning: Citation `bib1' on page 9 undefined on input line 491.
+Package natbib Warning: Citation `bib1' on page 9 undefined on input line 501.
 
 
-Package natbib Warning: Citation `bib2' on page 9 undefined on input line 491.
+Package natbib Warning: Citation `bib2' on page 9 undefined on input line 501.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -802,50 +788,50 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [10]
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.03749> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 627.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 637.
 
-Underfull \hbox (badness 2547) in paragraph at lines 619--629
+Underfull \hbox (badness 2547) in paragraph at lines 629--639
 \OT1/cmr/m/n/10 ma-tion, or if it describes human trans-plan-ta-tion research, 
 or if it reports
  []
 
 
-Underfull \hbox (badness 7238) in paragraph at lines 619--629
+Underfull \hbox (badness 7238) in paragraph at lines 629--639
 \OT1/cmr/m/n/10 results of a clin-i-cal trial then addi-tional infor-ma-tion wi
 ll be required.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 619--629
+Underfull \hbox (badness 10000) in paragraph at lines 629--639
 \OT1/cmr/m/n/10 Please visit ([][]$https :// www [] .nature [] .com / nature []
  -research / editorial [] -policies$[][]) for
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 619--629
+Underfull \hbox (badness 10000) in paragraph at lines 629--639
 \OT1/cmr/m/n/10 Nature Port-fo-lio jour-nals, ([][]$https :// www [] .springer 
 [] .com / gp / authors [] -editors /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 619--629
+Underfull \hbox (badness 10000) in paragraph at lines 629--639
 \OT1/cmr/m/n/10 journal [] -author / journal [] -author [] -helpdesk / publishi
 ng [] -ethics / 14214$[][]) for Springer
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 619--629
+Underfull \hbox (badness 10000) in paragraph at lines 629--639
 \OT1/cmr/m/n/10 Nature jour-nals, or ([][]https://www.biomedcentral.com/getpubl
 ished/editorial-
  []
 
 
 Package hyperref Warning: Difference (4) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 653.
+(hyperref)                than one, level fixed on input line 663.
 
 
 Package hyperref Warning: Difference (3) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 665.
+(hyperref)                than one, level fixed on input line 675.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -868,17 +854,14 @@ LaTeX Font Warning: Size substitutions with differences
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: There were multiply-defined labels.
-
 Package rerunfilecheck Info: File `Untitled.out' has not changed.
-(rerunfilecheck)             Checksum: 50064B44632D1B27639B7D4C7E5AADFC;3394.
+(rerunfilecheck)             Checksum: 87F0A0B8A91DCBAB89BEEC679BCD27C8;3521.
  ) 
 Here is how much of TeX's memory you used:
- 15081 strings out of 480247
- 227459 string characters out of 5896151
- 721090 words of memory out of 5000000
- 32671 multiletter control sequences out of 15000+600000
+ 15075 strings out of 480247
+ 227354 string characters out of 5896151
+ 721032 words of memory out of 5000000
+ 32667 multiletter control sequences out of 15000+600000
  490333 words of font info for 115 fonts, out of 8000000 for 9000
  24 hyphenation exceptions out of 8191
  85i,17n,90p,436b,1624s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -910,10 +893,10 @@ ist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/public/rsfs/rsfs10.pfb></usr/share/texmf/fonts/type1/public/cm-super/s
 frm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on Untitled.pdf (13 pages, 463315 bytes).
+Output written on Untitled.pdf (13 pages, 417068 bytes).
 PDF statistics:
- 406 PDF objects out of 1000 (max. 8388607)
- 320 compressed objects within 4 object streams
+ 407 PDF objects out of 1000 (max. 8388607)
+ 323 compressed objects within 4 object streams
  79 named destinations out of 1000 (max. 500000)
- 168 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 171 words of extra memory for PDF output out of 10000 (max. 10000000)
 
