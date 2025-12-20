@@ -141,7 +141,7 @@ sciences, graph theory is known as ``\emph{social network analysis}''
 \citep{Wasserman1994}, and psychologists have levearaged this framework
 to understand the structure of psychopathology \citep{borsboom2013}.
 
-\section{Network as a collection nodes and arcs}\label{sec2}
+\section{Network as a collection nodes and edges}\label{sec2}
 
 One of the easiest way to grasp the idea of a network is by looking its
 visual representation (see Figure \hyperref[fig:F1]{1}). According to
@@ -206,8 +206,112 @@ Figure \hyperref[fig:F2]{2}.
 \caption{Basic configurations in a network: dyads (top left), k-stars (top right), triples and triangles (bottom left), and components (bottom right).}\label{fig:F2}
 \end{figure}
 
-\section{This is an example for first level head---section
-head}\label{sec3}
+In the analysis of social networks, it is very important to distinguish
+between connected and disconnected networks \citep{Wasserman1994}. When
+a network is connected there is a path between every pair of nodes; that
+is, you can reach any node from any other node. In a disconnected
+network some paths do not exist (i.e., some nodes are isolated and not
+reachable). The nodes in a disconnected network can be partitioned into
+two or more subsets in which there are no paths between the nodes in
+different subsets. The connected sub-networks in a network are called
+components. A component is a sub-network in which there is a path
+between all pairs of nodes and there is no path between a node in a
+component and any node other node in the other component.
+
+\subsection{Nodal Centrality}\label{nodal-centrality}
+
+Nodal centrality relates to the amount of connections a given node has,
+and can be computed in different ways \citep{oldham2019}. Nodal degree
+is the most basic way of estimating a node centrality. It requires
+counting the number of lines incident with it. For example, the nodal
+degree of the central node in the 3-star network depicted in the top
+right of Figure \hyperref[fig:F2]{2} is three.
+
+Note that nodal centrality is a property of every single node in a
+network, and when the analysis of a social network focuses on nodes
+centrality, this estimation is done to every single node in the network.
+
+\section{Applications of Network
+Modeling}\label{applications-of-network-modeling}
+
+Network modeling has been used by psychologists and behavioral
+scientists in several ways that fit into the professional goals of
+well-established APA's divisions such as quantitative and qualitative
+methods (division 5), clinical psychology (division 12), and industrial
+and organizational psychology (division 14). The following subsections
+summarize how network modeling has been applied in these subdisciplines.
+
+\subsection{Network modeling as a quantitative method}\label{sec3}
+
+\citet{golino2017} illustrated the principles by which network modeling
+can be used as a framework for estimating the correct number of
+dimensions in psychological and educational instruments. While
+traditional techniques such as ``parallel analysis'' and ``minimum
+average partial'' are widely utilized, they often underestimate the
+number of factors in scenarios involving high correlations between
+latent variables, small sample sizes, or few indicators per factor.
+Conversely, the widely used Kaiser-Guttman rule is frequently criticized
+for overestimating the number of factors, particularly as sample sizes
+and the number of items increase.
+
+In response to these limitations, ``exploratory graph analysis'' has
+been developed as a new approach derived from the field of network
+psychometrics \citep{epskamp2018}. This framework utilizes Markov random
+fields to model the interaction between random variables as a network of
+nodes (variables) and edges (direct relationships). Specifically, EGA
+employs the \textbf{Gaussian Graphical Model (GGM)}, which models the
+multivariate distribution through the inverse covariance matrix. When
+these elements are standardized, they represent \textbf{partial
+correlation coefficients}. A fundamental tenet of this approach is the
+``Clusters in network = latent variables'' rule: if a latent variable
+model represents the true causal structure, its indicators will manifest
+as strongly connected clusters (or cliques) within the network because
+they cannot become independent after conditioning on other observed
+variables.
+
+\textbf{The EGA Procedure} The EGA framework follows a rigorous
+three-step statistical sequence to identify the underlying
+dimensionality of a dataset:
+
+1. \textbf{Estimation:} The correlation matrix of observable variables
+is estimated (e.g., tetrachoric or polychoric correlations for
+categorical data).
+
+2. \textbf{Regularization:} To prevent overfitting and the inclusion of
+spurious correlations common in typical psychological sample sizes, the
+\textbf{graphical LASSO (least absolute shrinkage and selection
+operator)} is applied. The sparsity of the resulting network is
+optimized by selecting a regularization parameter that minimizes the
+\textbf{Extended Bayesian Information Criterion (EBIC)}.
+
+3. \textbf{Community Detection:} The \textbf{walktrap algorithm}---a
+random walk-based procedure---is used to identify dense subgraphs or
+communities within the regularized partial correlation matrix. The
+number of detected communities corresponds to the estimated number of
+latent dimensions.
+
+\textbf{Empirical Performance and Accuracy} Extensive simulation
+research involving \textbf{32,000 datasets} across 64 conditions has
+demonstrated that EGA is highly robust. While it performs comparably to
+traditional methods in two-factor structures, EGA significantly
+outperforms them in \textbf{four-factor structures with high
+correlations (.70)} between dimensions. In these complex scenarios, EGA
+was often the only technique capable of maintaining high accuracy,
+reaching 100\% accuracy with a sample size of 5,000. Furthermore,
+analysis of variance (ANOVA) indicates that EGA's accuracy is the
+\textbf{least affected} by varying experimental conditions, such as
+sample size and factor correlation, compared to traditional techniques.
+
+\textbf{Additional Methodological Benefits} Beyond estimating the total
+number of dimensions, EGA provides a distinct advantage by automatically
+identifying \textbf{which specific items indicate each retrieved
+dimension}. This dual functionality---dimensionality estimation and item
+membership identification---provides a more comprehensive output for
+construct validation than traditional factor-retention rules. Empirical
+application to the \textbf{Inductive Reasoning Developmental Test
+(IRDT)} further validates the framework, as EGA correctly identified
+seven dimensions that matched the instrument's theoretical developmental
+stages, while other methods like Parallel Analysis suggested only four
 
 \subsection{This is an example for second level head---subsection
 head}\label{subsec2}
