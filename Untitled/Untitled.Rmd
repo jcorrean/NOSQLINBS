@@ -111,16 +111,24 @@ Networks structure is fundamental to a wide range of behavioral phenomena includ
 
 ## Configurations
 
-A configuration is a specific pattern of connections between nodes. The most elementary configuration is a dyad (two connected nodes). Other common configurations include triangles (three nodes, all connected to each other) and k-stars (a central node connected to k other nodes). These configurations, along with others, make up the larger connected subgraphs of a network, known as components. A component is a set of nodes where a path exists between every pair of nodes. A component is a maximal connected subgraph, where all nodes within it are reachable from each other, and it is not connected to any other nodes.
+A configuration is a specific pattern of connections between nodes.
+The most elementary configuration is a dyad (two connected nodes).
+Other common configurations include triangles (three nodes, all connected to each other) and k-stars (a central node connected to k other nodes).
+These configurations, along with others, make up the larger connected subgraphs of a network, known as components.
+A component is a set of nodes where a path exists between every pair of nodes.
+A component is a maximal connected subgraph, where all nodes within it are reachable from each other, and it is not connected to any other nodes.
 A component can be as simple as a long line of connected nodes with no triangles or k-stars.
 A path is a fundamental concept that describes a sequence of connections between nodes.
 It is the route one can follow to travel from one node to another.
 Paths are essential for understanding properties like the shortest distance between any pair of nodes.
-A special type of path is a cycle, which is a closed path with no repeated nodes or edges other than the start and
-end nodes. A cycle has a minimum of three links (e.g., a triangle). From
-the network science perspective, geometric structures like squares, pentagons,
-or decagons can all be seen as cycles. The four types of configurations in a
-network are depicted in Figure 5.2.
+A special type of path is a cycle, which is a closed path with no repeated nodes or edges other than the start and end nodes.
+A cycle has a minimum of three links (e.g., a triangle).
+From the network science perspective, geometric structures like squares, pentagons, or decagons can all be seen as cycles.
+The four types of configurations in a network are depicted in Figure [2](#fig:F2).
+
+```{r F2, echo=FALSE, fig.cap="Basic configurations in a network: dyads (top left), k-stars (top right), triples and triangles (bottom left), and components (bottom right).", fig.align="center", out.width="227px", fig.pos="H"}
+knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F2.png")
+```
 
 # This is an example for first level head---section head {#sec3}
 
