@@ -106,11 +106,7 @@ In this context, the term "social network" should not be confused with online pl
 knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F1.png")
 ```
 
-Graphs offer fundamental concepts for understanding how entities (nodes) and their relationships (edges) form interconnected structures.
-These concepts, thoroughly covered in introductory texts [@Newman2010], will not be revisited here.
-Instead, this article focuses on their implications for behavior science.
-Network structures underpin a wide range of behavioral phenomena—from disease transmission and social clustering to the spread of information and misinformation.
-As we have mentioned above, the recognition of these patterns requires tools that go beyond the rigid tabular constraints of relational databases. My goal is to illustrate how graph-based databases can enrich the methodological toolbox of behavior scientists, enabling analyses that embrace complexity, dynamic relationships, and multi-level contingencies.
+Graphs offer fundamental concepts for understanding how entities (nodes) and their relationships (edges) form interconnected structures. Network structures underpin a wide range of behavioral phenomena —from disease transmission and social clustering to the spread of information and misinformation. As we have mentioned above, the recognition of these patterns requires tools that go beyond the rigid tabular constraints of relational databases. As the concepts of graphs are thoroughly covered in introductory texts [@Newman2010], these will not be revisited here. Instead, this article aims to illustrate how graph-based databases can enrich the methodological toolbox of behavior scientists, enabling analyses that embrace complexity, dynamic relationships, and multi-level contingencies [@Hunger2021].
 
 # Graph databases: A gentle introduction
 
