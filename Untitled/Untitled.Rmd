@@ -14,7 +14,7 @@ classoptions:
   # - referee       # Optional: Use double line spacing 
   # - lineno        # Optional: Add line numbers
   # - iicol         # Optional: Double column layour
-title: Graphs as Not Only Relational Databases for Behavior Science
+title: Graph Databases as a Paradigm Shift in Behavior Science
 titlerunning: Article Title runing
 authors: 
   - firstname: Juan
@@ -128,6 +128,8 @@ A graph database like the one depicted in Figure [2](#fig:F2) leverages the
 
 ## Benefits of graph databases.
 
-According to @Robinson2015, a compelling reason for choosing a graph database is  the sheer performance increase when dealing with connected data versus relational databases. In contrast to relational databases, where join-intensive query performance deteriorates as the dataset gets bigger, with a graph database performance remain relatively constant, even as the dataset grows with millions of records. This is because queries are localized to a portion of the graph (the specific edge(s) to be consulted). As a result, the execution time for each query is proportional only to the size of the part of the graph traversed to satisfy that query, rather than the size of the overall graph.
+According to @Robinson2015, an advantage of graph databases is the sheer performance increase when dealing with connected data versus relational databases. Compared with relational databases, where join-intensive query performance deteriorates as the dataset gets bigger, a graph database performance remains relatively constant, even as the dataset grows with millions of records or variables. This is because queries are localized to a portion of the graph (the specific edge(s) to be consulted). As a result, the execution time for each query is proportional only to the size of the part of the graph traversed to satisfy that query, rather than the size of the overall graph.
+
+Another advantage of graph databases has to do with their flexibility. Scientists aim to connect data in ways that reflect the domain itself, allowing structure and schema to evolve alongside their understanding of the problem rather than being rigidly defined upfront, when knowledge is most limited. This is particularly important when a behavioral phenomenon lacks theoretical background. Graph databases fulfill this need by providing a flexible model that adapts to changing requirements. Because graphs are inherently additive, new nodes, relationships, labels, and subgraphs can be introduced without disrupting existing queries or application functionality. This flexibility minimizes the need for exhaustive upfront modeling and lowers the frequency of costly migrations, thereby reducing maintenance overhead.
 
 \backmatter
