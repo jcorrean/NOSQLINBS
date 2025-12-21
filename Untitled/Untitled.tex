@@ -105,14 +105,17 @@ City}, \country{Mexico}, \postcode{1219}}}
   \affil*[2]{\orgdiv{Research and Development Unit}, \orgname{Critical
 Centrality Institute}}
 
-\abstract{As researchers, behavior scientists can use many options for
-data collection, storage, and analysis. Graphs-based data science
-provides a unified framework that facilitates the understanding of human
-behavior as a complex system. This article argues for the benefits,
-utility, and rigor that behavior science can gain as a discipline by
-adopting graphs as an alternative paradigm to relational databases. The
-article provides use cases from three APA's division: clinical
-psychology, consumer psychology, and industrial/organizational
+\abstract{Behavior scientists have multiple options for managing
+research data. While relational databases offer robust tools for storage
+and analysis, they impose structural constraints that limit the
+representation of complex behavioral phenomena. This article argues that
+graph databases provide a rigorous and conceptually richer alternative,
+enabling the modeling of human behavior as an interconnected system
+rather than a set of isolated variables. Beyond a technological shift,
+adopting graph-based approaches invites a paradigm change in behavior
+science---one that embraces complexity, dynamic relationships, and
+multi-level contingencies. Practical implications are illustrated
+through examples from clinical, consumer, and industrial/organizational
 psychology.}
 
 \keywords{key, dictionary, word}
@@ -129,17 +132,24 @@ In a recent paper, \citet{soto2025} introduced relational databases for
 behavior science and used real-world examples to illustrate how
 relational databases have been used by behavior scientists. Even though
 relational databases represent the dominant paradigm inside and outside
-academic research settings, other paradigms are gaining traction
-\citep{golino2017}.
+academic research settings, other paradigms are gaining traction. The
+so-called ``Not Only Relational Database'' encompasses a series of
+database management systems that use single data structures to hold
+information. There are several instances of single data structures such
+as lists, key-value pairs, wide columns, documents, matrices, or graphs.
 
-Our work, in contrast, introduces graphs as an alternative paradigm to
-relational databases, where nodes and arcs (instead of tables and joins)
-represent the basic elements of any behavior that can be represented as
-a network or complex system. Networks have a long history in mathematics
-as ``\emph{graph theory}'' \citep{Estrada2011}. In sociology and social
-sciences, graph theory is known as ``\emph{social network analysis}''
-\citep{Wasserman1994}, and psychologists have levearaged this framework
-to understand the structure of psychopathology \citep{borsboom2013}.
+In this article, I examine graphs as a different paradigm from the
+traditional paradigm of relational databases, where nodes and edges
+(instead of tables and joins) represent the basic elements of any
+behavior that can be represented as a network or complex system.
+Networks have a long history in mathematics as ``\emph{graph theory}''
+\citep{Estrada2011}. In sociology and social sciences, graph theory is
+known as ``social network analysis'' \citep{Wasserman1994}, and
+psychologists have leveraged this framework to analyze the structure of
+psychopathology \citep{borsboom2013}, estimate the correct number of
+dimensions in psychological and educational instruments
+\citep{golino2017}, or understand the measurement of organizational
+climate \citep{menezes2021}.
 
 \section{Network as a collection nodes and edges}\label{sec2}
 
@@ -164,17 +174,21 @@ aspects of social networks as an academic discipline.
 \caption{A visual representation of four types of simple networks: non-directed unweighted network (upper left), non-directed weighted network (upper right), di- rected unweighted network (bottom left), and directed weighted network (bottom right).}\label{fig:F1}
 \end{figure}
 
-Graphs provide a series of fundamental concepts that facilitate how
-nodes connect and understand the structure of these links. For example,
-some networks might look loosely structured which means that it has few
-connections between nodes and most nodes are isolated or poorly
-connected. In other cases, the network is densely connected which means
-that almost all nodes connect with the rest of the nodes. Networks
-structure is fundamental to a wide range of behavioral phenomena
-including all kinds of spreads of a disease, all kinds of clustering,
-and other social behavior including propagation of rumors or fake news.
+Graphs offer fundamental concepts for understanding how entities (nodes)
+and their relationships (edges) form interconnected structures. These
+concepts, thoroughly covered in introductory texts \citep{Newman2010},
+will not be revisited here. Instead, this article focuses on their
+implications for behavior science. Network structures underpin a wide
+range of behavioral phenomena---from disease transmission and social
+clustering to the spread of information and misinformation. As we have
+mentioned above, the recognition of these patterns requires tools that
+go beyond the rigid tabular constraints of relational databases. My goal
+is to illustrate how graph-based databases can enrich the methodological
+toolbox of behavior scientists, enabling analyses that embrace
+complexity, dynamic relationships, and multi-level contingencies.
 
-\subsection{Configurations}\label{configurations}
+\section{Graph databases: A gentle
+introduction}\label{graph-databases-a-gentle-introduction}
 
 A configuration is a specific pattern of connections between nodes. The
 most elementary configuration is a dyad (two connected nodes). Other
@@ -230,6 +244,9 @@ right of Figure \hyperref[fig:F2]{2} is three.
 Note that nodal centrality is a property of every single node in a
 network, and when the analysis of a social network focuses on nodes
 centrality, this estimation is done to every single node in the network.
+The analysis of nodes centrality facilitates enables the differentiation
+of most important nodes from most peripheral nodes and organize nodes in
+order of importance or number of connections in the network.
 
 \section{Applications of Network
 Modeling}\label{applications-of-network-modeling}
