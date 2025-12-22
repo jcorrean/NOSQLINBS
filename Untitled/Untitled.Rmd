@@ -20,7 +20,7 @@ authors:
   - firstname: Juan
     particle: C.
     lastname: Correa
-    email: juan.correa@ibero.mx
+    email: j.correa.n@gmail.com
     affiliation: [1,2]
     corresponding: TRUE
 #  - firstname: Second
@@ -84,24 +84,25 @@ Although relational databases remain the dominant paradigm in research and indus
 The so-called ‘Not Only SQL’ (NoSQL) category includes database systems that employ non-tabular data models, such as key-value pairs, documents, wide columns, matrices, and graphs.
 Whereas relational databases store structured data in tables (i.e., columns as variables, rows as cases, and cells containing specific values), NoSQL systems accommodate flexible formats that better support evolving and highly connected data.
 
-In this article, I examine graphs as a different paradigm from the traditional paradigm of relational databases, where nodes and edges (instead of tables and joins) represent the basic elements of any behavior that can be represented as a network or complex system.
+In this article, I examine graphs as a paradigm that deviates from the traditional lenses of relational databases, where nodes and edges (instead of tables and joins) represent the basic elements of any behavior that can be represented as a network or complex system.
 Networks have a long history in mathematics as "*graph theory*" [@Estrada2011].
-In sociology and social sciences, graph theory is known as "social network analysis" [@Wasserman1994], and psychologists have leveraged this framework to analyze the structure of psychopathology [@borsboom2013], estimate the correct number of dimensions in psychological and educational instruments [@golino2017], or understand the measurement of organizational climate [@menezes2021].
+In sociology and social sciences, graph theory is known as "social network analysis" [@Wasserman1994].
+In this context, the term "social network" should not be confused with online platforms such as Facebook or Instagram, as they are technological implementations that do not necessarily represent all aspects of social networks as an academic discipline.
+Psychologists have leveraged this framework to analyze the structure of psychopathology [@borsboom2013], conduct bibliometric analysis of cyberbehavior [@serafin2019], estimate the correct number of dimensions in psychological and educational instruments [@golino2017], or understand the measurement of organizational climate [@menezes2021].
 
 # Network as a collection nodes and edges {#sec2}
 
 One of the easiest way to grasp the idea of a network is by looking its visual representation (see Figure [1](#fig:F1)).
 According to @Estrada2011, a network is a collection of points (called nodes) joined together in pairs by lines (called arcs or edges).
-Scientists can model different kinds of networks from physical networks (e.g., flights between airports) to biological networks (e.g., protein-protein interactions), and social networks (e.g., who follows whom in LinkedIn or X).
-In this context, the term "social network" should not be confused with online platforms such as Facebook or Instagram, as they are technological implementations that do not necessarily represent all aspects of social networks as an academic discipline.
+Despite this simplistic definition, networks provide a powerful framework to model any type of system from planets in a galaxy to neurons in the nervous system [@Vazza2020].
+In behavioral sciences, networks have been used to understand the mechanisms of team assembly and how these mechanisms determine collaboration structure and team performance [@guimerà2005]
 
-```{r F1, echo=FALSE, fig.cap="A visual representation of four types of simple networks: non-directed unweighted network (upper left), non-directed weighted network (upper right), di- rected unweighted network (bottom left), and directed weighted network (bottom right).", fig.align="center", out.width="227px", fig.pos="H"}
+```{r F1, echo=FALSE, fig.cap="A visual representation of four types of simple networks: non-directed unweighted network (upper left), non-directed weighted network (upper right), directed unweighted network (bottom left), and directed weighted network (bottom right).", fig.align="center", out.width="227px", fig.pos="H"}
 knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F1.png")
 ```
 
 Graphs offer fundamental concepts for understanding how entities (nodes) and their relationships (edges) form interconnected structures.
-Network structures underpin a wide range of behavioral phenomena —from disease transmission and social clustering to the spread of information and misinformation.
-As we have mentioned above, the recognition of these patterns requires tools that go beyond the rigid tabular constraints of relational databases.
+From a data management viewpoint, the analysis of these networks requires tools that go beyond the rigid tabular constraints of relational databases.
 As the concepts of graphs are thoroughly covered in introductory texts [@Newman2010], these will not be revisited here.
 Instead, this article aims to illustrate how graph-based databases can enrich the methodological toolbox of behavior scientists, enabling analyses that embrace complexity, dynamic relationships, and multi-level contingencies [@Robinson2015].
 
