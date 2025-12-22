@@ -87,20 +87,20 @@ Whereas relational databases store structured data in tables (i.e., columns as v
 In this article, I examine graphs as a paradigm that deviates from the traditional lenses of relational databases, where nodes and edges (instead of tables and joins) represent the basic elements of any behavior that can be represented as a network or complex system.
 Networks have a long history in mathematics as "*graph theory*" [@Estrada2011].
 In sociology and social sciences, graph theory is known as "social network analysis" [@Wasserman1994].
-In this context, the term "social network" should not be confused with online platforms such as Facebook or Instagram, as they are technological implementations that do not necessarily represent all aspects of social networks as an academic discipline.
+In this context, the term "social network" should not be confused with online platforms such as Facebook or Instagram, as they are technological implementations that do not necessarily represent all aspects of social networks as a discipline.
 Psychologists have leveraged this framework to analyze the structure of psychopathology [@borsboom2013], conduct bibliometric analysis of cyberbehavior [@serafin2019], estimate the correct number of dimensions in psychological and educational instruments [@golino2017], or understand the measurement of organizational climate [@menezes2021].
 
 # Network as a collection nodes and edges {#sec2}
 
 One of the easiest way to grasp the idea of a network is by looking its visual representation (see Figure [1](#fig:F1)).
-According to @Estrada2011, a network is a collection of points (called nodes) joined together in pairs by lines (called arcs or edges).
-Despite this simplistic definition, networks provide a powerful framework to model any type of system from planets in a galaxy to neurons in the nervous system [@Vazza2020].
-In behavioral sciences, networks have been used to understand the mechanisms of team assembly and how these mechanisms determine collaboration structure and team performance [@guimerà2005]
 
 ```{r F1, echo=FALSE, fig.cap="A visual representation of four types of simple networks: non-directed unweighted network (upper left), non-directed weighted network (upper right), directed unweighted network (bottom left), and directed weighted network (bottom right).", fig.align="center", out.width="227px", fig.pos="H"}
 knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F1.png")
 ```
 
+According to @Estrada2011, a network is a collection of points (called nodes) joined together in pairs by lines (called arcs or edges).
+Despite this simplistic definition, networks provide a powerful framework to model any type of system from planets in a galaxy to neurons in the nervous system [@Vazza2020].
+In behavioral sciences, networks have been used to understand the mechanisms of team assembly and how these mechanisms determine collaboration structure and team performance [@guimera2005].
 Graphs offer fundamental concepts for understanding how entities (nodes) and their relationships (edges) form interconnected structures.
 From a data management viewpoint, the analysis of these networks requires tools that go beyond the rigid tabular constraints of relational databases.
 As the concepts of graphs are thoroughly covered in introductory texts [@Newman2010], these will not be revisited here.
@@ -122,18 +122,22 @@ knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F2.png")
 ```
 
 A graph database like the one depicted in Figure [2](#fig:F2) leverages the "labeled property graph" which has the following characteristics: 1) it contains nodes and relationships, 2) Nodes contain properties (key-value pairs), 3) Nodes can be labeled with one or more labels, 4) Relationships are named and directed, and always have a start and end node, 5) Relationships can also contain properties.
+The characteristics of the labeled property graph provide a series of benefits for behavior scientists.
 
-## Benefits of graph databases.
+## Benefits of graph databases
 
-According to @Robinson2015, an advantage of graph databases is the sheer performance increase when dealing with connected data versus relational databases.
+According to @Robinson2015, an advantage of graph databases is the performance increase when dealing with connected data versus relational databases working with tabular data.
 Compared with relational databases, where join-intensive query performance deteriorates as the dataset gets bigger, a graph database performance remains relatively constant, even as the dataset grows with millions of records or variables.
-This is because queries are localized to a portion of the graph (the specific edge(s) to be consulted).
+Big data issues might not be present for experimental behavior analysts who use to work with data coming from laboratory experiments.
+Yet, applied behavior analysts can enjoy the the benefits of graph databases.
+One example where graph databases can be particularly helpful is when urban traffic in a city is under scrutiny at an individual scale by tracking the movements of hundreds of thousands of drivers in a city every two hours [@Gonzalez2008].
+In a case like the one just described, the outstanding performance of graph databases is in its queries as they are localized to a portion of the graph (e.g., if edges represent roads, the queries match the specific edges to be consulted).
 As a result, the execution time for each query is proportional only to the size of the part of the graph traversed to satisfy that query, rather than the size of the overall graph.
 
 Another advantage of graph databases has to do with their flexibility.
-Scientists aim to connect data in ways that reflect the domain itself, allowing structure and schema to evolve alongside their understanding of the problem rather than being rigidly defined upfront, when knowledge is most limited.
-This is particularly important when a behavioral phenomenon lacks theoretical background.
-Graph databases fulfill this need by providing a flexible model that adapts to changing requirements.
+Behavior scientists aim to connect data in ways that reflect the knowledge domain itself, allowing structure and schema to evolve alongside their understanding of the problem rather than being rigidly defined upfront, when knowledge is most limited.
+This is particularly important when a behavioral phenomenon lacks theoretical background or lacks replication [@burgos2025].
+Graph databases fulfill this need by providing a flexible model that adapts to changing requirements and evidence.
 Because graphs are inherently additive, new nodes, relationships, labels, and subgraphs can be introduced.
 The modifications introduced to the original graph do not imply a threat to existing queries or application functionality.
 This flexibility minimizes the need for exhaustive upfront modeling and lowers the frequency of costly migrations, thereby reducing maintenance overhead.
@@ -147,10 +151,11 @@ Typically, governance is enforced programmatically through tests that validate d
 This approach aligns well with agile and test-driven development practices, making graph database–based applications adaptable to changing business needs.
 
 It is worth mentioning that relational databases acknowledge relationships, but only during modeling, where they serve as join mechanisms between tables.
-In graph databases, we often need to clarify the meaning of relationships and even qualify their strength —something relational models cannot do [@Robinson2015].
-As datasets grow more complex and less uniform, relational systems like Microsoft Access, PostgreSQL, or SQLite become burdened with large join tables, sparsely populated rows, and extensive null-checking logic.
+In graph databases, we often need to clarify the meaning of relationships and even qualify their strength.
+These are aspects that relational models cannot do [@Robinson2015].
+From this viewpoint, graph databases demand ontological considerations such as those recently described for psychology and behavioral sciences [@burgos2025].
+As datasets grow more complex and less uniform, relational data management systems like Microsoft Access, PostgreSQL, or SQLite become burdened with large join tables, sparsely populated rows, and extensive null-checking logic.
 Increased connectedness in relational databases translates into more joins, which degrade performance and make adapting the database to evolving requirements difficult.
-
 These and other limitations of relational databases are highlighted as "challenges to adoption" [@soto2025].
 
 \backmatter
