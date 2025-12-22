@@ -1,0 +1,52 @@
+---
+title: "Link Prediction"
+author: |
+  Juan C. Correa\orcidlink{0000-0002-0301-5641}
+date: "Diciembre 2025"
+output: 
+  beamer_presentation:
+    theme: "Madrid"
+    toc: true
+classoption: "aspectratio=169"
+header-includes:
+  - \usepackage{orcidlink}
+  - \usepackage{hyperref}
+  - \hypersetup{pdfpagemode=UseOutlines, bookmarksopen=true, bookmarksnumbered=true}
+  - \author[Juan C. Correa]{Juan C. Correa\\ \href{mailto:j.correa.n@gmail.com}{\texttt{j.correa.n@gmail.com}}}
+  - \institute[]{Departamento de Estudios Empresariales, Universidad Iberoamericana}
+  - \date[]{Hola!}
+  - \usepackage[absolute,overlay]{textpos}
+  - \logo{\includegraphics[width=1.5cm]{Ibero_Imagotipo.png}}
+  - \xdefinecolor{ccdark}{HTML}{B00012}
+  # Set the background to black
+  - \setbeamercolor{background canvas}{bg=black}
+  # Set the main theme colors to your custom ccdark
+  - \setbeamercolor{structure}{fg=ccdark}
+  - \setbeamercolor{local structure}{fg=ccdark}
+  # Adjust text colors for readability on black
+  - \setbeamercolor{normal text}{fg=white}
+  - \setbeamercolor{title}{fg=white}
+  - \setbeamercolor{author in head/foot}{bg=ccdark, fg=white}
+  - \setbeamercolor{title in head/foot}{bg=ccdark, fg=white}
+  - \setbeamercolor{date in head/foot}{bg=ccdark, fg=white}
+  # Ensure frame titles are visible
+  - \setbeamercolor{frametitle}{fg=white, bg=ccdark}
+  - \setbeamertemplate{navigation symbols}{\insertslidenavigationsymbol\insertsectionnavigationsymbol}
+  - \setbeamercolor{navigation symbols}{fg=white, bg=ccdark}
+---
+
+# Introduction  <-- This creates a entry in the F9 panel
+
+## R Markdown Overview <- Y este
+This is an R Markdown presentation...
+
+# Project Details  <-- This creates the next entry in the F9 panel
+
+## Slide with Bullets
+- Bullet 1
+- Bullet 2
+
+## Slide with R Output
+```{r cars, echo = TRUE}
+summary(cars)
+```

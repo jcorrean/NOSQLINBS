@@ -118,11 +118,9 @@ multi-level contingencies. Practical implications are illustrated
 through examples from clinical, consumer, and industrial/organizational
 psychology.}
 
-\keywords{key, dictionary, word}
+\keywords{Graph database, Network modeling, complex behavior}
 
 
-\pacs[JEL Classification]{D8, H51}
-\pacs[MSC Classification]{35A01, 65L10}
 
 \maketitle
 
@@ -130,13 +128,15 @@ psychology.}
 
 In a recent paper, \citet{soto2025} introduced relational databases for
 behavior science and used real-world examples to illustrate how
-relational databases have been used by behavior scientists. Even though
-relational databases represent the dominant paradigm inside and outside
-academic research settings, other paradigms are gaining traction. The
-so-called ``Not Only Relational Database'' encompasses a series of
-database management systems that use single data structures to hold
-information. There are several instances of single data structures such
-as lists, key-value pairs, wide columns, documents, matrices, or graphs.
+relational databases have been used by behavior scientists. Although
+relational databases remain the dominant paradigm in research and
+industry, alternative approaches are gaining traction. The so-called
+`Not Only SQL' (NoSQL) category includes database systems that employ
+non-tabular data models, such as key-value pairs, documents, wide
+columns, matrices, and graphs. Whereas relational databases store
+structured data in tables (i.e., columns as variables, rows as cases,
+and cells containing specific values), NoSQL systems accommodate
+flexible formats that better support evolving and highly connected data.
 
 In this article, I examine graphs as a different paradigm from the
 traditional paradigm of relational databases, where nodes and edges
@@ -194,20 +194,19 @@ introduction}\label{graph-databases-a-gentle-introduction}
 \textbf{C}reate, \textbf{R}ead, \textbf{U}pdate, and \textbf{D}elete
 (CRUD) operations on a graph data model, where entities are represented
 as nodes and relationships as edges. Unlike relational databases, which
-organize data in tables (columns as variables, rows as cases, and cells
-containing specific information for each case-variable combination),
-graph databases treat relationships as first-class elements rather than
-secondary links between tables. This design enables efficient traversal
-and pattern matching across highly connected data, making it ideal for
-modeling complex networks such as behavioral contingencies or social
-interactions.
+organize data in tables, graph databases treat relationships as
+first-class elements rather than secondary links between tables. This
+design enables efficient traversal and pattern matching across highly
+connected data, making it ideal for modeling complex networks such as
+behavioral contingencies or social interactions.
 
 In Figure \hyperref[fig:F2]{2} we can see a graph of three X users
 (i.e., Tom, Paul, and Anna) and three messages (i.e., 99, 100, and 101).
-Tom is followed by Anna and Paul, Tom follows both Anna and Paul, but
-Paul does not follow Anna, who has a string of messages. Her most recent
-message can be found by following a relationship marked CURRENT, and the
-PREVIOUS relationships then create Anna's timeline.
+Anna and Tom \texttt{FOLLOWS} Paul, Tom also \texttt{FOLLOWS} Anna, but
+Paul does not follow Anna. Anna has a string of messages. Her most
+recent message can be found by following a relationship marked
+\texttt{CURRENT}, and the \texttt{PREVIOUS} relationships then create
+Anna's timeline.
 
 \begin{figure}[H]
 
@@ -215,7 +214,7 @@ PREVIOUS relationships then create Anna's timeline.
 
 }
 
-\caption{A visual representation of a graph database}\label{fig:F2}
+\caption{A visual representation of a graph database that combines users and messages}\label{fig:F2}
 \end{figure}
 
 A graph database like the one depicted in Figure \hyperref[fig:F2]{2}
@@ -247,10 +246,38 @@ most limited. This is particularly important when a behavioral
 phenomenon lacks theoretical background. Graph databases fulfill this
 need by providing a flexible model that adapts to changing requirements.
 Because graphs are inherently additive, new nodes, relationships,
-labels, and subgraphs can be introduced without disrupting existing
-queries or application functionality. This flexibility minimizes the
-need for exhaustive upfront modeling and lowers the frequency of costly
+labels, and subgraphs can be introduced. The modifications introduced to
+the original graph do not imply a threat to existing queries or
+application functionality. This flexibility minimizes the need for
+exhaustive upfront modeling and lowers the frequency of costly
 migrations, thereby reducing maintenance overhead.
+
+A third benefit of graph databases is the agility that they offer.
+Modern graph databases enable smooth development and easy system
+maintenance. Their schema-free design, combined with testable APIs and
+query languages, allows controlled evolution of applications. While the
+absence of rigid schemas means traditional governance mechanisms are
+missing, this is not a drawback. On the contrary, it encourages more
+transparent and actionable data governance. Typically, governance is
+enforced programmatically through tests that validate data models,
+queries, and business rules. This approach aligns well with agile and
+test-driven development practices, making graph database--based
+applications adaptable to changing business needs.
+
+It is worth mentioning that relational databases acknowledge
+relationships, but only during modeling, where they serve as join
+mechanisms between tables. In graph databases, we often need to clarify
+the meaning of relationships and even qualify their strength
+---something relational models cannot do \citep{Robinson2015}. As
+datasets grow more complex and less uniform, relational systems like
+Microsoft Access, PostgreSQL, or SQLite become burdened with large join
+tables, sparsely populated rows, and extensive null-checking logic.
+Increased connectedness in relational databases translates into more
+joins, which degrade performance and make adapting the database to
+evolving requirements difficult.
+
+These and other limitations of relational databases are highlighted as
+``challenges to adoption'' \citep{soto2025}.
 
 \backmatter
 
