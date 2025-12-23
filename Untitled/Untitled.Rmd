@@ -124,7 +124,7 @@ knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F2.png")
 A graph database like the one depicted in Figure [2](#fig:F2) leverages the "labeled property graph" which has the following characteristics: 1) it contains nodes and relationships, 2) Nodes contain properties (key-value pairs), 3) Nodes can be labeled with one or more labels, 4) Relationships are named and directed, and always have a start and end node, 5) Relationships can also contain properties.
 The characteristics of the labeled property graph provide a series of benefits for behavior scientists.
 
-## Benefits of graph databases
+# Benefits of graph databases
 
 According to @Robinson2015, an advantage of graph databases is the performance increase when dealing with connected data versus relational databases working with tabular data.
 Compared with relational databases, where join-intensive query performance deteriorates as the dataset gets bigger, a graph database performance remains relatively constant, even as the dataset grows with millions of records or variables.
@@ -157,5 +157,9 @@ From this viewpoint, graph databases demand ontological considerations such as t
 As datasets grow more complex and less uniform, relational data management systems like Microsoft Access, PostgreSQL, or SQLite become burdened with large join tables, sparsely populated rows, and extensive null-checking logic.
 Increased connectedness in relational databases translates into more joins, which degrade performance and make adapting the database to evolving requirements difficult.
 These and other limitations of relational databases are highlighted as "challenges to adoption" [@soto2025].
+
+# Potential usages of graph databases in behavioral research
+
+Even though network modeling has been used for several research purposes like the one mentioned above, to my knowledge graph databases remain underutilized by behavior scientists. 
 
 \backmatter
