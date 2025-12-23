@@ -79,11 +79,12 @@ knitr::opts_chunk$set(echo = FALSE,
 
 # Introduction {#sec1}
 
-In a recent paper, @soto2025 introduced relational databases for behavior science and used real-world examples to illustrate how relational databases have been used by behavioral scientists. Although relational databases remain the dominant paradigm in research and industry, alternative approaches are gaining traction.
+In a recent paper, @soto2025 introduced relational databases for behavior science and used real-world examples to illustrate how relational databases have been used by behavioral scientists.
+Although relational databases remain the dominant paradigm in research and industry, alternative approaches are gaining traction.
 The so-called ‘Not Only SQL’ (NoSQL) category includes database systems that employ non-tabular data models, such as key-value pairs, documents, wide columns, matrices, and graphs.
 Whereas relational databases store structured data in tables (i.e., columns as variables, rows as cases, and cells containing specific values), NoSQL systems accommodate flexible formats that better support evolving and highly connected data.
 
-In this article, I examine graphs as a paradigm that deviates from the traditional lenses of relational databases, where nodes and edges (instead of tables and joins) represent the basic elements of any behavior that can be represented as a network or complex system.
+In this article, I examine graphs as a paradigm that deviates from the traditional lenses of relational databases, where nodes and edges (instead of tables and joins) represent the basic elements of any behavior that can be represented as a network or a complex system.
 Networks have a long history in mathematics as "*graph theory*" [@Estrada2011].
 In sociology and social sciences, graph theory is known as "social network analysis" [@Wasserman1994].
 In this context, the term "social network" should not be confused with online platforms such as Facebook or Instagram, as they are technological implementations that do not necessarily represent all aspects of social networks as a discipline.
@@ -111,31 +112,38 @@ Instead, this article aims to illustrate how graph-based databases can enrich th
 Unlike relational databases, which organize data in tables, graph databases treat relationships as first-class elements rather than secondary links between tables.
 This design enables efficient traversal and pattern matching across highly connected data, making it ideal for modeling complex networks such as behavioral contingencies or social interactions.
 
-Figure [2](#fig:F2) shows a graph with eight nodes and eight edges. Nodes represent real-world entities such as persons  (i.e., Ana, Pam, Carlos, and John) companies (i.e., Chevron and Rice University), and routes (i.e., I-10 and I-45). Edges represent the relationship between pairs of nodes. Thus, John and Pam work in Chevron but they commute distinct distances through different routes. Carlos and Ana work in Rice University, they both commute by the same route but they have to drive different distances. Interestingly, the information of nodes and edges can be enriched with attributes. These attributes also represent real-world characteristics like the distance each person has to commute, their sex, or the sector of the company they work for. A graph database like the one depicted in Figure [2](#fig:F2) leverages the so-called "labeled property graph" which has the following elements: 1) it contains nodes and relationships, 2) nodes contain properties (key-value pairs), 3) nodes can be labeled with one or more labels, 4) relationships are named and directed, and always have a start and end node, 5) relationships can also contain properties. Although these elements offer significant benefits for behavioral scientists, they have been largely ignored. This gap presents an opportunity to enrich the methodological toolbox for behavior analysts working in both basic and applied settings, particularly those interested in integrating methods from other disciplines into behavioral science. 
+Figure [2](#fig:F2) shows a graph with eight nodes and eight edges.
+Nodes represent real-world entities such as persons (i.e., Anna, Pam, Carlos, and John) companies (i.e., Chevron and Rice University), and routes (i.e., I-10 and I-45).
+Edges represent the relationship between pairs of nodes.
+Thus, John and Pam work in Chevron but they commute distinct distances through different routes.
+Carlos and Anna work in Rice University, they both commute by the same route but they have to drive different distances.
+Interestingly, the information of nodes and edges can be enriched with attributes.
+These attributes also represent real-world characteristics like the distance each person has to commute, their sex, or the sector of the company they work for.
+A graph database like the one depicted in Figure [2](#fig:F2) leverages the so-called "labeled property graph" which has the following elements: 1) nodes and relationships, 2) nodes contain properties (key-value pairs), 3) nodes can be labeled with one or more labels, 4) relationships are named and directed, and always have a start and end node, 5) relationships can also contain properties.
+Although these elements offer significant benefits for behavioral scientists, they have been largely overlooked.
+This gap presents an opportunity to enrich the methodological toolbox for behavior analysts working in both basic and applied settings, particularly those interested in integrating methods from other disciplines into behavioral sciences.
 
-```{r F2, echo=FALSE, fig.cap="A visual representation of a graph database that combines persons, companies, and routes", fig.align="center", out.height="180px", out.width="320px", fig.pos="H"}
+```{r F2, echo=FALSE, fig.cap="A visual representation of a graph database that combines persons, companies, and routes", fig.align="center", out.height="180px", out.width="350px", fig.pos="H"}
 knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F2.png")
 ```
 
-
-
-# Benefits of graph databases
-
-According to @Robinson2015, an advantage of graph databases is the performance increase when dealing with connected data versus relational databases working with tabular data.
-Compared with relational databases, where join-intensive query performance deteriorates as the dataset gets bigger, a graph database performance remains relatively constant, even as the dataset grows with millions of records or variables.
-Big data issues might not be present for experimental behavior analysts who use to work with data coming from laboratory experiments.
-Yet, applied behavior analysts can enjoy the the benefits of graph databases.
-One example where graph databases can be particularly helpful is when urban traffic in a city is under scrutiny at an individual scale by tracking the movements of hundreds of thousands of drivers in a city every two hours [@Gonzalez2008].
-In a case like the one just described, the outstanding performance of graph databases is in its queries as they are localized to a portion of the graph (e.g., if edges represent roads, the queries match the specific edges to be consulted).
-As a result, the execution time for each query is proportional only to the size of the part of the graph traversed to satisfy that query, rather than the size of the overall graph.
+According to @Robinson2015, one advantage of graph databases is their superior performance when handling connected data compared to relational databases that rely on tabular structures.
+In relational databases, join-intensive queries slow down as datasets grow, whereas graph databases maintain relatively stable performance—even with millions of nodes and edges.
+While big data challenges may not concern experimental behavior analysts working with small laboratory datasets, applied behavior analysts can benefit significantly from graph databases.
+For example, consider analyzing urban traffic at an individual level by tracking the movements of hundreds of thousands of drivers every two hours [@Gonzalez2008].
+In such cases, graph databases excel because queries operate on localized portions of the graph rather than scanning the entire dataset.
+If edges store information such as commuting distances, queries can be designed to retrieve specific conditions (e.g., individuals who commute less than 10 miles).
+Consequently, execution time depends only on the size of the subgraph traversed, not the overall graph size.
 
 Another advantage of graph databases has to do with their flexibility.
-Behavior scientists aim to connect data in ways that reflect the knowledge domain itself, allowing structure and schema to evolve alongside their understanding of the problem rather than being rigidly defined upfront, when knowledge is most limited.
+Behavioral scientists aim to connect data in ways that reflect their knowledge and expertise.
+This is a key reason why graph databases serve as the underlying infrastructure for constructing "knowledge graphs" [@Barrasa2023].
+With these knowledge graphs, behavioral scientists allow the structure and schema to evolve alongside their understanding of the behavioral phenomenon rather than being rigidly defined upfront, when knowledge is most limited.
 This is particularly important when a behavioral phenomenon lacks theoretical background or lacks replication [@burgos2025].
 Graph databases fulfill this need by providing a flexible model that adapts to changing requirements and evidence.
 Because graphs are inherently additive, new nodes, relationships, labels, and subgraphs can be introduced.
 The modifications introduced to the original graph do not imply a threat to existing queries or application functionality.
-This flexibility minimizes the need for exhaustive upfront modeling and lowers the frequency of costly migrations, thereby reducing maintenance overhead.
+This flexibility minimizes the need for exhaustive upfront modeling and lowers the frequency of costly migrations (particularly for companies that hire behavior data scientists who use to be in charge of analyzing customers observed behavior), thereby reducing maintenance overhead.
 
 A third benefit of graph databases is the agility that they offer.
 Modern graph databases enable smooth development and easy system maintenance.
@@ -147,14 +155,18 @@ This approach aligns well with agile and test-driven development practices, maki
 
 It is worth mentioning that relational databases acknowledge relationships, but only during modeling, where they serve as join mechanisms between tables.
 In graph databases, we often need to clarify the meaning of relationships and even qualify their strength.
-These are aspects that relational models cannot do [@Robinson2015].
+These are aspects that relational database management systems do not address explicitly [@Robinson2015].
 From this viewpoint, graph databases demand ontological considerations such as those recently described for psychology and behavioral sciences [@burgos2025].
 As datasets grow more complex and less uniform, relational data management systems like Microsoft Access, PostgreSQL, or SQLite become burdened with large join tables, sparsely populated rows, and extensive null-checking logic.
-Increased connectedness in relational databases translates into more joins, which degrade performance and make adapting the database to evolving requirements difficult.
-These and other limitations of relational databases are highlighted as "challenges to adoption" [@soto2025].
+Greater interconnectedness in relational databases leads to more joins, which degrade performance and complicate adaptation to evolving requirements.
+@soto2025 has highlighted some of these limitations as "challenges to adoption." From the lenses of graph databases, however, these challenges are not even necessary.
+I will elaborate upon this particular aspect below.
 
-# Potential usages of graph databases in behavioral research
+# Behavioral Application of graph databases
 
-Even though network modeling has been used for several research purposes like the one mentioned above, to my knowledge graph databases remain underutilized by behavior scientists. 
+To illustrate the application of graph databases for behavioral scientists, I revisit data from customers who used an online food delivery platform in the city of Bogotá.
+The database is available in a public data repository [@segura2019] and its associated research article [@correa2019a].
+Behavioral scientists who are familiar with structured datasets will find that this database is in a coma separated value (.csv) file, just like most tables used in relational database management systems like Microsoft Access or SQLite.
+Given the variety of graph database management systems (e.g., Microsoft Azure Cosmos, AWS Neptune, Neo4j, Aerospike), the rest of this work relies on Neo4j [@Barrasa2023].
 
 \backmatter
