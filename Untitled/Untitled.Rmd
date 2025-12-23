@@ -48,7 +48,7 @@ keywords:
   - complex behavior
 # abstract: |
 abstract: |
-  Behavior scientists have multiple options for managing research data. While relational databases offer robust tools for storage and analysis, they impose structural constraints that limit the representation of complex behavioral phenomena. This article argues that graph databases provide a rigorous and conceptually richer alternative, enabling the modeling of human behavior as an interconnected system rather than a set of isolated variables. Beyond a technological shift, adopting graph-based approaches invites a paradigm change in behavior science—one that embraces complexity, dynamic relationships, and multi-level contingencies. Practical implications are illustrated through examples from clinical, consumer, and industrial/organizational psychology.
+  Behavioral scientists have multiple options for managing research data. While relational databases offer robust tools for storage and analysis, they impose structural constraints that limit the representation of complex behavioral phenomena. This article argues that graph databases provide a rigorous and conceptually richer alternative, enabling the modeling of human behavior as an interconnected system rather than a set of isolated variables. Beyond a technological shift, adopting graph-based approaches invites a paradigm change in behavior science—one that embraces complexity, dynamic relationships, and multi-level contingencies. Practical implications are illustrated through examples from clinical, consumer, and industrial/organizational psychology.
 bibliography: bibliography.bib
 header-includes: |
   %% Per the spinger doc, new theorem styles can be included using built in style, 
@@ -79,8 +79,7 @@ knitr::opts_chunk$set(echo = FALSE,
 
 # Introduction {#sec1}
 
-In a recent paper, @soto2025 introduced relational databases for behavior science and used real-world examples to illustrate how relational databases have been used by behavior scientists.
-Although relational databases remain the dominant paradigm in research and industry, alternative approaches are gaining traction.
+In a recent paper, @soto2025 introduced relational databases for behavior science and used real-world examples to illustrate how relational databases have been used by behavioral scientists. Although relational databases remain the dominant paradigm in research and industry, alternative approaches are gaining traction.
 The so-called ‘Not Only SQL’ (NoSQL) category includes database systems that employ non-tabular data models, such as key-value pairs, documents, wide columns, matrices, and graphs.
 Whereas relational databases store structured data in tables (i.e., columns as variables, rows as cases, and cells containing specific values), NoSQL systems accommodate flexible formats that better support evolving and highly connected data.
 
@@ -94,7 +93,7 @@ Psychologists have leveraged this framework to analyze the structure of psychopa
 
 One of the easiest way to grasp the idea of a network is by looking its visual representation (see Figure [1](#fig:F1)).
 
-```{r F1, echo=FALSE, fig.cap="A visual representation of four types of simple networks: non-directed unweighted network (upper left), non-directed weighted network (upper right), directed unweighted network (bottom left), and directed weighted network (bottom right).", fig.align="center", out.width="227px", fig.pos="H"}
+```{r F1, echo=FALSE, fig.cap="A visual representation of four types of simple networks: non-directed unweighted network (upper left), non-directed weighted network (upper right), directed unweighted network (bottom left), and directed weighted network (bottom right).", fig.align="center", out.width="200px", fig.pos="H"}
 knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F1.png")
 ```
 
@@ -104,7 +103,7 @@ In behavioral sciences, networks have been used to understand the mechanisms of 
 Graphs offer fundamental concepts for understanding how entities (nodes) and their relationships (edges) form interconnected structures.
 From a data management viewpoint, the analysis of these networks requires tools that go beyond the rigid tabular constraints of relational databases.
 As the concepts of graphs are thoroughly covered in introductory texts [@Newman2010], these will not be revisited here.
-Instead, this article aims to illustrate how graph-based databases can enrich the methodological toolbox of behavior scientists, enabling analyses that embrace complexity, dynamic relationships, and multi-level contingencies [@Robinson2015].
+Instead, this article aims to illustrate how graph-based databases can enrich the methodological toolbox of behavioral scientists, enabling analyses that embrace complexity, dynamic relationships, and multi-level contingencies [@Robinson2015].
 
 # Graph databases: A gentle introduction
 
@@ -112,8 +111,7 @@ Instead, this article aims to illustrate how graph-based databases can enrich th
 Unlike relational databases, which organize data in tables, graph databases treat relationships as first-class elements rather than secondary links between tables.
 This design enables efficient traversal and pattern matching across highly connected data, making it ideal for modeling complex networks such as behavioral contingencies or social interactions.
 
-Figure [2](#fig:F2) shows a graph with eight nodes and eight edges. Nodes represent real-world entities such as persons  (i.e., Ana, Pam, Carlos, and John) companies (i.e., Chevron and Rice University), and routes (i.e., I-10 and I-45). Edges represent the relationship between pairs of nodes. Thus, John and Pam work in Chevron but they commute distinct distances through different routes. Carlos and Ana work in Rice University, they both commute by the same route but they have to drive different distances. Interestingly, the information of nodes and edges can be enriched with attributes. These attributes also represent real-world characteristics like the distance each person has to commute, their sex, or the sector of the company they work for. A graph database like the one depicted in Figure [2](#fig:F2) leverages the "labeled property graph" which has the following characteristics: 1) it contains nodes and relationships, 2) Nodes contain properties (key-value pairs), 3) Nodes can be labeled with one or more labels, 4) Relationships are named and directed, and always have a start and end node, 5) Relationships can also contain properties.
-The characteristics of the labeled property graph provide a series of benefits for behavior scientists.
+Figure [2](#fig:F2) shows a graph with eight nodes and eight edges. Nodes represent real-world entities such as persons  (i.e., Ana, Pam, Carlos, and John) companies (i.e., Chevron and Rice University), and routes (i.e., I-10 and I-45). Edges represent the relationship between pairs of nodes. Thus, John and Pam work in Chevron but they commute distinct distances through different routes. Carlos and Ana work in Rice University, they both commute by the same route but they have to drive different distances. Interestingly, the information of nodes and edges can be enriched with attributes. These attributes also represent real-world characteristics like the distance each person has to commute, their sex, or the sector of the company they work for. A graph database like the one depicted in Figure [2](#fig:F2) leverages the so-called "labeled property graph" which has the following elements: 1) it contains nodes and relationships, 2) nodes contain properties (key-value pairs), 3) nodes can be labeled with one or more labels, 4) relationships are named and directed, and always have a start and end node, 5) relationships can also contain properties. Although these elements offer significant benefits for behavioral scientists, they have been largely ignored. This gap presents an opportunity to enrich the methodological toolbox for behavior analysts working in both basic and applied settings, particularly those interested in integrating methods from other disciplines into behavioral science. 
 
 ```{r F2, echo=FALSE, fig.cap="A visual representation of a graph database that combines persons, companies, and routes", fig.align="center", out.height="180px", out.width="320px", fig.pos="H"}
 knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F2.png")
