@@ -200,31 +200,34 @@ design enables efficient traversal and pattern matching across highly
 connected data, making it ideal for modeling complex networks such as
 behavioral contingencies or social interactions.
 
-In Figure \hyperref[fig:F2]{2} we can see a graph of three X users
-(i.e., Tom, Paul, and Anna) and three messages (i.e., 99, 100, and 101).
-Anna and Tom \texttt{FOLLOWS} Paul, Tom also \texttt{FOLLOWS} Anna, but
-Paul does not follow Anna. Anna has a string of messages. Her most
-recent message can be found by following a relationship marked
-\texttt{CURRENT}, and the \texttt{PREVIOUS} relationships then create
-Anna's timeline.
+Figure \hyperref[fig:F2]{2} shows a graph with eight nodes and eight
+edges. Nodes represent real-world entities such as persons (i.e., Ana,
+Pam, Carlos, and John) companies (i.e., Chevron and Rice University),
+and routes (i.e., I-10 and I-45). Edges represent the relationship
+between pairs of nodes. Thus, John and Pam work in Chevron but they
+commute distinct distances through different routes. Carlos and Ana work
+in Rice University, they both commute by the same route but they have to
+drive different distances. Interestingly, the information of nodes and
+edges can be enriched with attributes. These attributes also represent
+real-world characteristics like the distance each person has to commute,
+their sex, or the sector of the company they work for. A graph database
+like the one depicted in Figure \hyperref[fig:F2]{2} leverages the
+``labeled property graph'' which has the following characteristics: 1)
+it contains nodes and relationships, 2) Nodes contain properties
+(key-value pairs), 3) Nodes can be labeled with one or more labels, 4)
+Relationships are named and directed, and always have a start and end
+node, 5) Relationships can also contain properties. The characteristics
+of the labeled property graph provide a series of benefits for behavior
+scientists.
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=120px,height=180px,]{../F2} 
+{\centering \includegraphics[width=320px,height=180px,]{../F2} 
 
 }
 
-\caption{A visual representation of a graph database that combines users and messages}\label{fig:F2}
+\caption{A visual representation of a graph database that combines persons, companies, and routes}\label{fig:F2}
 \end{figure}
-
-A graph database like the one depicted in Figure \hyperref[fig:F2]{2}
-leverages the ``labeled property graph'' which has the following
-characteristics: 1) it contains nodes and relationships, 2) Nodes
-contain properties (key-value pairs), 3) Nodes can be labeled with one
-or more labels, 4) Relationships are named and directed, and always have
-a start and end node, 5) Relationships can also contain properties. The
-characteristics of the labeled property graph provide a series of
-benefits for behavior scientists.
 
 \section{Benefits of graph databases}\label{benefits-of-graph-databases}
 
