@@ -142,7 +142,7 @@ This is particularly important when a behavioral phenomenon lacks theoretical ba
 Graph databases fulfill this need by providing a flexible model that adapts to changing requirements and evidence.
 Because graphs are inherently additive, new nodes, relationships, labels, and subgraphs can be introduced.
 The modifications introduced to the original graph do not imply a threat to existing queries or application functionality.
-This flexibility minimizes the need for exhaustive upfront modeling and lowers the frequency of costly migrations (particularly for companies that hire behavior data scientists who use to be in charge of analyzing customers observed behavior), thereby reducing maintenance overhead.
+This flexibility minimizes the need for exhaustive upfront modeling and lowers the frequency of costly migrations (particularly for companies that hire behavior data scientists in charge of analyzing customers observed behavior), thereby reducing maintenance overhead.
 
 A third benefit of graph databases is the agility that they offer.
 Modern graph databases enable smooth development and easy system maintenance.
@@ -181,7 +181,7 @@ After installation, the instance creation is the second step.
 This is a top-level operation for setting up a new database environment, and involves allocating resources (memory, CPU, storage), defining a database version, and setting up initial user credentials by clicking one button.
 When creating a new instance, neo4j asks the user to provide a name as part of the instance details.
 The user is asked to provide a password of eight characters as a security check for further interactions.
-The instance created is called "OFD," an acronym from "Online Food Delivery." Figure [3](#fig:F3) depicts this instance which by default is "stopped." The user should start the instance by clicking the button "Start instance" that is at the top right of the window.
+The instance created is called "OFD," an acronym for "Online Food Delivery." Figure [3](#fig:F3) depicts this instance which by default is "stopped." The user should start the instance by clicking the button "Start instance" that is at the top right of the window.
 This action will create two default databases (i.e., neo4j and system).
 
 ```{r F3, echo=FALSE, fig.cap="The look-and-feel of an instance created in neo4j", fig.align="center", out.height="180px", out.height="100px", out.width="380px", fig.pos="H"}
