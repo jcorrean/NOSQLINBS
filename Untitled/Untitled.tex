@@ -79,8 +79,7 @@
 \begin{document}
 
 
-\title[Article Title runing]{Graph Databases as a Paradigm Shift in
-Behavior Science}
+\title[Article Title runing]{Graph Databases for Behavior Science}
 
 %%=============================================================%%
 %% Prefix	-> \pfx{Dr}
@@ -157,35 +156,34 @@ organizational climate \citep{menezes2021}.
 
 \section{Network as a collection nodes and edges}\label{sec2}
 
-One of the easiest way to grasp the idea of a network is by looking its
-visual representation (see Figure \hyperref[fig:F1]{1}).
+\citet{Estrada2011} defines a network as a collection of points (called
+nodes) joined together in pairs by lines (called arcs or edges) like
+those depicted in Figure \hyperref[fig:F1]{1}. Despite this simplistic
+definition, networks provide a powerful framework to model any type of
+system from planets in a galaxy to neurons in the nervous system
+\citep{Vazza2020}.
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=200px,]{../F1} 
+{\centering \includegraphics[width=380px,]{../F1} 
 
 }
 
-\caption{A visual representation of four types of simple networks: non-directed unweighted network (upper left), non-directed weighted network (upper right), directed unweighted network (bottom left), and directed weighted network (bottom right).}\label{fig:F1}
+\caption{A visual representation of four types of networks: A) non-directed unweighted network, B) non-directed weighted network, C) directed unweighted network, and D) directed weighted network.}\label{fig:F1}
 \end{figure}
 
-According to \citet{Estrada2011}, a network is a collection of points
-(called nodes) joined together in pairs by lines (called arcs or edges).
-Despite this simplistic definition, networks provide a powerful
-framework to model any type of system from planets in a galaxy to
-neurons in the nervous system \citep{Vazza2020}. In behavioral sciences,
-networks have been used to understand the mechanisms of team assembly
-and how these mechanisms determine collaboration structure and team
-performance \citep{guimera2005}. Graphs offer fundamental concepts for
-understanding how entities (nodes) and their relationships (edges) form
-interconnected structures. From a data management viewpoint, the
-analysis of these networks requires tools that go beyond the rigid
-tabular constraints of relational databases. As the concepts of graphs
-are thoroughly covered in introductory texts \citep{Newman2010}, these
-will not be revisited here. Instead, this article aims to illustrate how
-graph-based databases can enrich the methodological toolbox of
-behavioral scientists, enabling analyses that embrace complexity,
-dynamic relationships, and multi-level contingencies
+In behavioral sciences, networks have been used to understand the
+mechanisms of team assembly and how these mechanisms determine
+collaboration structure and team performance \citep{guimera2005}. Graphs
+offer fundamental concepts for understanding how entities (nodes) and
+their relationships (edges) form interconnected structures. From a data
+management viewpoint, the analysis of these networks requires tools that
+go beyond the rigid tabular constraints of relational databases. As the
+concepts of graphs are thoroughly covered in introductory texts
+\citep{Newman2010}, these will not be revisited here. Instead, this
+article aims to illustrate how graph-based databases can enrich the
+methodological toolbox of behavioral scientists, enabling analyses that
+embrace complexity, dynamic relationships, and multi-level contingencies
 \citep{Robinson2015}.
 
 \section{Graph databases: A gentle
@@ -311,10 +309,14 @@ public data repository \citep{segura2019} and its associated research
 article \citep{correa2019a}. Behavioral scientists who are familiar with
 structured datasets will find that this database is in a coma separated
 value (.csv) file, just like most tables used in relational database
-management systems like Microsoft Access or SQLite. Given the variety of
-graph database management systems (e.g., Microsoft Azure Cosmos, AWS
-Neptune, Neo4j, Aerospike), the rest of this work relies on Neo4j
-\citep{Barrasa2023}.
+management systems like Microsoft Access or SQLite. Given the wide
+variety of graph database management systems in the market (e.g., Neo4j,
+Microsoft Azure Cosmos, Aerospike, Amazon Web Services Neptune,
+NebulaGraph, Memgraph, TigerGraph, Giraph), the rest of this work relies
+on Neo4j \citep{Barrasa2023}. Neo4j ranks as the leading freemium
+software. It offers two free options: ``Neo4j Community Edition'' and
+``Neo4j AuraDB Free,'' as well as two licensed options called ``Neo4j
+enterprise'' and ``Neo4j AuraDB Professional/Enterprise.''
 
 \backmatter
 

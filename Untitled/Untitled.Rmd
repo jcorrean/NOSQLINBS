@@ -14,7 +14,7 @@ classoptions:
   # - referee       # Optional: Use double line spacing 
   # - lineno        # Optional: Add line numbers
   # - iicol         # Optional: Double column layour
-title: Graph Databases as a Paradigm Shift in Behavior Science
+title: Graph Databases for Behavior Science
 titlerunning: Article Title runing
 authors: 
   - firstname: Juan
@@ -92,14 +92,13 @@ Psychologists have leveraged this framework to analyze the structure of psychopa
 
 # Network as a collection nodes and edges {#sec2}
 
-One of the easiest way to grasp the idea of a network is by looking its visual representation (see Figure [1](#fig:F1)).
+@Estrada2011 defines a network as a collection of points (called nodes) joined together in pairs by lines (called arcs or edges) like those depicted in Figure [1](#fig:F1).
+Despite this simplistic definition, networks provide a powerful framework to model any type of system from planets in a galaxy to neurons in the nervous system [@Vazza2020].
 
-```{r F1, echo=FALSE, fig.cap="A visual representation of four types of simple networks: non-directed unweighted network (upper left), non-directed weighted network (upper right), directed unweighted network (bottom left), and directed weighted network (bottom right).", fig.align="center", out.width="200px", fig.pos="H"}
+```{r F1, echo=FALSE, fig.cap="A visual representation of four types of networks: A) non-directed unweighted network, B) non-directed weighted network, C) directed unweighted network, and D) directed weighted network.", fig.align="center", out.width="380px", fig.pos="H"}
 knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F1.png")
 ```
 
-According to @Estrada2011, a network is a collection of points (called nodes) joined together in pairs by lines (called arcs or edges).
-Despite this simplistic definition, networks provide a powerful framework to model any type of system from planets in a galaxy to neurons in the nervous system [@Vazza2020].
 In behavioral sciences, networks have been used to understand the mechanisms of team assembly and how these mechanisms determine collaboration structure and team performance [@guimera2005].
 Graphs offer fundamental concepts for understanding how entities (nodes) and their relationships (edges) form interconnected structures.
 From a data management viewpoint, the analysis of these networks requires tools that go beyond the rigid tabular constraints of relational databases.
@@ -167,6 +166,8 @@ I will elaborate upon this particular aspect below.
 To illustrate the application of graph databases for behavioral scientists, I revisit data from customers who used an online food delivery platform in the city of Bogotá.
 The database is available in a public data repository [@segura2019] and its associated research article [@correa2019a].
 Behavioral scientists who are familiar with structured datasets will find that this database is in a coma separated value (.csv) file, just like most tables used in relational database management systems like Microsoft Access or SQLite.
-Given the variety of graph database management systems (e.g., Microsoft Azure Cosmos, AWS Neptune, Neo4j, Aerospike), the rest of this work relies on Neo4j [@Barrasa2023].
+Given the wide variety of graph database management systems in the market (e.g., Neo4j, Microsoft Azure Cosmos, Aerospike, Amazon Web Services Neptune, NebulaGraph, Memgraph, TigerGraph, Giraph), the rest of this work relies on Neo4j [@Barrasa2023].
+Neo4j ranks as the leading freemium software.
+It offers two free options: "Neo4j Community Edition" and "Neo4j AuraDB Free," as well as two licensed options called "Neo4j enterprise" and "Neo4j AuraDB Professional/Enterprise."
 
 \backmatter
