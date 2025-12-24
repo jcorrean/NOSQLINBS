@@ -165,19 +165,15 @@ I will elaborate upon this particular aspect below.
 
 To illustrate the application of graph databases for behavioral scientists, I revisit data from customers who used an online food delivery platform in the city of Bogotá.
 The database is available in a public data repository [@segura2019] and its associated research article [@correa2019a].
-Behavioral scientists who are familiar with structured datasets will find that this database is in a coma separated value (.csv) file, just like most tables used in relational database management systems like Microsoft Access or SQLite.
+Behavioral scientists who are familiar with structured datasets will find that this database is in a coma-separated values (.csv) file, just like most tables used in relational database management systems like Microsoft Access or SQLite.
 Given the wide variety of graph database management systems in the market (e.g., Neo4j, Microsoft Azure Cosmos, Aerospike, Amazon Web Services Neptune, NebulaGraph, Memgraph, TigerGraph, Giraph), the rest of this work relies on Neo4j [@Barrasa2023].
-
 Neo4j ranks as the leading freemium software in the segment of graph database management systems and has been used in several industry sectors including retail, finance, pharmaceutics, hospitality, and electronic commerce, among others.
-
-## First steps: Downloading and installation
-
 Neo4j offers free and enterprise editions, which can be installed on local or server environments following official documentation.
-As the official documentation of neo4j provides helpful material for newcomers, downloading and installation details are not necessary here, and the reader can consult specific details elsewhere [@vanBruggen2014].
+As the official documentation provides helpful material for newcomers, downloading and installation details are not necessary here, and the reader can consult specific details elsewhere [@vanBruggen2014].
 
 ## Instance creation and data import
 
-After installation, the instance creation is the second step.
+Instance creation is the first step in using graph databases with Neo4j.
 This is a top-level operation for setting up a new database environment, and involves allocating resources (memory, CPU, storage), defining a database version, and setting up initial user credentials by clicking one button.
 When creating a new instance, neo4j asks the user to provide a name as part of the instance details.
 The user is asked to provide a password of eight characters as a security check for further interactions.
@@ -208,7 +204,25 @@ To decide which half of the fleet is restricted in any given day, the Pico y Pla
 
 In this context, @correa2019a reported that the data collected from Google Maps API indicated that rush hours occur three times during Saturdays: in the morning (between 8:00 and 10:00 a.m); around midday (between 12:00 and 2:00 p.m); and in the evenings (between 6:00 and 8:00 p.m).
 Based on this information, @correa2019a classiﬁed the typical traﬃc in three categories: "free" or "green traﬃc" (G), "average" or "orange traﬃc" (O), and "heavy" or "red traﬃc" (R).
-By using letter triads they characterized the typical daily traﬃc.
-Thus, for example, the sequence “R-O-G” means that the typical traﬃc changes from “red” in the morning to “orange” at noon and “green” in the afternoon, describing a place where traﬃc conditions improve as time passes.
+By using letter triads they characterized the typical daily traﬃc with sequences like "G-G-G" or "R-O-R." Thus, for example, the sequence “R-O-G” means that the typical traﬃc changes from “red” in the morning to “orange” at noon and “green” in the afternoon, describing a place where traﬃc conditions improve as time passes.
+
+## Sketching a graph database model
+
+Sketching a graph database model is the next step after a successful data import in Neo4j.
+Given the benefits of the labeled property graph, an initial model can be modified multiple times.
+These modifications are important because they reflect the analyst’s expertise and highlight critical nodes and relationships to be mapped.
+An initial graph database model can consider the following schema depicted in Figure [5](#fig:F5).
+
+```{r F5, echo=FALSE, fig.cap="The drag-and-drop import files option in the left panel of neo4j", fig.align="center", out.height="180px", out.height="200px", out.width="380px", fig.pos="H"}
+knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F5.png")
+```
+
+This graph model is the result of a series of cypher syntaxes like the following one
+
+``` cypher
+CYPHER 5 CREATE CONSTRAINT `Typical_Traffic Afternoon_TrafficPM_uniq` IF NOT EXISTS
+FOR (n: `TrafficPM`)
+REQUIRE (n.`Typical Traffic Afternoon`) IS UNIQUE;
+```
 
 \backmatter
