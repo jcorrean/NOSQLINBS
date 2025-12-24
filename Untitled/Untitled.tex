@@ -254,13 +254,13 @@ subgraph traversed, not the overall graph size.
 
 Another advantage of graph databases has to do with their flexibility.
 Behavioral scientists aim to connect data in ways that reflect their
-knowledge and expertise. This is a key reason why graph databases serve
-as the underlying infrastructure for constructing ``knowledge graphs''
-\citep{Barrasa2023}. With these knowledge graphs, behavioral scientists
-allow the structure and schema to evolve alongside their understanding
-of the behavioral phenomenon rather than being rigidly defined upfront,
-when knowledge is most limited. This is particularly important when a
-behavioral phenomenon lacks theoretical background or lacks replication
+knowledge and expertise. This is why graph databases serve as the
+underlying infrastructure for constructing ``knowledge graphs''
+\citep{Barrasa2023}. With these knowledge graphs, researchers allow the
+database to evolve alongside their understanding of the behavioral
+phenomenon rather than being rigidly defined upfront, when knowledge is
+most limited. This is particularly important when a behavioral
+phenomenon lacks theoretical background or lacks replication
 \citep{burgos2025}. Graph databases fulfill this need by providing a
 flexible model that adapts to changing requirements and evidence.
 Because graphs are inherently additive, new nodes, relationships,
@@ -326,30 +326,27 @@ electronic commerce, among others.
 \subsection{First steps: Downloading and
 installation}\label{first-steps-downloading-and-installation}
 
-Neo4j offers two free options: ``Neo4j Community Edition'' and ``Neo4j
-AuraDB Free,'' as well as two licensed options called ``Neo4j
-enterprise'' and ``Neo4j AuraDB Professional/Enterprise.'' Behavioral
-scientists can download any of its free options from its official
-website and install it in their laptops, desktop computers, or
-laboratory servers. As the official documentation of neo4j provides
-helpful material for newcomers, downloading and installation details are
-not necessary here, and the reader can consult specific details
-elsewhere \citep{vanBruggen2014}.
+Neo4j offers free and enterprise editions, which can be installed on
+local or server environments following official documentation. As the
+official documentation of neo4j provides helpful material for newcomers,
+downloading and installation details are not necessary here, and the
+reader can consult specific details elsewhere \citep{vanBruggen2014}.
 
-\subsection{Instance creation}\label{instance-creation}
+\subsection{Instance creation and data
+import}\label{instance-creation-and-data-import}
 
-After installation, the instance creation is the second step behavioral
-scientists can follow. This is a top-level operation for setting up a
-new database environment, and involves allocating resources (memory,
-CPU, storage), defining a database version, and setting up initial user
-credentials by clicking one button. When creating a new instance, neo4j
-asks the user to provide a name as part of the instance details. The
-user is asked to provide a password of eight characters as a security
-check for further interactions. The instance created is called ``OFD,''
-an acronym from ``Online Food Delivery.'' Figure \hyperref[fig:F3]{3}
-depicts this instance which by default is ``stopped.'' The user should
-start the instance by clicking the button Start instance that is at the
-top right of the window. This action will create two default databases
+After installation, the instance creation is the second step. This is a
+top-level operation for setting up a new database environment, and
+involves allocating resources (memory, CPU, storage), defining a
+database version, and setting up initial user credentials by clicking
+one button. When creating a new instance, neo4j asks the user to provide
+a name as part of the instance details. The user is asked to provide a
+password of eight characters as a security check for further
+interactions. The instance created is called ``OFD,'' an acronym from
+``Online Food Delivery.'' Figure \hyperref[fig:F3]{3} depicts this
+instance which by default is ``stopped.'' The user should start the
+instance by clicking the button ``Start instance'' that is at the top
+right of the window. This action will create two default databases
 (i.e., neo4j and system).
 
 \begin{figure}[H]
@@ -363,7 +360,7 @@ top right of the window. This action will create two default databases
 
 Our database can be easily uploaded by moving the mouse to the left
 panel of neo4j and clicking on the icon ``import'' depicted with a red
-circle in Figure \hyperref[fig:F4]{4}
+circle in Figure \hyperref[fig:F4]{4}.
 
 \begin{figure}[H]
 
@@ -374,8 +371,14 @@ circle in Figure \hyperref[fig:F4]{4}
 \caption{The drag-and-drop import files option in the left panel of neo4j}\label{fig:F4}
 \end{figure}
 
-Unlike relational databases, which organize data in tables, graph
-databases treat
+As described above, the database is a csv file (newdata.csv) with a
+total of 19 variables. According to \citet{segura2019}, this database
+was developed with the goal of evaluating the impact of traffic
+conditions on key performance indicators of a sample of 787 restaurants
+with food delivery services in Bogotá City. It includes the physical
+location of both restaurants and 4,296 customers, as well as key
+performance indicators and traffic descriptions captured by the Google
+Maps API at three time points during Saturday rush hours.
 
 \backmatter
 
