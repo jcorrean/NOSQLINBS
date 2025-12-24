@@ -192,35 +192,8 @@ introduction}\label{graph-databases-a-gentle-introduction}
 \citet{Robinson2015} define a graph database as a system that implements
 \textbf{C}reate, \textbf{R}ead, \textbf{U}pdate, and \textbf{D}elete
 (CRUD) operations on a graph data model, where entities are represented
-as nodes and relationships as edges. Unlike relational databases, which
-organize data in tables, graph databases treat relationships as
-first-class elements rather than secondary links between tables. This
-design enables efficient traversal and pattern matching across highly
-connected data, making it ideal for modeling complex networks such as
-behavioral contingencies or social interactions.
-
-Figure \hyperref[fig:F2]{2} shows a graph with eight nodes and eight
-edges. Nodes represent real-world entities such as persons (i.e., Anna,
-Pam, Carlos, and John) companies (i.e., Chevron and Rice University),
-and routes (i.e., I-10 and I-45). Edges represent the relationship
-between pairs of nodes. Thus, John and Pam work in Chevron but they
-commute distinct distances through different routes. Carlos and Anna
-work in Rice University, they both commute by the same route but they
-have to drive different distances. Interestingly, the information of
-nodes and edges can be enriched with attributes. These attributes also
-represent real-world characteristics like the distance each person has
-to commute, their sex, or the sector of the company they work for. A
-graph database like the one depicted in Figure \hyperref[fig:F2]{2}
-leverages the so-called ``labeled property graph'' which has the
-following elements: 1) nodes and relationships, 2) nodes contain
-properties (key-value pairs), 3) nodes can be labeled with one or more
-labels, 4) relationships are named and directed, and always have a start
-and end node, 5) relationships can also contain properties. Although
-these elements offer significant benefits for behavioral scientists,
-they have been largely overlooked. This gap presents an opportunity to
-enrich the methodological toolbox for behavior analysts working in both
-basic and applied settings, particularly those interested in integrating
-methods from other disciplines into behavioral sciences.
+as nodes and relationships as edges like the one depicted in Figure
+\hyperref[fig:F2]{2}.
 
 \begin{figure}[H]
 
@@ -231,14 +204,44 @@ methods from other disciplines into behavioral sciences.
 \caption{A visual representation of a graph database that combines persons, companies, and routes}\label{fig:F2}
 \end{figure}
 
-According to \citet{Robinson2015}, one advantage of graph databases is
-their superior performance when handling connected data compared to
-relational databases that rely on tabular structures. In relational
-databases, join-intensive queries slow down as datasets grow, whereas
-graph databases maintain relatively stable performance---even with
-millions of nodes and edges. While big data challenges may not concern
-experimental behavior analysts working with small laboratory datasets,
-applied behavior analysts can benefit significantly from graph
+Unlike relational databases, which organize data in tables, graph
+databases treat relationships as first-class elements rather than
+secondary links between tables. This design enables efficient traversal
+and pattern matching across highly connected data, making it ideal for
+modeling complex networks such as behavioral contingencies or social
+interactions. Nodes in Figure \hyperref[fig:F2]{2} refers to real-world
+entities such as persons (i.e., Anna, Pam, Carlos, and John) companies
+(i.e., Chevron and Rice University), and routes (i.e., I-10 and I-45).
+Edges represent the relationship between pairs of nodes. Thus, John and
+Pam work in Chevron but they commute distinct distances through
+different routes. Carlos and Anna work in Rice University, they both
+commute by the same route but they have to drive different distances.
+Interestingly, the information of nodes and edges can be enriched with
+attributes. These attributes also represent real-world characteristics
+like the distance each person has to commute, their sex, or the sector
+of the company they work for.
+
+A graph database model like the one depicted in Figure
+\hyperref[fig:F2]{2} leverages the so-called ``labeled property graph''
+which has the following elements: 1) nodes and relationships, 2) nodes
+contain properties (key-value pairs), 3) nodes can be labeled with one
+or more labels, 4) relationships are named and directed, and always have
+a start and end node, 5) relationships can also contain properties.
+Although these elements offer significant benefits for behavioral
+scientists, they have been largely overlooked. This gap presents an
+opportunity to enrich the methodological toolbox for behavior analysts
+working in both basic and applied settings, particularly those
+interested in integrating methods from other disciplines into behavioral
+sciences.
+
+According to \citet{Robinson2015}, one advantage of graph database
+models is their superior performance when handling connected data
+compared to relational databases that rely on tabular structures. In
+relational databases, join-intensive queries slow down as datasets grow,
+whereas graph databases maintain relatively stable performance---even
+with millions of nodes and edges. While big data challenges may not
+concern experimental behavior analysts working with small laboratory
+datasets, applied behavior analysts can benefit significantly from graph
 databases. For example, consider analyzing urban traffic at an
 individual level by tracking the movements of hundreds of thousands of
 drivers every two hours \citep{Gonzalez2008}. In such cases, graph
@@ -278,8 +281,8 @@ missing, this is not a drawback. On the contrary, it encourages more
 transparent and actionable data governance. Typically, governance is
 enforced programmatically through tests that validate data models,
 queries, and business rules. This approach aligns well with agile and
-test-driven development practices, making graph database--based
-applications adaptable to changing business needs.
+test-driven development practices, making graph database applications
+adaptable to changing business needs.
 
 It is worth mentioning that relational databases acknowledge
 relationships, but only during modeling, where they serve as join
@@ -299,8 +302,8 @@ as ``challenges to adoption.'' From the lenses of graph databases,
 however, these challenges are not even necessary. I will elaborate upon
 this particular aspect below.
 
-\section{Behavioral Application of graph
-databases}\label{behavioral-application-of-graph-databases}
+\section{Applying graph database in behavioral
+research}\label{applying-graph-database-in-behavioral-research}
 
 To illustrate the application of graph databases for behavioral
 scientists, I revisit data from customers who used an online food
@@ -313,10 +316,66 @@ management systems like Microsoft Access or SQLite. Given the wide
 variety of graph database management systems in the market (e.g., Neo4j,
 Microsoft Azure Cosmos, Aerospike, Amazon Web Services Neptune,
 NebulaGraph, Memgraph, TigerGraph, Giraph), the rest of this work relies
-on Neo4j \citep{Barrasa2023}. Neo4j ranks as the leading freemium
-software. It offers two free options: ``Neo4j Community Edition'' and
-``Neo4j AuraDB Free,'' as well as two licensed options called ``Neo4j
-enterprise'' and ``Neo4j AuraDB Professional/Enterprise.''
+on Neo4j \citep{Barrasa2023}.
+
+Neo4j ranks as the leading freemium software in the segment of graph
+database management systems and has been used in several industry
+sectors including retail, finance, pharmaceutics, hospitality, and
+electronic commerce, among others.
+
+\subsection{First steps: Downloading and
+installation}\label{first-steps-downloading-and-installation}
+
+Neo4j offers two free options: ``Neo4j Community Edition'' and ``Neo4j
+AuraDB Free,'' as well as two licensed options called ``Neo4j
+enterprise'' and ``Neo4j AuraDB Professional/Enterprise.'' Behavioral
+scientists can download any of its free options from its official
+website and install it in their laptops, desktop computers, or
+laboratory servers. As the official documentation of neo4j provides
+helpful material for newcomers, downloading and installation details are
+not necessary here, and the reader can consult specific details
+elsewhere \citep{vanBruggen2014}.
+
+\subsection{Instance creation}\label{instance-creation}
+
+After installation, the instance creation is the second step behavioral
+scientists can follow. This is a top-level operation for setting up a
+new database environment, and involves allocating resources (memory,
+CPU, storage), defining a database version, and setting up initial user
+credentials by clicking one button. When creating a new instance, neo4j
+asks the user to provide a name as part of the instance details. The
+user is asked to provide a password of eight characters as a security
+check for further interactions. The instance created is called ``OFD,''
+an acronym from ``Online Food Delivery.'' Figure \hyperref[fig:F3]{3}
+depicts this instance which by default is ``stopped.'' The user should
+start the instance by clicking the button Start instance that is at the
+top right of the window. This action will create two default databases
+(i.e., neo4j and system).
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=380px,height=100px,]{../F3} 
+
+}
+
+\caption{The look-and-feel of an instance created in neo4j}\label{fig:F3}
+\end{figure}
+
+Our database can be easily uploaded by moving the mouse to the left
+panel of neo4j and clicking on the icon ``import'' depicted with a red
+circle in Figure \hyperref[fig:F4]{4}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=380px,height=200px,]{../F4} 
+
+}
+
+\caption{The drag-and-drop import files option in the left panel of neo4j}\label{fig:F4}
+\end{figure}
+
+Unlike relational databases, which organize data in tables, graph
+databases treat
 
 \backmatter
 
