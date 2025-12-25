@@ -164,7 +164,7 @@ I will elaborate upon this particular aspect below.
 # Applying graph database in behavioral research
 
 To illustrate the application of graph databases for behavioral scientists, I revisit data from customers who used an online food delivery platform in the city of Bogotá.
-The database is available in a public data repository [@segura2019] and its associated research article [@correa2019a].
+The database is available in a public data repository [@segura2019] which refers to an associated research article [@correa2019a].
 Behavioral scientists who are familiar with structured datasets will find that this database is in a coma-separated values (.csv) file, just like most tables used in relational database management systems like Microsoft Access or SQLite.
 Given the wide variety of graph database management systems in the market (e.g., Neo4j, Microsoft Azure Cosmos, Aerospike, Amazon Web Services Neptune, NebulaGraph, Memgraph, TigerGraph, Giraph), the rest of this work relies on Neo4j [@Barrasa2023].
 Neo4j ranks as the leading freemium software in the segment of graph database management systems and has been used in several industry sectors including retail, finance, pharmaceutics, hospitality, and electronic commerce, among others.
@@ -191,8 +191,8 @@ knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F4.png")
 ```
 
 As described above, the database is a csv file (newdata.csv) with a total of 19 variables.
-According to @segura2019, this database was developed with the goal of evaluating the impact of traffic conditions on key performance indicators of a sample of 787 restaurants with food delivery services in Bogotá City.
-It includes the physical location of both restaurants and 4,296 customers, as well as key performance indicators and traffic descriptions captured by the Google Maps API at three time points during Saturday rush hours.
+According to @segura2019, this database was developed with the goal of evaluating the impact of traffic conditions on key performance indicators of a sample of restaurants with food delivery services in Bogotá City.
+It includes the physical location of both restaurants and customers, as well as key performance indicators and traffic descriptions captured by the Google Maps API at three time points during Saturday rush hours.
 
 ## Understanding the context
 
@@ -211,18 +211,22 @@ By using letter triads they characterized the typical daily traﬃc with sequenc
 Sketching a graph database model is the next step after a successful data import in Neo4j.
 Given the benefits of the labeled property graph, an initial model can be modified multiple times.
 These modifications are important because they reflect the analyst’s expertise and highlight critical nodes and relationships to be mapped.
-An initial graph database model can consider the following schema depicted in Figure [5](#fig:F5).
+An initial graph database model can consider the most elementary schema focused on the relationship between restaurants and customers (Figure [5](#fig:F5)).
 
-```{r F5, echo=FALSE, fig.cap="A visual representation of the initial schema about online food delivery", fig.align="center", out.height="180px", out.height="200px", out.width="380px", fig.pos="H"}
+```{r F5, echo=FALSE, fig.cap="A visual representation of the initial schema about restaurants-customers relationship", fig.align="center", out.height="180px", out.height="100px", out.width="380px", fig.pos="H"}
 knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F5.png")
 ```
 
-This graph model is the result of a series of cypher syntaxes like the following one
+In this graph model, the node "Restaurant" has four hidden properties (i.e., web, name, latitude, and longitude), the node "Customer" has two hidden properties (i.e., ClientLatitude, ClientLongitude), and the relationship "SERVES" has one property (i.e., distance).
+Despite its simple visual representation, with this model we can examine several statistical aspects.
+For example, by using cypher, which is Neo4j's declarative, SQL-like query language for property graphs, the following syntax provides the minimum, the mean, and the maximum distance coverage from restaurants to customers' location.
 
 ``` cypher
-CYPHER 5 CREATE CONSTRAINT `Typical_Traffic Afternoon_TrafficPM_uniq` IF NOT EXISTS
-FOR (n: `TrafficPM`)
-REQUIRE (n.`Typical Traffic Afternoon`) IS UNIQUE;
+
+MATCH (:Restaurant)-[s:SERVES]->(:Customer)
+RETURN round(avg(toFloat(s.Distance)), 1) AS avgDistanceMts,
+       min(toFloat(s.Distance))           AS minDistanceMts,
+       max(toFloat(s.Distance))           AS maxDistanceMts;
 ```
 
 \backmatter

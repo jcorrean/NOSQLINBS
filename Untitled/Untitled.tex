@@ -350,23 +350,24 @@ research}\label{applying-graph-database-in-behavioral-research}
 To illustrate the application of graph databases for behavioral
 scientists, I revisit data from customers who used an online food
 delivery platform in the city of Bogotá. The database is available in a
-public data repository \citep{segura2019} and its associated research
-article \citep{correa2019a}. Behavioral scientists who are familiar with
-structured datasets will find that this database is in a coma-separated
-values (.csv) file, just like most tables used in relational database
-management systems like Microsoft Access or SQLite. Given the wide
-variety of graph database management systems in the market (e.g., Neo4j,
-Microsoft Azure Cosmos, Aerospike, Amazon Web Services Neptune,
-NebulaGraph, Memgraph, TigerGraph, Giraph), the rest of this work relies
-on Neo4j \citep{Barrasa2023}. Neo4j ranks as the leading freemium
-software in the segment of graph database management systems and has
-been used in several industry sectors including retail, finance,
-pharmaceutics, hospitality, and electronic commerce, among others. Neo4j
-offers free and enterprise editions, which can be installed on local or
-server environments following official documentation. As the official
-documentation provides helpful material for newcomers, downloading and
-installation details are not necessary here, and the reader can consult
-specific details elsewhere \citep{vanBruggen2014}.
+public data repository \citep{segura2019} which refers to an associated
+research article \citep{correa2019a}. Behavioral scientists who are
+familiar with structured datasets will find that this database is in a
+coma-separated values (.csv) file, just like most tables used in
+relational database management systems like Microsoft Access or SQLite.
+Given the wide variety of graph database management systems in the
+market (e.g., Neo4j, Microsoft Azure Cosmos, Aerospike, Amazon Web
+Services Neptune, NebulaGraph, Memgraph, TigerGraph, Giraph), the rest
+of this work relies on Neo4j \citep{Barrasa2023}. Neo4j ranks as the
+leading freemium software in the segment of graph database management
+systems and has been used in several industry sectors including retail,
+finance, pharmaceutics, hospitality, and electronic commerce, among
+others. Neo4j offers free and enterprise editions, which can be
+installed on local or server environments following official
+documentation. As the official documentation provides helpful material
+for newcomers, downloading and installation details are not necessary
+here, and the reader can consult specific details elsewhere
+\citep{vanBruggen2014}.
 
 \subsection{Instance creation and data
 import}\label{instance-creation-and-data-import}
@@ -410,11 +411,11 @@ circle in Figure \hyperref[fig:F4]{4}.
 As described above, the database is a csv file (newdata.csv) with a
 total of 19 variables. According to \citet{segura2019}, this database
 was developed with the goal of evaluating the impact of traffic
-conditions on key performance indicators of a sample of 787 restaurants
-with food delivery services in Bogotá City. It includes the physical
-location of both restaurants and 4,296 customers, as well as key
-performance indicators and traffic descriptions captured by the Google
-Maps API at three time points during Saturday rush hours.
+conditions on key performance indicators of a sample of restaurants with
+food delivery services in Bogotá City. It includes the physical location
+of both restaurants and customers, as well as key performance indicators
+and traffic descriptions captured by the Google Maps API at three time
+points during Saturday rush hours.
 
 \subsection{Understanding the context}\label{understanding-the-context}
 
@@ -456,26 +457,36 @@ data import in Neo4j. Given the benefits of the labeled property graph,
 an initial model can be modified multiple times. These modifications are
 important because they reflect the analyst's expertise and highlight
 critical nodes and relationships to be mapped. An initial graph database
-model can consider the following schema depicted in Figure
-\hyperref[fig:F5]{5}.
+model can consider the most elementary schema focused on the
+relationship between restaurants and customers (Figure
+\hyperref[fig:F5]{5}).
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=380px,height=200px,]{../F5} 
+{\centering \includegraphics[width=380px,height=100px,]{../F5} 
 
 }
 
-\caption{A visual representation of the initial schema about online food delivery}\label{fig:F5}
+\caption{A visual representation of the initial schema about restaurants-customers relationship}\label{fig:F5}
 \end{figure}
 
-This graph model is the result of a series of cypher syntaxes like the
-following one
+In this graph model, the node ``Restaurant'' has four hidden properties
+(i.e., web, name, latitude, and longitude), the node ``Customer'' has
+two hidden properties (i.e., ClientLatitude, ClientLongitude), and the
+relationship ``SERVES'' has one property (i.e., distance). Despite its
+simple visual representation, with this model we can examine several
+statistical aspects. For example, by using cypher, which is Neo4j's
+declarative, SQL-like query language for property graphs, the following
+syntax provides the minimum, the mean, and the maximum distance coverage
+from restaurants to customers' location.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{CYPHER 5 CREATE CONSTRAINT \textasciigrave{}Typical\_Traffic Afternoon\_TrafficPM\_uniq\textasciigrave{} IF NOT EXISTS}
-\NormalTok{FOR (n: \textasciigrave{}TrafficPM\textasciigrave{})}
-\NormalTok{REQUIRE (n.\textasciigrave{}Typical Traffic Afternoon\textasciigrave{}) IS UNIQUE;}
+
+\NormalTok{MATCH (:Restaurant){-}[s:SERVES]{-}\textgreater{}(:Customer)}
+\NormalTok{RETURN round(avg(toFloat(s.Distance)), 1) AS avgDistanceMts,}
+\NormalTok{       min(toFloat(s.Distance))           AS minDistanceMts,}
+\NormalTok{       max(toFloat(s.Distance))           AS maxDistanceMts;}
 \end{Highlighting}
 \end{Shaded}
 
