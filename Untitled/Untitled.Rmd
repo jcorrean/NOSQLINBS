@@ -79,7 +79,7 @@ knitr::opts_chunk$set(echo = FALSE,
 
 # Introduction {#sec1}
 
-In a recent paper, @soto2025 introduced relational databases for behavior science and used real-world examples to illustrate how relational databases have been used by behavioral scientists.
+In a recent article, @soto2025 introduced relational databases and illustrated their use by behavioral scientists through real-world examples.
 Although relational databases remain the dominant paradigm in research and industry, alternative approaches are gaining traction.
 The so-called ‘Not Only SQL’ (NoSQL) category includes database systems that employ non-tabular data models, such as key-value pairs, documents, wide columns, matrices, and graphs.
 Whereas relational databases store structured data in tables (i.e., columns as variables, rows as cases, and cells containing specific values), NoSQL systems accommodate flexible formats that better support evolving and highly connected data.
@@ -217,7 +217,7 @@ An initial graph database model can consider the most elementary schema focused 
 knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F5.png")
 ```
 
-In this graph model, the node "Restaurant" has four hidden properties (i.e., web, name, latitude, and longitude), the node "Customer" has two hidden properties (i.e., ClientLatitude, ClientLongitude), and the relationship "SERVES" has one property (i.e., distance).
+In this graph model, the node "Restaurant" has four hidden properties (i.e., web, name, latitude, and longitude), the node "Customer" has two hidden properties (i.e., ClientLatitude, ClientLongitude), and the relationship "`SERVES`" has one property (i.e., distance).
 Despite its simple visual representation, with this model we can examine several statistical aspects.
 For example, by using cypher, which is Neo4j's declarative, SQL-like query language for property graphs, the following syntax provides the minimum, the mean, and the maximum distance coverage from restaurants to customers' location.
 
