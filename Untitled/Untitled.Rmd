@@ -14,8 +14,8 @@ classoptions:
   # - referee       # Optional: Use double line spacing 
   # - lineno        # Optional: Add line numbers
   # - iicol         # Optional: Double column layour
-title: Graph Databases for Behavior Science
-titlerunning: Article Title runing
+title: Leveraging Graph Databases to Model Complex Behavioral Systems
+titlerunning: Graph Databases
 authors: 
   - firstname: Juan
     particle: C.
@@ -217,7 +217,7 @@ An initial graph database model can consider the most elementary schema focused 
 knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F5.png")
 ```
 
-In this graph model, the node "Restaurant" has four hidden properties (i.e., web, name, latitude, and longitude), the node "Customer" has two hidden properties (i.e., ClientLatitude, ClientLongitude), and the relationship "`SERVES`" has one property (i.e., distance).
+In this graph model, the node "`Restaurant`" has four hidden properties (i.e., web, name, latitude, and longitude), the node "`Customer`" has two hidden properties (i.e., ClientLatitude, ClientLongitude), and the relationship "`SERVES`" has one property (i.e., distance).
 Despite its simple visual representation, with this model we can examine several statistical aspects.
 For example, by using cypher, which is Neo4j's declarative, SQL-like query language for property graphs, the following syntax provides the minimum, the mean, and the maximum distance coverage from restaurants to customers' location.
 

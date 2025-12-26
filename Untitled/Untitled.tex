@@ -120,7 +120,8 @@
 \begin{document}
 
 
-\title[Article Title runing]{Graph Databases for Behavior Science}
+\title[Graph Databases]{Leveraging Graph Databases to Model Complex
+Behavioral Systems}
 
 %%=============================================================%%
 %% Prefix	-> \pfx{Dr}
@@ -469,15 +470,16 @@ relationship between restaurants and customers (Figure
 \caption{A visual representation of the initial schema about restaurants-customers relationship}\label{fig:F5}
 \end{figure}
 
-In this graph model, the node ``Restaurant'' has four hidden properties
-(i.e., web, name, latitude, and longitude), the node ``Customer'' has
-two hidden properties (i.e., ClientLatitude, ClientLongitude), and the
-relationship ``\texttt{SERVES}'' has one property (i.e., distance).
-Despite its simple visual representation, with this model we can examine
-several statistical aspects. For example, by using cypher, which is
-Neo4j's declarative, SQL-like query language for property graphs, the
-following syntax provides the minimum, the mean, and the maximum
-distance coverage from restaurants to customers' location.
+In this graph model, the node ``\texttt{Restaurant}'' has four hidden
+properties (i.e., web, name, latitude, and longitude), the node
+``\texttt{Customer}'' has two hidden properties (i.e., ClientLatitude,
+ClientLongitude), and the relationship ``\texttt{SERVES}'' has one
+property (i.e., distance). Despite its simple visual representation,
+with this model we can examine several statistical aspects. For example,
+by using cypher, which is Neo4j's declarative, SQL-like query language
+for property graphs, the following syntax provides the minimum, the
+mean, and the maximum distance coverage from restaurants to customers'
+location.
 
 \begin{Shaded}
 \begin{Highlighting}[]
