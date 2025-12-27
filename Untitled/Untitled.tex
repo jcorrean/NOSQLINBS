@@ -178,7 +178,8 @@ that employ non-tabular data models, such as key-value pairs, documents,
 wide columns, matrices, and graphs. Whereas relational databases store
 structured data in tables (i.e., columns as variables, rows as cases,
 and cells containing specific values), NoSQL systems accommodate
-flexible formats that better support evolving and highly connected data.
+flexible formats that better support evolving and highly connected data,
+which provides distinct advantages in psychological research.
 
 In this article, I examine graphs as a database paradigm that deviates
 from the traditional lenses of relational databases, where nodes and
@@ -187,23 +188,22 @@ behavior that can be represented as a network or a complex system.
 Networks have a long history in mathematics as ``\emph{graph theory}''
 \citep{Estrada2011}. In sociology and social sciences, graph theory is
 known as ``social network analysis'' \citep{Wasserman1994}. In this
-context, the term ``social network'' should not be confused with online
-platforms such as Instagram or Facebook, as they are technological
-implementations that do not necessarily represent all aspects of social
-networks as an object of study. Psychologists have leveraged this
-framework to analyze the structure of psychopathology
-\citep{borsboom2013}, conduct bibliometric analysis of cyberbehavior
-\citep{serafin2019}, estimate the correct number of dimensions in
-psychological and educational instruments \citep{golino2017}, or
-understand the measurement of organizational climate
-\citep{menezes2021}. Even though these examples show the versatility of
-social network analysis for psychological research, they do not
-necessarily rely on graph database management systems and this aspect is
-what differentiates this article. Here, I intend to illustrate how the
-network lenses, when applied as a database management system, unveils
-novel ways for modeling and analyzing behavioral data.
+context, the term ``social network'' should not be confused with
+Instagram or Facebook, as they are online platforms that do not
+necessarily represent all aspects of social networks as an object of
+study. Psychologists have leveraged this framework to analyze the
+structure of psychopathology \citep{borsboom2013}, conduct bibliometric
+analysis of cyberbehavior \citep{serafin2019}, estimate the correct
+number of dimensions in psychological and educational instruments
+\citep{golino2017}, or understand the measurement of organizational
+climate \citep{menezes2021}. Even though these examples show the
+versatility of social network analysis for psychological research, they
+do not necessarily rely on graph database management systems and this
+aspect is what differentiates this article. Here, I intend to illustrate
+how the network lenses, when applied as a database management system,
+unveils novel ways for modeling and analyzing behavioral data.
 
-\section{Network as a collection nodes and edges}\label{sec2}
+\section{Networks in a nutshell}\label{sec2}
 
 \citet{Estrada2011} defines a network as a collection of points (called
 nodes) joined together in pairs by lines (called arcs or edges) like
@@ -225,15 +225,16 @@ In behavioral sciences, networks have been used to understand the
 mechanisms of team assembly and how these mechanisms determine
 collaboration structure and team performance \citep{guimera2005}. Graphs
 offer fundamental concepts for understanding how entities (nodes) and
-their relationships (edges) form interconnected structures. From a data
-management viewpoint, the analysis of these networks requires tools that
-go beyond the rigid tabular constraints of relational databases. As the
-concepts of graphs are thoroughly covered in introductory texts
-\citep{Newman2010}, these will not be revisited here. Instead, this
-article aims to illustrate how graph databases can enrich the
-methodological toolbox of psychological researchers and behavioral
-scientists, enabling analyses that embrace complexity, dynamic
-relationships, and multi-level contingencies \citep{Robinson2015}.
+their relationships (edges) form interconnected data structures. From a
+data management viewpoint, the analysis of these data structures
+requires tools that go beyond the rigid tabular constraints of
+relational databases. As the concepts of graphs are thoroughly covered
+in introductory texts \citep{Newman2010}, these will not be revisited
+here. Instead, this article aims to illustrate how graph databases can
+enrich the methodological toolbox of psychological researchers and
+behavioral scientists, enabling analyses that embrace complexity,
+dynamic relationships, and multi-level contingencies
+\citep{Robinson2015}.
 
 \section{Graph databases: A gentle
 introduction}\label{graph-databases-a-gentle-introduction}
@@ -276,12 +277,12 @@ specific time-frame and the current travel time each person experiences
 when using the road, allowing the integration of contextual
 contingencies into individual commuting behavior. As nodes and edges can
 represent distinct behaviors, contingencies, and interactions, graph
-database management systems represent a relevant methodological tool for
-behavioral sciences. I will elaborate upon these implications
-immediately.
+database management systems provide the unique opportunity to mingle
+different kinds of objects accordingly. I will elaborate upon these
+implications immediately.
 
-\section{Methodological implications of graph
-databases}\label{methodological-implications-of-graph-databases}
+\section{Implications of graph databases for psychological
+research}\label{implications-of-graph-databases-for-psychological-research}
 
 A graph database model like the one depicted in Figure
 \hyperref[fig:F2]{2} leverages the so-called ``labeled property graph.''
@@ -294,17 +295,18 @@ recent reviews that promote other methodologies as potential solutions
 to increase intra and interdisciplinary interactions across subfields of
 behavior analysis in both basic and applied settings \citep{Elcoro2023}.
 
-An important methodolgical implication embedded in graph database models
-is their performance when handling connected data compared to relational
-databases that rely on tabular structures \citep{Robinson2015}. In
-relational databases, join-intensive queries slow down as datasets grow,
-whereas graph databases maintain relatively stable performance ---even
-with millions of nodes and edges. From a traditional perspective, the
-idea of working with huge datasets might seem implausible for most
-psychological researchers. Nonetheless, big data research is no longer
-outside professional considerations \citep{vezzoli2023}. Such
-considerations, however, have been tackled by network scientists in
-charge of analyzing urban traffic at an individual level by tracking the
+A methodolgical implication embedded in graph databases is their
+performance when handling network data structures \citep{Robinson2015}.
+In relational databases, join-intensive queries slow down as datasets
+grow, whereas graph databases maintain relatively stable performance
+---even with millions of nodes and edges. From a traditional
+perspective, the idea of working with huge datasets might seem
+implausible for most psychological researchers. Nonetheless, big data
+research is no longer outside professional considerations and that
+explains why big data has been recently reviewed as a psychological
+method \citep{vezzoli2023}. For example, previous works in network
+science has shown how to address complex behavioral phenomena such as
+the analysis of urban traffic at an individual level by tracking the
 movements of hundreds of thousands of drivers every two hours
 \citep{Gonzalez2008}. In cases like this, graph databases excel because
 queries operate on localized portions of the graph rather than scanning
@@ -314,10 +316,10 @@ distances, queries can be designed to retrieve specific conditions
 commute more than 20 miles). Consequently, execution time depends only
 on the size of the subgraph traversed, not the overall graph size.
 
-Another advantage of graph databases has to do with their flexibility.
-Behavioral scientists aim to connect data in ways that reflect their
-knowledge and expertise. This is why graph databases serve as the
-underlying infrastructure for constructing ``knowledge graphs''
+Another implication of graph databases is their flexibility. Behavioral
+scientists aim to connect data in ways that reflect their knowledge and
+expertise. This is why graph databases serve as the underlying
+infrastructure for constructing ``knowledge graphs''
 \citep{Barrasa2023}. With these knowledge graphs, researchers allow the
 database to evolve alongside their understanding of the behavioral
 phenomenon rather than being rigidly defined upfront, when knowledge is
@@ -334,7 +336,7 @@ migrations (particularly for companies that hire behavior data
 scientists in charge of analyzing customers observed behavior), thereby
 reducing maintenance overhead in both academic and business settings.
 
-A third benefit of graph databases is the agility that they offer.
+A third implication of graph databases is the agility that they offer.
 Modern graph databases enable smooth development and easy system
 maintenance. Their schema-free design, combined with testable APIs and
 query languages, allows controlled evolution of applications. While the
@@ -344,7 +346,12 @@ transparent and actionable data governance. Typically, governance is
 enforced programmatically through tests that validate data models,
 queries, and business rules. This approach aligns well with agile and
 test-driven development practices, making graph database applications
-adaptable to changing business needs.
+adaptable to changing business needs. In psychology, these aspects can
+be vital for the so-called ``automated data collection techniques.'' For
+example, mobile applications, such as ecological momentary assessment
+tools, prompt users to report emotions or behaviors throughout the day,
+while motion sensors and radio frequency identification tags can monitor
+movement and location in homes or classrooms \citep{Bak2021}.
 
 It is worth mentioning that relational databases acknowledge
 relationships, but only during modeling, where they serve as join
@@ -352,42 +359,48 @@ mechanisms between tables. In graph databases, we often need to clarify
 the meaning of relationships and even qualify their strength. These are
 aspects that relational database management systems do not address
 explicitly \citep{Robinson2015}. From this viewpoint, graph databases
-demand ontological considerations such as those recently described for
-psychology and behavioral sciences \citep{burgos2025}. As datasets grow
-more complex and less uniform, relational data management systems like
-Microsoft Access, PostgreSQL, or SQLite become burdened with large join
-tables, sparsely populated rows, and extensive null-checking logic.
-Greater interconnectedness in relational databases leads to more joins,
-which degrade performance and complicate adaptation to evolving
-requirements. \citet{soto2025} has highlighted some of these limitations
-as ``challenges to adoption.'' From the lenses of graph databases,
-however, these challenges are not even necessary. I will elaborate upon
-this particular aspect below.
+demand both ontological and epistemological considerations like the ones
+recently described in the literature of theoretical and philosophical
+psychology \citep{burgos2025}. Roughly speaking, ontological
+considerations relate to traditional questions of pure ontology like
+what is it to be? what does exist? What is the nature of what exist? In
+contrast, epistemological considerations pertains matters of evidence,
+explanation, certainty and truth \citep{burgos2025}. As datasets grow
+more complex and less uniform (provided new evidence is available),
+relational data management systems like Microsoft Access, PostgreSQL, or
+SQLite become burdened with large join tables, sparsely populated rows,
+and extensive null-checking logic. Greater interconnectedness in
+relational databases leads to more joins, which degrade performance and
+complicate adaptation to evolving requirements. \citet{soto2025} has
+highlighted some of these limitations as ``challenges to adoption.''
+From the lenses of graph databases, however, these challenges are not
+even necessary. I will elaborate upon this particular aspect below.
 
 \section{Applying graph database in behavioral
 research}\label{applying-graph-database-in-behavioral-research}
 
 To illustrate the application of graph databases for behavioral
-scientists, I revisit data from customers who used an online food
-delivery platform in the city of Bogotá. The database is available in a
-public data repository \citep{segura2019} which refers to an associated
-research article \citep{correa2019a}. Behavioral scientists who are
-familiar with structured datasets will find that this database is in a
-coma-separated values (.csv) file, just like most tables used in
+scientists, I revisit data of delivery time fulfillment from restaurants
+offering food delivery in the city of Bogotá. The database is available
+in a public data repository \citep{segura2019} which refers to an
+associated research article \citep{correa2019a}. Behavioral scientists
+who are familiar with structured datasets will find that this database
+is in a coma-separated values (.csv) file, just like most tables used in
 relational database management systems like Microsoft Access or SQLite.
 Given the wide variety of graph database management systems in the
 market (e.g., Neo4j, Microsoft Azure Cosmos, Aerospike, Amazon Web
 Services Neptune, NebulaGraph, Memgraph, TigerGraph, Giraph), the rest
-of this work relies on Neo4j \citep{Barrasa2023}. Neo4j ranks as the
-leading freemium software in the segment of graph database management
-systems and has been used in several industry sectors including retail,
-finance, pharmaceutics, hospitality, and electronic commerce, among
-others. Neo4j offers free and enterprise editions, which can be
-installed on local or server environments following official
-documentation. As the official documentation provides helpful material
-for newcomers, downloading and installation details are not necessary
-here, and the reader can consult specific details elsewhere
-\citep{vanBruggen2014}.
+of this work relies on Neo4j \citep{Barrasa2023}.
+
+Neo4j ranks as the leading freemium software in the segment of graph
+database management systems and has been used in several industry
+sectors including retail, finance, pharmaceutics, hospitality, and
+electronic commerce, among others. Neo4j offers free and enterprise
+editions, which can be installed on local or server environments
+following official documentation. As the official documentation provides
+helpful material for newcomers, downloading and installation details are
+not necessary here, and the reader can consult specific details
+elsewhere \citep{vanBruggen2014}.
 
 \subsection{Instance creation and data
 import}\label{instance-creation-and-data-import}
@@ -401,11 +414,11 @@ a name as part of the instance details. The user is asked to provide a
 password of eight characters as a security check for further
 interactions. The instance created is called ``OFD,'' an acronym for
 ``Online Food Delivery,'' and computational details can be found in our
-public GitHub repository. By default any instance created in neo4j is
-``stopped'' mode and the user should start it by clicking one button.
+public GitHub repository. By default any instance created in neo4j is in
+``stopped'' mode so the user needs to start it by clicking one button.
 The data import is straightforward using the import option depicted with
 a red circle in the left panel of neo4j (see Figure
-\hyperref[fig:F4]{4}).
+\hyperref[fig:F4]{3}).
 
 \begin{figure}[H]
 
@@ -416,14 +429,15 @@ a red circle in the left panel of neo4j (see Figure
 \caption{The drag-and-drop import files option in the left panel of neo4j}\label{fig:F4}
 \end{figure}
 
-As described above, the database is a csv file (newdata.csv) with a
-total of 19 variables. According to \citet{segura2019}, this database
-was developed with the goal of evaluating the impact of traffic
-conditions on key performance indicators of a sample of restaurants with
-food delivery services in Bogotá City. It includes the physical location
-of both restaurants and customers, as well as key performance indicators
-and traffic descriptions captured by the Google Maps API at three time
-points during Saturday rush hours.
+As described above, the database is a CSV file (newdata.csv) containing
+19 variables. Delivery time fulfillment is recorded in seconds or
+minutes (in the last two columns of the dataset). According to
+\citet{segura2019}, this database was developed to evaluate the impact
+of traffic conditions on key performance indicators for a sample of
+restaurants offering food delivery services in Bogotá. It includes the
+physical locations of both restaurants and customers, as well as
+performance metrics and traffic data captured by the Google Maps API at
+three time points during Saturday rush hours.
 
 \subsection{Understanding the context}\label{understanding-the-context}
 
@@ -482,8 +496,8 @@ properties (i.e., web, name, latitude, and longitude), the node
 ClientLongitude), and the relationship ``\texttt{SERVES}'' has one
 property (i.e., distance). Despite its simple visual representation,
 with this model we can examine several statistical aspects. For example,
-by using cypher, which is Neo4j's declarative, SQL-like query language
-for property graphs, the following syntax provides the minimum, the
+by using cypher (i.e., the declarative, SQL-like query language for
+property graphs in Neo4j) the following syntax provides the minimum, the
 mean, and the maximum distance coverage from restaurants to customers'
 location.
 
@@ -496,6 +510,45 @@ location.
 \NormalTok{       max(toFloat(s.Distance))           AS maxDistanceMts;}
 \end{Highlighting}
 \end{Shaded}
+
+Despite the simplistic structure of the graph database model of Figure
+\hyperref[fig:F5]{4}, its complexity and scope can easily grow as long
+as the analyst intends to map other variable relationships. Before
+moving on how to increase the complexity of this graph database model,
+it is worth mentioning that it opens the possibility to examine the
+\texttt{Restaurant-SERVES-Customer} resulting network with a single
+cypher query like this one:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{// Show the Restaurant–Customer network for distance \textless{}= 2000 meters}
+\NormalTok{MATCH (r:Restaurant){-}[s:SERVES]{-}\textgreater{}(c:Customer)}
+\NormalTok{WHERE toFloat(s.Distance) \textless{}= 2000}
+\NormalTok{RETURN r, s, c;}
+\end{Highlighting}
+\end{Shaded}
+
+With this cypher query, Neo4j produces a network visualization that
+shows the graph data structure like the one depicted in Figure
+\href{fig:F6}{5}. Such a network-based data structure visualization
+unlocks further analyses via Neo4j's built-in plugin called ``Graph Data
+Science'' (GDS). This plugin provides extensive analytical capabilities
+centered around graph algorithms, including nodes community detection,
+centrality, similarity, path finding, and node embeddings, as well as
+graph catalog procedures and machine learning pipelines designed to
+support data science workflows for graphs. With GDS, all operations are
+designed for massive scale and parallelization, with a custom and
+general API tailored for graph-global processing, and highly optimized
+compressed in-memory data structures.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=380px,height=200px,]{../F6} 
+
+}
+
+\caption{A network-based visualization of the Restaurant-SERVES-Customer graph model}\label{fig:F6}
+\end{figure}
 
 \backmatter
 
