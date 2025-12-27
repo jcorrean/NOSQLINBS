@@ -79,9 +79,18 @@ knitr::opts_chunk$set(echo = FALSE,
 
 # Introduction {#sec1}
 
-In a recent article, @soto2025 introduced relational databases and illustrated their use by behavioral scientists through real-world examples. Although relational databases with their standardized "structured query language" (SQL) remain the dominant paradigm in research and industry, alternative approaches are gaining traction. The so-called "Not Only SQL" (NoSQL) category includes database systems that employ non-tabular data models, such as key-value pairs, documents, wide columns, matrices, and graphs. Whereas relational databases store structured data in tables (i.e., columns as variables, rows as cases, and cells containing specific values), NoSQL systems accommodate flexible formats that better support evolving and highly connected data.
+In a recent article, @soto2025 introduced relational databases and illustrated their use by behavioral scientists through real-world examples.
+Although relational databases with their standardized "structured query language" (SQL) remain the dominant paradigm in research and industry, alternative approaches are gaining traction.
+The so-called "Not Only SQL" (NoSQL) category includes database systems that employ non-tabular data models, such as key-value pairs, documents, wide columns, matrices, and graphs.
+Whereas relational databases store structured data in tables (i.e., columns as variables, rows as cases, and cells containing specific values), NoSQL systems accommodate flexible formats that better support evolving and highly connected data.
 
-In this article, I examine graphs as a database paradigm that deviates from the traditional lenses of relational databases, where nodes and edges (instead of tables and joins) represent the basic elements of any behavior that can be represented as a network or a complex system. Networks have a long history in mathematics as "*graph theory*" [@Estrada2011]. In sociology and social sciences, graph theory is known as "social network analysis" [@Wasserman1994]. In this context, the term "social network" should not be confused with online platforms such as Instagram or Facebook, as they are technological implementations that do not necessarily represent all aspects of social networks as an object of study. Psychologists have leveraged this framework to analyze the structure of psychopathology [@borsboom2013], conduct bibliometric analysis of cyberbehavior [@serafin2019], estimate the correct number of dimensions in psychological and educational instruments [@golino2017], or understand the measurement of organizational climate [@menezes2021]. Even though these examples show the versatility of social network analysis for psychological research, they do not necessarily rely on graph database management systems and this aspect is what differentiates this article. Here, I intend to illustrate how the network lenses, when applied as a database management system, unveils novel ways for modeling and analyzing behavioral data.
+In this article, I examine graphs as a database paradigm that deviates from the traditional lenses of relational databases, where nodes and edges (instead of tables and joins) represent the basic elements of any behavior that can be represented as a network or a complex system.
+Networks have a long history in mathematics as "*graph theory*" [@Estrada2011].
+In sociology and social sciences, graph theory is known as "social network analysis" [@Wasserman1994].
+In this context, the term "social network" should not be confused with online platforms such as Instagram or Facebook, as they are technological implementations that do not necessarily represent all aspects of social networks as an object of study.
+Psychologists have leveraged this framework to analyze the structure of psychopathology [@borsboom2013], conduct bibliometric analysis of cyberbehavior [@serafin2019], estimate the correct number of dimensions in psychological and educational instruments [@golino2017], or understand the measurement of organizational climate [@menezes2021].
+Even though these examples show the versatility of social network analysis for psychological research, they do not necessarily rely on graph database management systems and this aspect is what differentiates this article.
+Here, I intend to illustrate how the network lenses, when applied as a database management system, unveils novel ways for modeling and analyzing behavioral data.
 
 # Network as a collection nodes and edges {#sec2}
 
@@ -122,7 +131,7 @@ I will elaborate upon these implications immediately.
 # Methodological implications of graph databases
 
 A graph database model like the one depicted in Figure [2](#fig:F2) leverages the so-called "labeled property graph." As a methodological tool it paves the way for incorporating complex systems thinking in any discipline [@Krakauer2019].
-In psychology and behavioral sciences, complex systems thinking is not novel at all [@Luce1999;@Guastello2009].
+In psychology and behavioral sciences, complex systems thinking is not novel at all [@Luce1999; @Guastello2009].
 However, a labeled property graph and its elements have been largely overlooked.
 This gap coincides with recent reviews that promote other methodologies as potential solutions to increase intra and interdisciplinary interactions across subfields of behavior analysis in both basic and applied settings [@Elcoro2023].
 
@@ -193,7 +202,11 @@ It includes the physical location of both restaurants and customers, as well as 
 ## Understanding the context
 
 Traffic conditions in cities like Bogotá promote food delivery services as an alternative to cooking or driving to get food [@correa2019a].
-As Bogotá has long suffered traffic congestion problems, local governmental authorities have decided to impose a restriction program called "Pico y Placa" [@montero2025]. This program was introduced in August 1998 and has been modified several times looking to extend its scope. For example, since July 2012, Pico y Placa affects the half of residential and commercial vehicles every other day of the week (excluding weekends) from 6:00 to 8:30 a.m. and then from 3:00 to 7:30 p.m, and buses, police cars, ambulances, fire trucks, government and diplomatic vehicles, school buses and vans, and electric and hybrid vehicles are exempt. To decide which half of the fleet is restricted in any given day, the Pico y Placa follows an odd–even schedule based on the last digit of the vehicle’s license plate [@montero2025].
+As Bogotá has long suffered traffic congestion problems, local governmental authorities have decided to impose a restriction program called "Pico y Placa" [@montero2025].
+This program was introduced in August 1998 and has been modified several times looking to extend its scope.
+For example, since July 2012, Pico y Placa affects the half of residential and commercial vehicles every other day of the week (excluding weekends) from 6:00 to 8:30 a.m.
+and then from 3:00 to 7:30 p.m, and buses, police cars, ambulances, fire trucks, government and diplomatic vehicles, school buses and vans, and electric and hybrid vehicles are exempt.
+To decide which half of the fleet is restricted in any given day, the Pico y Placa follows an odd–even schedule based on the last digit of the vehicle’s license plate [@montero2025].
 
 In this context, @correa2019a reported that the data collected from Google Maps API indicated that rush hours occur three times during Saturdays: in the morning (between 8:00 and 10:00 a.m); around midday (between 12:00 and 2:00 p.m); and in the evenings (between 6:00 and 8:00 p.m).
 Based on this information, @correa2019a classiﬁed the typical traﬃc in three categories: "free" or "green traﬃc" (G), "average" or "orange traﬃc" (O), and "heavy" or "red traﬃc" (R).
@@ -201,7 +214,9 @@ By using letter triads they characterized the typical daily traﬃc with sequenc
 
 ## Sketching a graph database model
 
-Sketching a graph database model is the next step after a successful data import in Neo4j. Given the benefits of the labeled property graph, an initial model can be modified multiple times. These modifications are important because they reflect the analyst’s expertise and highlight critical nodes and relationships to be mapped.
+Sketching a graph database model is the next step after a successful data import in Neo4j.
+Given the benefits of the labeled property graph, an initial model can be modified multiple times.
+These modifications are important because they reflect the analyst’s expertise and highlight critical nodes and relationships to be mapped.
 An initial graph database model can consider the most elementary schema focused on the relationship between restaurants and customers (Figure [4](#fig:F5)).
 
 ```{r F5, echo=FALSE, fig.cap="A visual representation of the initial schema about restaurants-customers relationship", fig.align="center", out.height="180px", out.height="100px", out.width="380px", fig.pos="H"}
