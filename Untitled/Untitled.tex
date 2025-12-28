@@ -120,8 +120,8 @@
 \begin{document}
 
 
-\title[Graph Databases]{An introductory tutorial of labeled property
-graphs for psychological data}
+\title[]{A Primer on Labeled Property Graphs for Modeling Complex
+Psychological Data}
 
 %%=============================================================%%
 %% Prefix	-> \pfx{Dr}
@@ -281,8 +281,8 @@ database management systems provide the unique opportunity to mingle
 different kinds of objects accordingly. I will elaborate upon these
 implications immediately.
 
-\section{Implications of graph databases for psychological
-research}\label{implications-of-graph-databases-for-psychological-research}
+\section{Why graph databases as psychological
+method}\label{why-graph-databases-as-psychological-method}
 
 A graph database model like the one depicted in Figure
 \hyperref[fig:F2]{2} leverages the so-called ``labeled property graph.''
@@ -418,15 +418,15 @@ public GitHub repository. By default any instance created in neo4j is in
 ``stopped'' mode so the user needs to start it by clicking one button.
 The data import is straightforward using the import option depicted with
 a red circle in the left panel of neo4j (see Figure
-\hyperref[fig:F4]{3}).
+\hyperref[fig:F3]{3}).
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=380px,height=200px,]{../F4} 
+{\centering \includegraphics[width=380px,height=200px,]{../F3} 
 
 }
 
-\caption{The drag-and-drop import files option in the left panel of neo4j}\label{fig:F4}
+\caption{The drag-and-drop import files option in the left panel of neo4j}\label{fig:F3}
 \end{figure}
 
 As described above, the database is a CSV file (newdata.csv) containing
@@ -479,15 +479,15 @@ important because they reflect the analyst's expertise and highlight
 critical nodes and relationships to be mapped. An initial graph database
 model can consider the most elementary schema focused on the
 relationship between restaurants and customers (Figure
-\hyperref[fig:F5]{4}).
+\hyperref[fig:F4]{4}).
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=380px,height=100px,]{../F5} 
+{\centering \includegraphics[width=380px,height=100px,]{../F4} 
 
 }
 
-\caption{A visual representation of the initial schema about restaurants-customers relationship}\label{fig:F5}
+\caption{A visual representation of the initial schema about restaurants-customers relationship}\label{fig:F4}
 \end{figure}
 
 In this graph model, the node ``\texttt{Restaurant}'' has four hidden
@@ -512,7 +512,7 @@ location.
 \end{Shaded}
 
 Despite the simplistic structure of the graph database model of Figure
-\hyperref[fig:F5]{4}, its complexity and scope can easily grow as long
+\hyperref[fig:F4]{4}, its complexity and scope can easily grow as long
 as the analyst intends to map other variable relationships. Before
 moving on how to increase the complexity of this graph database model,
 it is worth mentioning that it opens the possibility to examine the
@@ -530,7 +530,7 @@ cypher query like this one:
 
 With this cypher query, Neo4j produces a network visualization that
 shows the graph data structure like the one depicted in Figure
-\href{fig:F6}{5}. Such a network-based data structure visualization
+\href{fig:F5}{5}. Such a network-based data structure visualization
 unlocks further analyses via Neo4j's built-in plugin called ``Graph Data
 Science'' (GDS). This plugin provides extensive analytical capabilities
 centered around graph algorithms, including nodes community detection,
@@ -543,12 +543,38 @@ compressed in-memory data structures.
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=380px,height=200px,]{../F6} 
+{\centering \includegraphics[width=380px,height=200px,]{../F5} 
 
 }
 
-\caption{A network-based visualization of the Restaurant-SERVES-Customer graph model}\label{fig:F6}
+\caption{A network-based visualization of the Restaurant-SERVES-Customer graph model}\label{fig:F5}
 \end{figure}
+
+From a methodological viewpoint, examining network-based data enables
+the identification and testing of confounding factors in behavioral
+non-experimental research designs. According to \citet{Kerlinger1986}, a
+confounding factor (or hidden variable) refers to the mixing of the
+statistical variance of one or more independent variables---typically
+extraneous to the research purpose---with the independent variable or
+variables of the research problem. For example, figure \href{fig:F5}{5}
+shows that the number of connections between restaurants and customers
+is uneven when considering distances less than or equal to 2,000 meters
+(i.e., some restaurants have more clients than others). If this pattern
+holds for other distances, it is appropriate to analyze the
+restaurant-customer relationships in the entire network. If this pattern
+does not hold, then we can assume that restaurants' delivery time
+fulfillment might be non-linearly related to the distance between
+restaurant and customer locations. Non-linear relationships in
+network-like data structures arise because connections between nodes
+follow a scale-free, power-law distribution \citep{barabasi1999}.
+
+The considerations described above pertain further implications in
+psychological research. As many network show a power-law distribution
+(i.e., the probability of ﬁnding a node with a lot of connections is
+relatively small in comparison with the high probability of ﬁnding node
+with a few connections), the development of large networks turns out to
+be governed by self-organizing phenomena that go beyond the particular
+properties of individual nodes.
 
 \backmatter
 

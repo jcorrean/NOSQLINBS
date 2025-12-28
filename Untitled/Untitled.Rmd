@@ -14,8 +14,7 @@ classoptions:
   # - referee       # Optional: Use double line spacing 
   # - lineno        # Optional: Add line numbers
   # - iicol         # Optional: Double column layour
-title: An introductory tutorial of labeled property graphs for psychological data
-titlerunning: Graph Databases
+title: A Primer on Labeled Property Graphs for Modeling Complex Psychological Data
 authors: 
   - firstname: Juan
     particle: C.
@@ -94,18 +93,14 @@ Here, I intend to illustrate how the network lenses, when applied as a database 
 
 # Networks in a nutshell {#sec2}
 
-@Estrada2011 defines a network as a collection of points (called nodes) joined together in pairs by lines (called arcs or edges) like those depicted in Figure [1](#fig:F1).
-Despite this simplistic definition, networks provide a powerful framework to model any type of system from planets in a galaxy to neurons in the nervous system [@Vazza2020].
+@Estrada2011 defines a network as a collection of points (called nodes) joined together in pairs by lines (called arcs or edges) like those depicted in Figure [1](#fig:F1). Despite this simplistic definition, networks provide a powerful framework to model any type of system from planets in a galaxy to neurons in the nervous system [@Vazza2020].
 
 ```{r F1, echo=FALSE, fig.cap="A visual representation of four types of networks: A) non-directed unweighted network, B) non-directed weighted network, C) directed unweighted network, and D) directed weighted network.", fig.align="center", out.width="380px", fig.pos="H"}
 knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F1.png")
 ```
 
-In behavioral sciences, networks have been used to understand the mechanisms of team assembly and how these mechanisms determine collaboration structure and team performance [@guimera2005].
-Graphs offer fundamental concepts for understanding how entities (nodes) and their relationships (edges) form interconnected data structures.
-From a data management viewpoint, the analysis of these data structures requires tools that go beyond the rigid tabular constraints of relational databases.
-As the concepts of graphs are thoroughly covered in introductory texts [@Newman2010], these will not be revisited here.
-Instead, this article aims to illustrate how graph databases can enrich the methodological toolbox of psychological researchers and behavioral scientists, enabling analyses that embrace complexity, dynamic relationships, and multi-level contingencies [@Robinson2015].
+In behavioral sciences, networks have been used to understand the mechanisms of team assembly and how these mechanisms determine collaboration structure and team performance [@guimera2005]. Graphs offer fundamental concepts for understanding how entities (nodes) and their relationships (edges) form interconnected data structures.
+From a data management viewpoint, the analysis of these data structures requires tools that go beyond the rigid tabular constraints of relational databases. As the concepts of graphs are thoroughly covered in introductory texts [@Newman2010], these will not be revisited here. Instead, this article aims to illustrate how graph databases can enrich the methodological toolbox of psychological researchers and behavioral scientists, enabling analyses that embrace complexity, dynamic relationships, and multi-level contingencies [@Robinson2015].
 
 # Graph databases: A gentle introduction
 
@@ -116,43 +111,17 @@ knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F2.png")
 ```
 
 Unlike relational databases, which organize data in tables, graph databases treat relationships as first-class elements rather than secondary links between tables.
-This design enables efficient traversal and pattern matching across highly connected data, making it ideal for modeling complex networks such as behavioral contingencies or social interactions.
-Nodes in Figure [2](#fig:F2) refers to real-world entities such as persons (i.e., Anna, Pam, Carlos, and John) companies (i.e., Chevron and Rice University), and routes (i.e., I-10 and I-45).
-Edges represent the relationship between pairs of nodes.
-Thus, John and Pam work in Chevron but they commute distinct distances through different routes.
-Carlos and Anna work in Rice University, they both commute by the same route but they have to drive different distances.
-Interestingly, the information of nodes and edges can be enriched with attributes.
-These attributes also represent real-world characteristics like the distance each person has to commute, their sex, or the sector of the company they work for.
-This graph can become even more complex by adding more properties on nodes.
-For example, the series of edges labeled as `"COMMUTES_BY"` that already have the property of distance in miles can be enriched with other properties representing the specific time-frame and the current travel time each person experiences when using the road, allowing the integration of contextual contingencies into individual commuting behavior.
-As nodes and edges can represent distinct behaviors, contingencies, and interactions, graph database management systems provide the unique opportunity to mingle different kinds of objects accordingly.
-I will elaborate upon these implications immediately.
+This design enables efficient traversal and pattern matching across highly connected data, making it ideal for modeling complex networks such as behavioral contingencies or social interactions. Nodes in Figure [2](#fig:F2) refers to real-world entities such as persons (i.e., Anna, Pam, Carlos, and John) companies (i.e., Chevron and Rice University), and routes (i.e., I-10 and I-45). Edges represent the relationship between pairs of nodes. Thus, John and Pam work in Chevron but they commute distinct distances through different routes. Carlos and Anna work in Rice University, they both commute by the same route but they have to drive different distances. Interestingly, the information of nodes and edges can be enriched with attributes. These attributes also represent real-world characteristics like the distance each person has to commute, their sex, or the sector of the company they work for. This graph can become even more complex by adding more properties on nodes. For example, the series of edges labeled as `"COMMUTES_BY"` that already have the property of distance in miles can be enriched with other properties representing the specific time-frame and the current travel time each person experiences when using the road, allowing the integration of contextual contingencies into individual commuting behavior. As nodes and edges can represent distinct behaviors, contingencies, and interactions, graph database management systems provide the unique opportunity to mingle different kinds of objects accordingly. I will elaborate upon these implications immediately.
 
-# Implications of graph databases for psychological research
+# Why graph databases as psychological method
 
 A graph database model like the one depicted in Figure [2](#fig:F2) leverages the so-called "labeled property graph." As a methodological tool it paves the way for incorporating complex systems thinking in any discipline [@Krakauer2019].
-In psychology and behavioral sciences, complex systems thinking is not novel at all [@Luce1999; @Guastello2009].
-However, a labeled property graph and its elements have been largely overlooked.
-This gap coincides with recent reviews that promote other methodologies as potential solutions to increase intra and interdisciplinary interactions across subfields of behavior analysis in both basic and applied settings [@Elcoro2023].
+In psychology and behavioral sciences, complex systems thinking is not novel at all [@Luce1999; @Guastello2009]. However, a labeled property graph and its elements have been largely overlooked. This gap coincides with recent reviews that promote other methodologies as potential solutions to increase intra and interdisciplinary interactions across subfields of behavior analysis in both basic and applied settings [@Elcoro2023]. 
 
-A methodolgical implication embedded in graph databases is their performance when handling network data structures [@Robinson2015].
-In relational databases, join-intensive queries slow down as datasets grow, whereas graph databases maintain relatively stable performance —even with millions of nodes and edges.
-From a traditional perspective, the idea of working with huge datasets might seem implausible for most psychological researchers.
-Nonetheless, big data research is no longer outside professional considerations and that explains why big data has been recently reviewed as a psychological method [@vezzoli2023].
-For example, previous works in network science has shown how to address complex behavioral phenomena such as the analysis of urban traffic at an individual level by tracking the movements of hundreds of thousands of drivers every two hours [@Gonzalez2008].
-In cases like this, graph databases excel because queries operate on localized portions of the graph rather than scanning the entire dataset.
-If edges store information such as commuting distances, queries can be designed to retrieve specific conditions (e.g., individuals who commute less than 10 miles versus persons who commute more than 20 miles).
-Consequently, execution time depends only on the size of the subgraph traversed, not the overall graph size.
+A methodolgical implication embedded in graph databases is their performance when handling network data structures [@Robinson2015]. In relational databases, join-intensive queries slow down as datasets grow, whereas graph databases maintain relatively stable performance —even with millions of nodes and edges. From a traditional perspective, the idea of working with huge datasets might seem implausible for most psychological researchers. Nonetheless, big data research is no longer outside professional considerations and that explains why big data has been recently reviewed as a psychological method [@vezzoli2023]. For example, previous works in network science has shown how to address complex behavioral phenomena such as the analysis of urban traffic at an individual level by tracking the movements of hundreds of thousands of drivers every two hours [@Gonzalez2008]. In cases like this, graph databases excel because queries operate on localized portions of the graph rather than scanning the entire dataset. If edges store information such as commuting distances, queries can be designed to retrieve specific conditions (e.g., individuals who commute less than 10 miles versus persons who commute more than 20 miles). Consequently, execution time depends only on the size of the subgraph traversed, not the overall graph size.
 
-Another implication of graph databases is their flexibility.
-Behavioral scientists aim to connect data in ways that reflect their knowledge and expertise.
-This is why graph databases serve as the underlying infrastructure for constructing "knowledge graphs" [@Barrasa2023].
-With these knowledge graphs, researchers allow the database to evolve alongside their understanding of the behavioral phenomenon rather than being rigidly defined upfront, when knowledge is most limited.
-This is particularly important when a behavioral phenomenon lacks theoretical background or lacks replication [@burgos2025].
-Graph databases fulfill this need by providing a flexible model that adapts to changing requirements and evidence.
-Because graphs are inherently additive, new nodes, relationships, labels, and subgraphs can be introduced.
-The modifications introduced to the original graph do not imply a threat to existing queries or application functionality.
-This flexibility minimizes the need for exhaustive upfront modeling and lowers the frequency of costly migrations (particularly for companies that hire behavior data scientists in charge of analyzing customers observed behavior), thereby reducing maintenance overhead in both academic and business settings.
+Another implication of graph databases is their flexibility. Behavioral scientists aim to connect data in ways that reflect their knowledge and expertise. This is why graph databases serve as the underlying infrastructure for constructing "knowledge graphs" [@Barrasa2023]. With these knowledge graphs, researchers allow the database to evolve alongside their understanding of the behavioral phenomenon rather than being rigidly defined upfront, when knowledge is most limited. This is particularly important when a behavioral phenomenon lacks theoretical background or lacks replication [@burgos2025].
+Graph databases fulfill this need by providing a flexible model that adapts to changing requirements and evidence. Because graphs are inherently additive, new nodes, relationships, labels, and subgraphs can be introduced. The modifications introduced to the original graph do not imply a threat to existing queries or application functionality. This flexibility minimizes the need for exhaustive upfront modeling and lowers the frequency of costly migrations (particularly for companies that hire behavior data scientists in charge of analyzing customers observed behavior), thereby reducing maintenance overhead in both academic and business settings.
 
 A third implication of graph databases is the agility that they offer.
 Modern graph databases enable smooth development and easy system maintenance.
@@ -195,10 +164,10 @@ When creating a new instance, neo4j asks the user to provide a name as part of t
 The user is asked to provide a password of eight characters as a security check for further interactions.
 The instance created is called "OFD," an acronym for "Online Food Delivery," and computational details can be found in our public GitHub repository.
 By default any instance created in neo4j is in "stopped" mode so the user needs to start it by clicking one button.
-The data import is straightforward using the import option depicted with a red circle in the left panel of neo4j (see Figure [3](#fig:F4)).
+The data import is straightforward using the import option depicted with a red circle in the left panel of neo4j (see Figure [3](#fig:F3)).
 
-```{r F4, echo=FALSE, fig.cap="The drag-and-drop import files option in the left panel of neo4j", fig.align="center", out.height="180px", out.height="200px", out.width="380px", fig.pos="H"}
-knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F4.png")
+```{r F3, echo=FALSE, fig.cap="The drag-and-drop import files option in the left panel of neo4j", fig.align="center", out.height="180px", out.height="200px", out.width="380px", fig.pos="H"}
+knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F3.png")
 ```
 
 As described above, the database is a CSV file (newdata.csv) containing 19 variables.
@@ -224,10 +193,10 @@ By using letter triads they characterized the typical daily traﬃc with sequenc
 Sketching a graph database model is the next step after a successful data import in Neo4j.
 Given the benefits of the labeled property graph, an initial model can be modified multiple times.
 These modifications are important because they reflect the analyst’s expertise and highlight critical nodes and relationships to be mapped.
-An initial graph database model can consider the most elementary schema focused on the relationship between restaurants and customers (Figure [4](#fig:F5)).
+An initial graph database model can consider the most elementary schema focused on the relationship between restaurants and customers (Figure [4](#fig:F4)).
 
-```{r F5, echo=FALSE, fig.cap="A visual representation of the initial schema about restaurants-customers relationship", fig.align="center", out.height="180px", out.height="100px", out.width="380px", fig.pos="H"}
-knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F5.png")
+```{r F4, echo=FALSE, fig.cap="A visual representation of the initial schema about restaurants-customers relationship", fig.align="center", out.height="180px", out.height="100px", out.width="380px", fig.pos="H"}
+knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F4.png")
 ```
 
 In this graph model, the node "`Restaurant`" has four hidden properties (i.e., web, name, latitude, and longitude), the node "`Customer`" has two hidden properties (i.e., ClientLatitude, ClientLongitude), and the relationship "`SERVES`" has one property (i.e., distance).
@@ -242,7 +211,7 @@ RETURN round(avg(toFloat(s.Distance)), 1) AS avgDistanceMts,
        max(toFloat(s.Distance))           AS maxDistanceMts;
 ```
 
-Despite the simplistic structure of the graph database model of Figure [4](#fig:F5), its complexity and scope can easily grow as long as the analyst intends to map other variable relationships.
+Despite the simplistic structure of the graph database model of Figure [4](#fig:F4), its complexity and scope can easily grow as long as the analyst intends to map other variable relationships.
 Before moving on how to increase the complexity of this graph database model, it is worth mentioning that it opens the possibility to examine the `Restaurant-SERVES-Customer` resulting network with a single cypher query like this one:
 
 ``` cypher
@@ -252,11 +221,20 @@ WHERE toFloat(s.Distance) <= 2000
 RETURN r, s, c;
 ```
 
-With this cypher query, Neo4j produces a network visualization that shows the graph data structure like the one depicted in Figure [5](fig:F6). Such a network-based data structure visualization unlocks further analyses via Neo4j's built-in plugin called "Graph Data Science" (GDS). This plugin provides extensive analytical capabilities centered around graph algorithms, including nodes community detection, centrality, similarity, path finding, and node embeddings, as well as graph catalog procedures and machine learning pipelines designed to support data science workflows for graphs. With GDS, all operations are designed for massive scale and parallelization, with a custom and general API tailored for graph-global processing, and highly optimized compressed in-memory data structures.
+With this cypher query, Neo4j produces a network visualization that shows the graph data structure like the one depicted in Figure [5](fig:F5).
+Such a network-based data structure visualization unlocks further analyses via Neo4j's built-in plugin called "Graph Data Science" (GDS).
+This plugin provides extensive analytical capabilities centered around graph algorithms, including nodes community detection, centrality, similarity, path finding, and node embeddings, as well as graph catalog procedures and machine learning pipelines designed to support data science workflows for graphs.
+With GDS, all operations are designed for massive scale and parallelization, with a custom and general API tailored for graph-global processing, and highly optimized compressed in-memory data structures.
 
-```{r F6, echo=FALSE, fig.cap="A network-based visualization of the Restaurant-SERVES-Customer graph model", fig.align="center", out.height="180px", out.height="200px", out.width="380px", fig.pos="H"}
-knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F6.png")
+```{r F5, echo=FALSE, fig.cap="A network-based visualization of the Restaurant-SERVES-Customer graph model", fig.align="center", out.height="180px", out.height="200px", out.width="380px", fig.pos="H"}
+knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F5.png")
 ```
 
+From a methodological viewpoint, examining network-based data enables the identification and testing of confounding factors in behavioral non-experimental research designs. According to @Kerlinger1986, a confounding factor (or hidden variable) refers to the mixing of the statistical variance of one or more independent variables—typically extraneous to the research purpose—with the independent variable or variables of the research problem. For example, figure [5](fig:F5) shows that the number of connections between restaurants and customers is uneven when considering distances less than or equal to 2,000 meters (i.e., some restaurants have more clients than others).
+If this pattern holds for other distances, it is appropriate to analyze the restaurant-customer relationships in the entire network.
+If this pattern does not hold, then we can assume that restaurants' delivery time fulfillment might be non-linearly related to the distance between restaurant and customer locations.
+Non-linear relationships in network-like data structures arise because connections between nodes follow a scale-free, power-law distribution [@barabasi1999].
+
+The considerations described above pertain further implications in psychological research. As many network show a power-law distribution (i.e., the probability of ﬁnding a node with a lot of connections is relatively small in comparison with the high probability of ﬁnding node with a few connections), the development of large networks turns out to be governed by self-organizing phenomena that go beyond the particular properties of individual nodes.
 
 \backmatter
