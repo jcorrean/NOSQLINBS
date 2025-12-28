@@ -14,7 +14,7 @@ classoptions:
   # - referee       # Optional: Use double line spacing 
   # - lineno        # Optional: Add line numbers
   # - iicol         # Optional: Double column layour
-title: Labeled Property Graphs and Complex Psychological Data Modeling
+title: A Primer on Labeled Property Graphs and Complex Psychological Data Modeling
 authors: 
   - firstname: Juan
     particle: C.
