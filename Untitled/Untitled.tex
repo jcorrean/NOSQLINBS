@@ -120,8 +120,8 @@
 \begin{document}
 
 
-\title[]{A Primer on Labeled Property Graphs for Modeling Complex
-Psychological Data}
+\title[]{Labeled Property Graphs and Complex Psychological Data
+Modeling}
 
 %%=============================================================%%
 %% Prefix	-> \pfx{Dr}
@@ -374,7 +374,11 @@ relational databases leads to more joins, which degrade performance and
 complicate adaptation to evolving requirements. \citet{soto2025} has
 highlighted some of these limitations as ``challenges to adoption.''
 From the lenses of graph databases, however, these challenges are not
-even necessary. I will elaborate upon this particular aspect below.
+even necessary. I will elaborate upon this particular aspect in the next
+section. As a wrap-up, labeled property graphs are not merely a
+technical alternative to relational schemas; they represent a
+methodological advance that aligns with psychology's need for flexible,
+scalable, and conceptually transparent data models.
 
 \section{Applying graph database in behavioral
 research}\label{applying-graph-database-in-behavioral-research}
@@ -543,7 +547,7 @@ compressed in-memory data structures.
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=380px,height=200px,]{../F5} 
+{\centering \includegraphics[width=380px,height=250px,]{../F5} 
 
 }
 
@@ -556,17 +560,18 @@ non-experimental research designs. According to \citet{Kerlinger1986}, a
 confounding factor (or hidden variable) refers to the mixing of the
 statistical variance of one or more independent variables---typically
 extraneous to the research purpose---with the independent variable or
-variables of the research problem. For example, figure \href{fig:F5}{5}
-shows that the number of connections between restaurants and customers
-is uneven when considering distances less than or equal to 2,000 meters
-(i.e., some restaurants have more clients than others). If this pattern
-holds for other distances, it is appropriate to analyze the
-restaurant-customer relationships in the entire network. If this pattern
-does not hold, then we can assume that restaurants' delivery time
-fulfillment might be non-linearly related to the distance between
-restaurant and customer locations. Non-linear relationships in
-network-like data structures arise because connections between nodes
-follow a scale-free, power-law distribution \citep{barabasi1999}.
+variables of the research problem. For example, figure
+\hyperref[fig:F5]{5} shows that the number of connections between
+restaurants (green nodes) and customers (pink nodes) is uneven when
+considering distances less than or equal to 2,000 meters (i.e., some
+restaurants have more clients than others). If this pattern holds for
+other distances, it is appropriate to analyze the restaurant-customer
+relationships in the entire network. If this pattern does not hold, then
+we can assume that restaurants' delivery time fulfillment might be
+non-linearly related to the distance between restaurant and customer
+locations. Non-linear relationships in network-like data structures
+arise because connections between nodes follow a scale-free, power-law
+distribution \citep{barabasi1999}.
 
 The considerations described above entail further implications. As many
 networks exhibit a power-law distribution---where the probability of
@@ -575,8 +580,25 @@ probability of finding nodes with few connections---the development of
 large networks is governed by ``self-organization'' which transcends the
 properties of individual nodes and is therefore intrinsically linked to
 the network structure. Self-organization is widely recognized in natural
-sciences such as physics or biology, but in psychology is largely
-neglected or underexplored \citep{correa2020}.
+sciences such as physics or biology, but in psychology is not a
+mainstream framework \citep{correa2020}. Rougly speaking, emergence
+refers to a property of the system that is not present by the individual
+parts that belong to the system. The popular phrase ``the whole is
+greater than the sum of its parts'' captures the idea of emergence,
+which in psychology is largely attributed to the Gestalt school of
+thought, but has been applied in ecological psychology \citep{Mace1977}
+and information processing in cognitive psychology \citep{Hollis2009}.
+
+\subsection{Increasing complexity in labeled property
+graphs}\label{increasing-complexity-in-labeled-property-graphs}
+
+As we mentioned before, labeled property graphs are highly flexible and
+adaptable to new evidence and/or theoretical considerations. This
+translates into redrawing the graph database model by adding more nodes
+or edges. These modifications add not only more complexity on the
+network structure, but increase the researcher's awareness on the
+omission of other variables whose absence in the model may bias the
+scrutiny of findings.
 
 \backmatter
 
