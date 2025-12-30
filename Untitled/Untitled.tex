@@ -67,47 +67,6 @@
 
 
 
-% Pandoc syntax highlighting
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{248,248,248}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\BuiltInTok}[1]{#1}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
-\newcommand{\ExtensionTok}[1]{#1}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\ImportTok}[1]{#1}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\NormalTok}[1]{#1}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 
 % tightlist command for lists without linebreak
 \providecommand{\tightlist}{%
@@ -120,7 +79,7 @@
 \begin{document}
 
 
-\title[]{A Primer on Labeled Property Graphs and Complex Psychological
+\title[]{A Primer on Labeled Property Graphs for Complex Psychological
 Data Modeling}
 
 %%=============================================================%%
@@ -487,7 +446,7 @@ relationship between restaurants and customers (Figure
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=380px,height=100px,]{../F4} 
+{\centering \includegraphics[width=380px,height=90px,]{../F4} 
 
 }
 
@@ -505,15 +464,12 @@ property graphs in Neo4j) the following syntax provides the minimum, the
 mean, and the maximum distance coverage from restaurants to customers'
 location.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-
-\NormalTok{MATCH (:Restaurant){-}[s:SERVES]{-}\textgreater{}(:Customer)}
-\NormalTok{RETURN round(avg(toFloat(s.Distance)), 1) AS avgDistanceMts,}
-\NormalTok{       min(toFloat(s.Distance))           AS minDistanceMts,}
-\NormalTok{       max(toFloat(s.Distance))           AS maxDistanceMts;}
-\end{Highlighting}
-\end{Shaded}
+\begin{verbatim}
+MATCH (:Restaurant)-[s:SERVES]->(:Customer)
+RETURN round(avg(toFloat(s.Distance)), 1) AS avgDistanceMts,
+       min(toFloat(s.Distance))           AS minDistanceMts,
+       max(toFloat(s.Distance))           AS maxDistanceMts;
+\end{verbatim}
 
 Despite the simplistic structure of the graph database model of Figure
 \hyperref[fig:F4]{4}, its complexity and scope can easily grow as long
@@ -523,14 +479,12 @@ it is worth mentioning that it opens the possibility to examine the
 \texttt{Restaurant-SERVES-Customer} resulting network with a single
 cypher query like this one:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{// Show the Restaurant–Customer network for distance \textless{}= 2000 meters}
-\NormalTok{MATCH (r:Restaurant){-}[s:SERVES]{-}\textgreater{}(c:Customer)}
-\NormalTok{WHERE toFloat(s.Distance) \textless{}= 2000}
-\NormalTok{RETURN r, s, c;}
-\end{Highlighting}
-\end{Shaded}
+\begin{verbatim}
+// Show the Restaurant–Customer network for distance <= 2000 meters
+MATCH (r:Restaurant)-[s:SERVES]->(c:Customer)
+WHERE toFloat(s.Distance) <= 2000
+RETURN r, s, c;
+\end{verbatim}
 
 With this cypher query, Neo4j produces a network visualization that
 shows the graph data structure like the one depicted in Figure
@@ -547,7 +501,7 @@ compressed in-memory data structures.
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=380px,height=250px,]{../F5} 
+{\centering \includegraphics[width=380px,height=280px,]{../F5} 
 
 }
 
@@ -589,8 +543,8 @@ which in psychology is largely attributed to the Gestalt school of
 thought, but has been applied in ecological psychology \citep{Mace1977}
 and information processing in cognitive psychology \citep{Hollis2009}.
 
-\subsection{Increasing complexity in labeled property
-graphs}\label{increasing-complexity-in-labeled-property-graphs}
+\section{Why complexity matters in
+psychology}\label{why-complexity-matters-in-psychology}
 
 As we mentioned before, labeled property graphs are highly flexible and
 adaptable to new evidence and/or theoretical considerations. This
@@ -598,7 +552,74 @@ translates into redrawing the graph database model by adding more nodes
 or edges. These modifications add not only more complexity on the
 network structure, but increase the researcher's awareness on the
 omission of other variables whose absence in the model may bias the
-scrutiny of findings.
+rigor of findings in subsequent statistical analyses. The problem with
+omitted variables in statistical modeling is recognized as one of the
+culprits of endogeneity in making causal claims out of non-experimental
+research \citep{antonakis2010}. The problem of omitted variables remains
+as a valid concern for most recent statistical techniques as they convey
+other circumstances \citep{bollen2019}. From a technical viewpoint,
+several reasons may explain why researchers omit one or more variables
+in a model. In some cases, operational costs for capturing or measuring
+variables can work as barriers. However, the impossibility to observe or
+measure variables has not prevented scientists to advance their
+knowledge in disciplines like quantum physics or theoretical biology,
+where mathematical modeling and computer simulations are used as
+scientific tools for building theories \citep{Luce1999}. I elaborate
+upon these and other implications with the same dataset described above
+and increase the complexity of the initial graph database by adding a
+third node and a second edge (see Figure \hyperref[fig:F6]{6}.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=380px,height=100px,]{../F6} 
+
+}
+
+\caption{The schema visualization for the Restaurant-FULFILLED-Order-TO-Customer model}\label{fig:F6}
+\end{figure}
+
+Compared with the previous model, the schema of Figure
+\hyperref[fig:F6]{6} mirrors a slightly complex version. This complexity
+might not be visible in the visualization, but it is in the cypher query
+below
+
+\begin{verbatim}
+CREATE CONSTRAINT restaurant_web_unique IF NOT EXISTS
+FOR (r:Restaurant) REQUIRE r.web IS UNIQUE;
+
+CREATE CONSTRAINT customer_geo_unique IF NOT EXISTS
+FOR (c:Customer) REQUIRE (c.ClientLatitude, c.ClientLongitude) IS UNIQUE;
+
+CREATE CONSTRAINT order_number_unique IF NOT EXISTS
+FOR (o:Order) REQUIRE o.number IS UNIQUE;
+
+MERGE (r:Restaurant {web: $web})
+  ON CREATE SET r.name = $name, 
+  r.location = point({longitude: toFloat($Longitude), 
+  latitude: toFloat($Latitude)});
+MERGE (c:Customer {ClientLatitude: toFloat($ClientLatitude), 
+ClientLongitude: toFloat($ClientLongitude)})
+  ON CREATE SET c.location = point({longitude: toFloat($ClientLongitude), 
+  latitude: toFloat($ClientLatitude)});
+MERGE (o:Order {number: toInteger($number)})
+SET o.Moment = $Moment,
+    o.Distance_mts = toFloat($Distancemts),
+    o.Time_sec = toFloat($Timesec),
+    o.Time_min = toFloat($Timemin),
+    o.ExpectedDeliveryTime = toFloat($ExpectedDeliveryTime),
+    o.CostDelivery = toFloat($CostDelivery),
+    o.MinimumChargeOrdering = toFloat($MinimumChargeOrdering),
+    o.NumComments = toInteger($NumberOfComments);
+MERGE (r)-[:FULFILLED]->(o)
+MERGE (o)-[:TO]->(c);
+
+MATCH (r:Restaurant), (o:Order), (c:Customer)
+WITH r, o, c
+MERGE (r)-[:FULFILLED]->(o)
+MERGE (o)-[:TO]->(c)
+
+CALL db.schema.visualization();
+\end{verbatim}
 
 \backmatter
 

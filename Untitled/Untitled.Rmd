@@ -14,7 +14,7 @@ classoptions:
   # - referee       # Optional: Use double line spacing 
   # - lineno        # Optional: Add line numbers
   # - iicol         # Optional: Double column layour
-title: A Primer on Labeled Property Graphs and Complex Psychological Data Modeling
+title: A Primer on Labeled Property Graphs for Complex Psychological Data Modeling
 authors: 
   - firstname: Juan
     particle: C.
@@ -226,7 +226,7 @@ Given the benefits of the labeled property graph, an initial model can be modifi
 These modifications are important because they reflect the analyst’s expertise and highlight critical nodes and relationships to be mapped.
 An initial graph database model can consider the most elementary schema focused on the relationship between restaurants and customers (Figure [4](#fig:F4)).
 
-```{r F4, echo=FALSE, fig.cap="A visual representation of the initial schema about restaurants-customers relationship", fig.align="center", out.height="180px", out.height="100px", out.width="380px", fig.pos="H"}
+```{r F4, echo=FALSE, fig.cap="A visual representation of the initial schema about restaurants-customers relationship", fig.align="center", out.height="180px", out.height="90px", out.width="380px", fig.pos="H"}
 knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F4.png")
 ```
 
@@ -234,8 +234,7 @@ In this graph model, the node "`Restaurant`" has four hidden properties (i.e., w
 Despite its simple visual representation, with this model we can examine several statistical aspects.
 For example, by using cypher (i.e., the declarative, SQL-like query language for property graphs in Neo4j) the following syntax provides the minimum, the mean, and the maximum distance coverage from restaurants to customers' location.
 
-``` cypher
-
+```
 MATCH (:Restaurant)-[s:SERVES]->(:Customer)
 RETURN round(avg(toFloat(s.Distance)), 1) AS avgDistanceMts,
        min(toFloat(s.Distance))           AS minDistanceMts,
@@ -245,7 +244,7 @@ RETURN round(avg(toFloat(s.Distance)), 1) AS avgDistanceMts,
 Despite the simplistic structure of the graph database model of Figure [4](#fig:F4), its complexity and scope can easily grow as long as the analyst intends to map other variable relationships.
 Before moving on how to increase the complexity of this graph database model, it is worth mentioning that it opens the possibility to examine the `Restaurant-SERVES-Customer` resulting network with a single cypher query like this one:
 
-``` cypher
+```
 // Show the Restaurant–Customer network for distance <= 2000 meters
 MATCH (r:Restaurant)-[s:SERVES]->(c:Customer)
 WHERE toFloat(s.Distance) <= 2000
@@ -257,7 +256,7 @@ Such a network-based data structure visualization unlocks further analyses via N
 This plugin provides extensive analytical capabilities centered around graph algorithms, including nodes community detection, centrality, similarity, path finding, and node embeddings, as well as graph catalog procedures and machine learning pipelines designed to support data science workflows for graphs.
 With GDS, all operations are designed for massive scale and parallelization, with a custom and general API tailored for graph-global processing, and highly optimized compressed in-memory data structures.
 
-```{r F5, echo=FALSE, fig.cap="A network-based visualization of the Restaurant-SERVES-Customer graph model", fig.align="center", out.width="250px", out.height="250px", out.width="380px", fig.pos="H"}
+```{r F5, echo=FALSE, fig.cap="A network-based visualization of the Restaurant-SERVES-Customer graph model", fig.align="center", out.width="250px", out.height="280px", out.width="380px", fig.pos="H"}
 knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F5.png")
 ```
 
@@ -274,10 +273,60 @@ Self-organization is widely recognized in natural sciences such as physics or bi
 Rougly speaking, emergence refers to a property of the system that is not present by the individual parts that belong to the system.
 The popular phrase "the whole is greater than the sum of its parts" captures the idea of emergence, which in psychology is largely attributed to the Gestalt school of thought, but has been applied in ecological psychology [@Mace1977] and information processing in cognitive psychology [@Hollis2009].
 
-## Increasing complexity in labeled property graphs
+# Why complexity matters in psychology
 
 As we mentioned before, labeled property graphs are highly flexible and adaptable to new evidence and/or theoretical considerations.
 This translates into redrawing the graph database model by adding more nodes or edges.
-These modifications add not only more complexity on the network structure, but increase the researcher's awareness on the omission of other variables whose absence in the model may bias the scrutiny of findings.
+These modifications add not only more complexity on the network structure, but increase the researcher's awareness on the omission of other variables whose absence in the model may bias the rigor of findings in subsequent statistical analyses.
+The problem with omitted variables in statistical modeling is recognized as one of the culprits of endogeneity in making causal claims out of non-experimental research [@antonakis2010].
+The problem of omitted variables remains as a valid concern for most recent statistical techniques as they convey other circumstances [@bollen2019].
+From a technical viewpoint, several reasons may explain why researchers omit one or more variables in a model.
+In some cases, operational costs for capturing or measuring variables can work as barriers.
+However, the impossibility to observe or measure variables has not prevented scientists to advance their knowledge in disciplines like quantum physics or theoretical biology, where mathematical modeling and computer simulations are used as scientific tools for building theories [@Luce1999].
+I elaborate upon these and other implications with the same dataset described above and increase the complexity of the initial graph database by adding a third node and a second edge (see Figure [6](#fig:F6).
 
+```{r F6, echo=FALSE, fig.cap="The schema visualization for the Restaurant-FULFILLED-Order-TO-Customer model", fig.align="center", out.width="250px", out.height="100px", out.width="380px", fig.pos="H"}
+knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F6.png")
+```
+
+Compared with the previous model, the schema of Figure [6](#fig:F6) mirrors a slightly complex version.
+This complexity might not be visible in the visualization, but it is in the cypher query below
+
+```
+CREATE CONSTRAINT restaurant_web_unique IF NOT EXISTS
+FOR (r:Restaurant) REQUIRE r.web IS UNIQUE;
+
+CREATE CONSTRAINT customer_geo_unique IF NOT EXISTS
+FOR (c:Customer) REQUIRE (c.ClientLatitude, c.ClientLongitude) IS UNIQUE;
+
+CREATE CONSTRAINT order_number_unique IF NOT EXISTS
+FOR (o:Order) REQUIRE o.number IS UNIQUE;
+
+MERGE (r:Restaurant {web: $web})
+  ON CREATE SET r.name = $name, 
+  r.location = point({longitude: toFloat($Longitude), 
+  latitude: toFloat($Latitude)});
+MERGE (c:Customer {ClientLatitude: toFloat($ClientLatitude), 
+ClientLongitude: toFloat($ClientLongitude)})
+  ON CREATE SET c.location = point({longitude: toFloat($ClientLongitude), 
+  latitude: toFloat($ClientLatitude)});
+MERGE (o:Order {number: toInteger($number)})
+SET o.Moment = $Moment,
+    o.Distance_mts = toFloat($Distancemts),
+    o.Time_sec = toFloat($Timesec),
+    o.Time_min = toFloat($Timemin),
+    o.ExpectedDeliveryTime = toFloat($ExpectedDeliveryTime),
+    o.CostDelivery = toFloat($CostDelivery),
+    o.MinimumChargeOrdering = toFloat($MinimumChargeOrdering),
+    o.NumComments = toInteger($NumberOfComments);
+MERGE (r)-[:FULFILLED]->(o)
+MERGE (o)-[:TO]->(c);
+
+MATCH (r:Restaurant), (o:Order), (c:Customer)
+WITH r, o, c
+MERGE (r)-[:FULFILLED]->(o)
+MERGE (o)-[:TO]->(c)
+
+CALL db.schema.visualization();
+```
 \backmatter
