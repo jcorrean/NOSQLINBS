@@ -234,7 +234,7 @@ In this graph model, the node "`Restaurant`" has four hidden properties (i.e., w
 Despite its simple visual representation, with this model we can examine several statistical aspects.
 For example, by using cypher (i.e., the declarative, SQL-like query language for property graphs in Neo4j) the following syntax provides the minimum, the mean, and the maximum distance coverage from restaurants to customers' location.
 
-```
+```         
 MATCH (:Restaurant)-[s:SERVES]->(:Customer)
 RETURN round(avg(toFloat(s.Distance)), 1) AS avgDistanceMts,
        min(toFloat(s.Distance))           AS minDistanceMts,
@@ -244,7 +244,7 @@ RETURN round(avg(toFloat(s.Distance)), 1) AS avgDistanceMts,
 Despite the simplistic structure of the graph database model of Figure [4](#fig:F4), its complexity and scope can easily grow as long as the analyst intends to map other variable relationships.
 Before moving on how to increase the complexity of this graph database model, it is worth mentioning that it opens the possibility to examine the `Restaurant-SERVES-Customer` resulting network with a single cypher query like this one:
 
-```
+```         
 // Show the Restaurant–Customer network for distance <= 2000 meters
 MATCH (r:Restaurant)-[s:SERVES]->(c:Customer)
 WHERE toFloat(s.Distance) <= 2000
@@ -275,15 +275,18 @@ The popular phrase "the whole is greater than the sum of its parts" captures the
 
 # Why complexity matters in psychology
 
-As we mentioned before, labeled property graphs are highly flexible and adaptable to new evidence and/or theoretical considerations.
-This translates into redrawing the graph database model by adding more nodes or edges.
-These modifications add not only more complexity on the network structure, but increase the researcher's awareness on the omission of other variables whose absence in the model may bias the rigor of findings in subsequent statistical analyses.
-The problem with omitted variables in statistical modeling is recognized as one of the culprits of endogeneity in making causal claims out of non-experimental research [@antonakis2010].
-The problem of omitted variables remains as a valid concern for most recent statistical techniques as they convey other circumstances [@bollen2019].
+As previously noted, labeled property graphs are highly adaptable to new evidence and theoretical shifts.
+This flexibility allows the database model to evolve through the addition of nodes and edges.
+When a labeled property graph grows, it does more than just increasing its structural complexity because they mirror the researcher’s awareness of potential confounders such as "omitted variables" whose absence might otherwise bias the rigor of subsequent statistical analyses.
+In causal modeling, omitted variable bias is a primary driver of "endogeneity" [@antonakis2010].
+Formally, endogeneity occurs when an independent variable ($x$) is correlated with the error term ($\epsilon$) in a regression equation ($y = \alpha + \beta x + \epsilon$).
+Beyond omitted variables, endogeneity also arises from "simulaneity" or reverse causality (when $x$ causes $y$ and $y$ causes $x$) and measurement error.
+While psychometric indices like McDonald’s $\Omega$ or Cronbach’s $\alpha$ help estimate measurement precision, simultaneity remains challenging in psychological research.
+Omitted variables is also a valid concern for most recent statistical techniques as they convey other circumstances [@bollen2019].
 From a technical viewpoint, several reasons may explain why researchers omit one or more variables in a model.
 In some cases, operational costs for capturing or measuring variables can work as barriers.
 However, the impossibility to observe or measure variables has not prevented scientists to advance their knowledge in disciplines like quantum physics or theoretical biology, where mathematical modeling and computer simulations are used as scientific tools for building theories [@Luce1999].
-I elaborate upon these and other implications with the same dataset described above and increase the complexity of the initial graph database by adding a third node and a second edge (see Figure [6](#fig:F6).
+I elaborate upon these and other implications with the same dataset described above and increase the complexity of the initial graph database by adding a third node and a second edge (see Figure [6](#fig:F6)).
 
 ```{r F6, echo=FALSE, fig.cap="The schema visualization for the Restaurant-FULFILLED-Order-TO-Customer model", fig.align="center", out.width="250px", out.height="100px", out.width="380px", fig.pos="H"}
 knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F6.png")
@@ -292,7 +295,7 @@ knitr::include_graphics("/home/jcc/Documents/GitHub/NOSQLINBS/F6.png")
 Compared with the previous model, the schema of Figure [6](#fig:F6) mirrors a slightly complex version.
 This complexity might not be visible in the visualization, but it is in the cypher query below
 
-```
+```         
 CREATE CONSTRAINT restaurant_web_unique IF NOT EXISTS
 FOR (r:Restaurant) REQUIRE r.web IS UNIQUE;
 
@@ -329,4 +332,5 @@ MERGE (o)-[:TO]->(c)
 
 CALL db.schema.visualization();
 ```
+
 \backmatter
