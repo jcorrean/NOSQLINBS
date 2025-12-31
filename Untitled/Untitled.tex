@@ -547,30 +547,32 @@ and information processing in cognitive psychology \citep{Hollis2009}.
 psychology}\label{why-complexity-matters-in-psychology}
 
 As previously noted, labeled property graphs are highly adaptable to new
-evidence and theoretical shifts. This flexibility allows the database
-model to evolve through the addition of nodes and edges. When a labeled
-property graph grows, it does more than just increasing its structural
-complexity because they mirror the researcher's awareness of potential
-confounders such as ``omitted variables'' whose absence might otherwise
-bias the rigor of subsequent statistical analyses. In causal modeling,
-omitted variable bias is a primary driver of ``endogeneity''
-\citep{antonakis2010}. Formally, endogeneity occurs when an independent
-variable (\(x\)) is correlated with the error term (\(\epsilon\)) in a
-regression equation (\(y = \alpha + \beta x + \epsilon\)). Beyond
-omitted variables, endogeneity also arises from ``simulaneity'' or
-reverse causality (when \(x\) causes \(y\) and \(y\) causes \(x\)) and
-measurement error. While psychometric indices like McDonald's \(\Omega\)
-or Cronbach's \(\alpha\) help estimate measurement precision,
-simultaneity remains challenging in psychological research. Omitted
-variables is also a valid concern for most recent statistical techniques
-as they convey other circumstances \citep{bollen2019}. From a technical
-viewpoint, several reasons may explain why researchers omit one or more
-variables in a model. In some cases, operational costs for capturing or
-measuring variables can work as barriers. However, the impossibility to
-observe or measure variables has not prevented scientists to advance
-their knowledge in disciplines like quantum physics or theoretical
-biology, where mathematical modeling and computer simulations are used
-as scientific tools for building theories \citep{Luce1999}. I elaborate
+evidence. This flexibility allows the database model to evolve through
+the addition of nodes and edges. When a labeled property graph grows, it
+does more than just increasing its structural complexity because it
+mirrors the researcher's awareness of potential confounders such as
+``omitted variables'' whose absence might otherwise bias the rigor of
+subsequent statistical analyses. In causal modeling, omitted variable
+bias is a primary driver of ``endogeneity'' \citep{antonakis2010}.
+Formally, endogeneity occurs when an independent variable (\(x\)) is
+correlated with the error term (\(\epsilon\)) in a regression equation
+(\(y = \alpha + \beta x + \epsilon\)). Beyond omitted variables,
+endogeneity also arises from ``simultaneity'' or reverse causality (when
+\(x\) causes \(y\) and \(y\) causes \(x\)) and measurement error.
+
+While psychometric indices like McDonald's \(\Omega\) or Cronbach's
+\(\alpha\) help estimate measurement precision, simultaneity remains
+challenging in psychological research. As these problems are present in
+other technical domains such as structural equation modeling
+\citep{bollen2002}, they still remain as a valid concern in recent
+approaches \citep{bollen2019}. From a technical viewpoint, several
+reasons may explain why researchers omit one or more variables in a
+model. In some cases, operational costs for capturing or measuring
+variables can work as barriers. However, the impossibility to observe or
+measure variables has not prevented scientists to advance their
+knowledge in disciplines like quantum physics or theoretical biology,
+where mathematical modeling and computer simulations are used as
+scientific tools for building theories \citep{Luce1999}. I elaborate
 upon these and other implications with the same dataset described above
 and increase the complexity of the initial graph database by adding a
 third node and a second edge (see Figure \hyperref[fig:F6]{6}).
@@ -587,7 +589,7 @@ third node and a second edge (see Figure \hyperref[fig:F6]{6}).
 Compared with the previous model, the schema of Figure
 \hyperref[fig:F6]{6} mirrors a slightly complex version. This complexity
 might not be visible in the visualization, but it is in the cypher query
-below
+below.
 
 \begin{verbatim}
 CREATE CONSTRAINT restaurant_web_unique IF NOT EXISTS
@@ -626,6 +628,24 @@ MERGE (o)-[:TO]->(c)
 
 CALL db.schema.visualization();
 \end{verbatim}
+
+Now, the cypher query encodes complexity through an additional node
+(i.e., Order). This node introduces a couple of edges (i.e.,
+\texttt{FULFILLS} and \texttt{TO}) between the \texttt{Restaurant} and
+the \texttt{Customer}. In addition, the \texttt{Restaurant} has three
+properties: web, name, and a location (that has a latitude and
+longitude), the \texttt{Customer} has two properties (the latitude and
+longitude), and the \texttt{Order} has the following properties: number,
+moment, distance (in meters), time (in seconds), time (in minutes),
+expected delivery time, delivery cost, minimum charge ordering, and
+number of comments. Note that some properties are set as integers and
+others as float. This distinction is also important from an
+interdisciplinary viewpoint. In psychology and social sciences,
+\citet{stevens1946} introduced a classic distinction of variables that
+dominates several introductory textbooks on statistics (i.e., nominal,
+ordinal, interval, and ratio), but this distinction is fairly distinct
+from a computational viewpoint (i.e., boolean, character, integer, and
+float).
 
 \backmatter
 
