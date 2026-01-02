@@ -644,15 +644,24 @@ interdisciplinary viewpoint. In psychology and social sciences,
 \citet{stevens1946} introduced a classic distinction of variables that
 dominates several introductory textbooks on statistics (i.e., nominal,
 ordinal, interval, and ratio), but this distinction is fairly distinct
-from the computational viewpoint in dominating programming languages
-such as R or Python (i.e., boolean, character, integer, and float).
+from the computational viewpoint (i.e., boolean, character, integer, and
+float) in dominating programming languages such as R or Python, which
+also have useful libraries that connect with Neo4j
+\citep{Godard2024, Scifo2023}.
 
-While schema graphs display labels and relationship types, the
-analytical power resides in the property-rich event nodes and
-constraints that permit temporal slicing, spatial querying, and graph
-data science workflows. In our case, reifying delivery events with the
-node \texttt{Order} unlocks similarity, community, and link prediction
-analyses that are impossible or brittle with a single \texttt{SERVES}
+The analytical power of labeled property graphs such as those created in
+Neo4j resides in the property-rich event nodes and constraints that
+permit temporal slicing, spatial querying, and graph data science
+workflows. In our case, modeling \texttt{Order} as a node (rather than
+just a property on a relationship) is a best practice for ``analytical
+power'' for at least two reasons. First, it creates the possibility to
+connect to other nodes (i.e., \texttt{Restaurant} and
+\texttt{Customer}). The node \texttt{Order} can be enriched with more
+information or metadata (timestamps, amounts, restaurant category)
+allowing ``multi-dimensional'' filtering without complex joins. These
+filters, however, should not be confused with other sophisticated
+graph-based analyses focused on nodes similarity, community, and link
+prediction which are impossible or brittle with a single \texttt{SERVES}
 edge. The distinction between diagrammatic simplicity and code-level
 complexity is essential in psychological data modeling, where omitted
 variables and contextual contingencies often drive observed outcomes.

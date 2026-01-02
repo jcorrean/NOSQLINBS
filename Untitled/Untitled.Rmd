@@ -339,10 +339,13 @@ This node introduces a couple of edges (i.e., `FULFILLS` and `TO`) between the `
 In addition, the `Restaurant` has three properties: web, name, and a location (that has a latitude and longitude), the `Customer` has two properties (the latitude and longitude), and the `Order` has the following properties: number, moment, distance (in meters), time (in seconds), time (in minutes), expected delivery time, delivery cost, minimum charge ordering, and number of comments.
 Note that some properties are set as integers and others as float.
 This distinction is also important from an interdisciplinary viewpoint.
-In psychology and social sciences, @stevens1946 introduced a classic distinction of variables that dominates several introductory textbooks on statistics (i.e., nominal, ordinal, interval, and ratio), but this distinction is fairly distinct from the computational viewpoint in dominating programming languages such as R or Python (i.e., boolean, character, integer, and float).
+In psychology and social sciences, @stevens1946 introduced a classic distinction of variables that dominates several introductory textbooks on statistics (i.e., nominal, ordinal, interval, and ratio), but this distinction is fairly distinct from the computational viewpoint (i.e., boolean, character, integer, and float) in dominating programming languages such as R or Python, which also have useful libraries that connect with Neo4j [@Godard2024;@Scifo2023].
 
-While schema graphs display labels and relationship types, the analytical power resides in the property-rich event nodes and constraints that permit temporal slicing, spatial querying, and graph data science workflows.
-In our case, reifying delivery events with the node `Order` unlocks similarity, community, and link prediction analyses that are impossible or brittle with a single `SERVES` edge.
+The analytical power of labeled property graphs such as those created in Neo4j resides in the property-rich event nodes and constraints that permit temporal slicing, spatial querying, and graph data science workflows.
+In our case, modeling `Order` as a node (rather than just a property on a relationship) is a best practice for "analytical power" for at least two reasons.
+First, it creates the possibility to connect to other nodes (i.e., `Restaurant` and `Customer`).
+The node `Order` can be enriched with more information or metadata (timestamps, amounts, restaurant category) allowing "multi-dimensional" filtering without complex joins.
+These filters, however, should not be confused with other sophisticated graph-based analyses focused on nodes similarity, community, and link prediction which are impossible or brittle with a single `SERVES` edge.
 The distinction between diagrammatic simplicity and code-level complexity is essential in psychological data modeling, where omitted variables and contextual contingencies often drive observed outcomes.
 
 \backmatter
