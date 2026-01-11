@@ -19,8 +19,8 @@ authors:
   - firstname: Juan
     particle: C.
     lastname: Correa
-    email: j.correa.n@gmail.com
-    affiliation: [1,2]
+    email: juanc.correa.n@ibero.mx
+    affiliation: [1]
     corresponding: TRUE
 #  - firstname: Second
 #    lastname: Author
@@ -34,13 +34,8 @@ affiliations:
       orgname: Universidad Iberoamericana
     address:
         city: Mexico City
-        postcode: 01219
+        postcode: "01219"
         country: Mexico
-  - number: 2
-    corresponding: TRUE
-    info:
-      orgdiv: Research and Development Unit
-      orgname: Critical Centrality Institute
 keywords:
   - Graph database
   - Network modeling
@@ -339,7 +334,7 @@ This node introduces a couple of edges (i.e., `FULFILLS` and `TO`) between the `
 In addition, the `Restaurant` has three properties: web, name, and a location (that has a latitude and longitude), the `Customer` has two properties (the latitude and longitude), and the `Order` has the following properties: number, moment, distance (in meters), time (in seconds), time (in minutes), expected delivery time, delivery cost, minimum charge ordering, and number of comments.
 Note that some properties are set as integers and others as float.
 This distinction is also important from an interdisciplinary viewpoint.
-In psychology and social sciences, @stevens1946 introduced a classic distinction of variables that dominates several introductory textbooks on statistics (i.e., nominal, ordinal, interval, and ratio), but this distinction is fairly distinct from the computational viewpoint (i.e., boolean, character, integer, and float) in dominating programming languages such as R or Python, which also have useful libraries that connect with Neo4j [@Godard2024;@Scifo2023].
+In psychology and social sciences, @stevens1946 introduced a classic distinction of variables that dominates several introductory textbooks on statistics (i.e., nominal, ordinal, interval, and ratio), but this distinction is fairly distinct from the computational viewpoint (i.e., boolean, character, integer, and float) in dominating programming languages such as R or Python, which also have useful libraries that connect with Neo4j [@Godard2024; @Scifo2023].
 
 The analytical power of labeled property graphs such as those created in Neo4j resides in the property-rich event nodes and constraints that permit temporal slicing, spatial querying, and graph data science workflows.
 In our case, modeling `Order` as a node (rather than just a property on a relationship) is a best practice for "analytical power" for at least two reasons.
