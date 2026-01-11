@@ -126,8 +126,22 @@ I will elaborate upon these implications immediately.
 
 Any graph database model leverages the so-called "labeled property graph." As a computational tool it paves the way for incorporating complex systems thinking in any discipline [@Krakauer2019], and as a psychological method it opens the door for interdisciplinary collaboration.
 In psychology and behavioral sciences, complex systems thinking is not novel at all [@Luce1999; @Guastello2009].
-However, a labeled property graph and its elements have been largely overlooked.
+However, labeled property graph models and their elements have been largely overlooked.
 This gap coincides with recent reviews that promote other methodologies as potential solutions to increase intra and interdisciplinary interactions across subfields of behavior analysis in both basic and applied settings [@Elcoro2023].
+
+As a psychological method, labeled property graph models share some similarities with the "nomological nets" coined by @cronbach1955.
+However, labeled property graph models (also known as knowledge graphs) represent a more general purpose toolkit that transcends the seminal conception of nomological nets (see Table [1]()).
+
+| Feature | Knowledge graphs | Nomological nets |
+|------------------------|------------------------|------------------------|
+| Primary field | Computer science / AI / Data engineering | Psychology / Philosophy of Science |
+| Primary goal | Data integration, search, automated reasoning. | Establishing construct validity (i.e., proving a theory). |
+| Nature of nodes | Concrete entities (e.g., "Lee J. Cronbach", "University of Illinois"). | Theoretical constructs (e.g., "introversion", "intelligence"). |
+| Nature of edges | Predicate or properties (e.g., "works_at", "collaborate_with"). | Theoretical laws or empirical correlations. |
+| Verification | Based on data consistency and retrieval accuracy | Based on statistical evidence (correlations and p-values) |
+| Scale | Can contain billions of facts (e.g., Google knowledge graph) | Usually small, focused on a specific theoretical model |
+
+: Knowledge graphs and nomological nets
 
 A methodolgical implication embedded in graph databases is their performance when handling network data structures [@Robinson2015].
 In relational databases, join-intensive queries slow down as datasets grow, whereas graph databases maintain relatively stable performance —even with millions of nodes and edges.
