@@ -133,7 +133,7 @@ As a psychological method, labeled property graph models share some similarities
 However, labeled property graph models (also known as knowledge graphs) represent a more general purpose toolkit that transcends the seminal conception of nomological nets (see Table [1]()).
 
 | Feature | Knowledge graphs | Nomological nets |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | Primary field | Computer science / AI / Data engineering | Psychology / Philosophy of Science |
 | Primary goal | Data integration, search, automated reasoning. | Establishing construct validity (i.e., proving a theory). |
 | Nature of nodes | Concrete entities (e.g., "Lee J. Cronbach", "University of Illinois"). | Theoretical constructs (e.g., "introversion", "intelligence"). |
