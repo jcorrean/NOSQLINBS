@@ -92,7 +92,7 @@ Here, I intend to illustrate how the network lenses, when applied as a database 
 Despite this simplistic definition, networks provide a powerful framework to model any type of system from planets in a galaxy to neurons in the nervous system [@Vazza2020].
 
 ```{r F1, echo=FALSE, fig.cap="A visual representation of four types of networks: A) non-directed unweighted network, B) non-directed weighted network, C) directed unweighted network, and D) directed weighted network.", fig.align="center", out.width="380px", fig.pos="H"}
-knitr::include_graphics("/GitHub/NOSQLINBS/F1.png")
+knitr::include_graphics("GitHub/NOSQLINBS/F1.png")
 ```
 
 In behavioral sciences, networks have been used to understand the mechanisms of team assembly and how these mechanisms determine collaboration structure and team performance [@guimera2005].
