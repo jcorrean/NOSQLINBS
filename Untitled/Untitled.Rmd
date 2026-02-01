@@ -301,8 +301,7 @@ I elaborate upon these and other implications with the same dataset described ab
 ```{r F6, echo=FALSE, fig.cap="The schema visualization for the Restaurant-FULFILLED-Order-TO-Customer model", fig.align="center", out.width="250px", out.height="100px", out.width="380px", fig.pos="H"}
 knitr::include_graphics("F6.png")
 ```
-
-Let's see. Compared with the previous model, the schema of Figure [6](#fig:F6) mirrors a slightly complex version.
+Compared with the previous model, the schema of Figure [6](#fig:F6) mirrors a slightly complex version.
 This complexity might not be visible in the visualization, but it is in the cypher query below.
 
 ```         
