@@ -302,7 +302,7 @@ I elaborate upon these and other implications with the same dataset described ab
 knitr::include_graphics("F6.png")
 ```
 
-Compared with the previous model, the schema of Figure [6](#fig:F6) mirrors a slightly complex version.
+Let's see. Compared with the previous model, the schema of Figure [6](#fig:F6) mirrors a slightly complex version.
 This complexity might not be visible in the visualization, but it is in the cypher query below.
 
 ```         
