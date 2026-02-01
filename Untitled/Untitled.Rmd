@@ -92,7 +92,7 @@ Here, I intend to illustrate how the network lenses, when applied as a database 
 Despite this simplistic definition, networks provide a powerful framework to model any type of system from planets in a galaxy to neurons in the nervous system [@Vazza2020].
 
 ```{r F1, echo=FALSE, fig.cap="A visual representation of four types of networks: A) non-directed unweighted network, B) non-directed weighted network, C) directed unweighted network, and D) directed weighted network.", fig.align="center", out.width="380px", fig.pos="H"}
-knitr::include_graphics("/GitHub/NOSQLINBS/F1.png")
+knitr::include_graphics("F1.png")
 ```
 
 In behavioral sciences, networks have been used to understand the mechanisms of team assembly and how these mechanisms determine collaboration structure and team performance [@guimera2005].
@@ -106,7 +106,7 @@ Instead, this article aims to illustrate how graph databases can enrich the meth
 @Robinson2015 define a graph database as a system that implements **C**reate, **R**ead, **U**pdate, and **D**elete (CRUD) operations on a graph data model, where entities are represented as nodes and relationships as edges like the one depicted in Figure [2](#fig:F2).
 
 ```{r F2, echo=FALSE, fig.cap="A visual representation of a graph database that combines persons, companies, and routes", fig.align="center", out.height="180px", out.width="350px", fig.pos="H"}
-knitr::include_graphics("/GitHub/NOSQLINBS/F2.png")
+knitr::include_graphics("F2.png")
 ```
 
 Unlike relational databases, which organize data in tables, graph databases treat relationships as first-class elements rather than secondary links between tables.
@@ -133,7 +133,7 @@ As a psychological method, labeled property graph models share some similarities
 However, labeled property graph models (also known as knowledge graphs) represent a more general purpose toolkit that transcends the seminal conception of nomological nets (see Table [1]()).
 
 | Feature | Knowledge graphs | Nomological nets |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | Primary field | Computer science / AI / Data engineering | Psychology / Philosophy of Science |
 | Primary goal | Data integration, search, automated reasoning. | Establishing construct validity (i.e., proving a theory). |
 | Nature of nodes | Concrete entities (e.g., "Lee J. Cronbach", "University of Illinois"). | Theoretical constructs (e.g., "introversion", "intelligence"). |
@@ -207,7 +207,7 @@ By default any instance created in neo4j is in "stopped" mode so the user needs 
 The data import is straightforward using the import option depicted with a red circle in the left panel of neo4j (see Figure [3](#fig:F3)).
 
 ```{r F3, echo=FALSE, fig.cap="The drag-and-drop import files option in the left panel of neo4j", fig.align="center", out.height="180px", out.height="200px", out.width="380px", fig.pos="H"}
-knitr::include_graphics("/GitHub/NOSQLINBS/F3.png")
+knitr::include_graphics("F3.png")
 ```
 
 As described above, the database is a CSV file (newdata.csv) containing 19 variables.
@@ -236,7 +236,7 @@ These modifications are important because they reflect the analyst’s expertise
 An initial graph database model can consider the most elementary schema focused on the relationship between restaurants and customers (Figure [4](#fig:F4)).
 
 ```{r F4, echo=FALSE, fig.cap="A visual representation of the initial schema about restaurants-customers relationship", fig.align="center", out.height="180px", out.height="90px", out.width="380px", fig.pos="H"}
-knitr::include_graphics("/GitHub/NOSQLINBS/F4.png")
+knitr::include_graphics("F4.png")
 ```
 
 In this graph model, the node "`Restaurant`" has four hidden properties (i.e., web, name, latitude, and longitude), the node "`Customer`" has two hidden properties (i.e., ClientLatitude, ClientLongitude), and the relationship "`SERVES`" has one property (i.e., distance).
@@ -266,7 +266,7 @@ This plugin provides extensive analytical capabilities centered around graph alg
 With GDS, all operations are designed for massive scale and parallelization, with a custom and general API tailored for graph-global processing, and highly optimized compressed in-memory data structures.
 
 ```{r F5, echo=FALSE, fig.cap="A network-based visualization of the Restaurant-SERVES-Customer graph model", fig.align="center", out.width="250px", out.height="280px", out.width="380px", fig.pos="H"}
-knitr::include_graphics("/GitHub/NOSQLINBS/F5.png")
+knitr::include_graphics("F5.png")
 ```
 
 From a methodological viewpoint, examining network-based data enables the identification and testing of confounding factors in behavioral non-experimental research designs.
@@ -299,7 +299,7 @@ However, the impossibility to observe or measure variables has not prevented sci
 I elaborate upon these and other implications with the same dataset described above and increase the complexity of the initial graph database by adding a third node and a second edge (see Figure [6](#fig:F6)).
 
 ```{r F6, echo=FALSE, fig.cap="The schema visualization for the Restaurant-FULFILLED-Order-TO-Customer model", fig.align="center", out.width="250px", out.height="100px", out.width="380px", fig.pos="H"}
-knitr::include_graphics("/GitHub/NOSQLINBS/F6.png")
+knitr::include_graphics("F6.png")
 ```
 
 Compared with the previous model, the schema of Figure [6](#fig:F6) mirrors a slightly complex version.
