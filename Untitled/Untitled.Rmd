@@ -199,7 +199,7 @@ As the official documentation provides helpful material for newcomers, downloadi
 ## Prerrequisites and materials
 
 
-## Instance creation and data import
+## STEP 1: Instance creation and data import
 
 Instance creation is the first step in using graph databases with Neo4j.
 This is a top-level operation for setting up a new database environment, and involves allocating resources (memory, CPU, storage), defining a database version, and setting up initial user credentials by clicking one button.
@@ -218,7 +218,7 @@ Delivery time fulfillment is recorded in seconds or minutes (in the last two col
 According to @segura2019, this database was developed to evaluate the impact of traffic conditions on key performance indicators for a sample of restaurants offering food delivery services in Bogotá.
 It includes the physical locations of both restaurants and customers, as well as performance metrics and traffic data captured by the Google Maps API at three time points during Saturday rush hours.
 
-## Understanding the context
+## STEP 2: Understanding the context
 
 Traffic conditions in cities like Bogotá promote food delivery services as an alternative to cooking or driving to get food [@correa2019a].
 As Bogotá has long suffered traffic congestion problems, local governmental authorities have decided to impose a restriction program called "Pico y Placa" [@montero2025].
