@@ -109,18 +109,13 @@ Instead, this article aims to illustrate how graph databases can enrich the meth
 knitr::include_graphics("F2.png")
 ```
 
-In contrast to relational databases (where relationships exist only implicitly through table joins) graph databases treat relationships as fundamental elements.
-This design enables researchers to traverse, query, and model highly interconnected data structures with exceptional efficiency.
+In contrast to relational databases (where relationships exist only implicitly through table joins) graph databases treat relationships as fundamental elements. This design enables researchers to traverse, query, and model highly interconnected data structures with exceptional efficiency.
 
-In psychological research, many phenomena are inherently relational and multi‑layered: people interact with others, form impressions, and generate outcomes that unfold over time.
-These relational processes are difficult to represent using rectangular tables, which require data duplication, artificial identifiers, and complex join operations across multiple files.
-LPG models overcome these limitations by allowing each node and relationship to carry arbitrary key–value properties, multiple labels, and flexible schemas that naturally adapt to the structure of psychological processes.
+In psychological research, many phenomena are inherently relational and multi‑layered: people interact with others, form impressions, and generate outcomes that unfold over time. These relational processes are difficult to represent using rectangular tables, which require data duplication, artificial identifiers, and complex join operations across multiple files. LPG models overcome these limitations by allowing each node and relationship to carry arbitrary key–value properties, multiple labels, and flexible schemas that naturally adapt to the structure of psychological processes.
 
-To illustrate, consider the schema in Figure 2 .
-This dataset contains information at three distinct levels: (1) stable participant characteristics (e.g., age, ethnicity, sex), (2) interaction‑level impressions recorded during each brief date (e.g., attraction, perceived similarity, desire to say “yes”), and (3) longitudinal follow‑up responses across subsequent weeks for pairs who continued interacting.
-These layers of data are typically stored in separate tables with many NAs and require extensive preprocessing before analysis.
-But in an LPG, they are represented as interconnected components of a single, coherent graph structure.
-3.1 Entities as Nodes Three principal node types are used in the LPG representation:
+To illustrate, consider the schema in Figure 2 . This dataset contains information at three distinct levels: (1) stable participant characteristics (e.g., age, ethnicity, sex), (2) interaction‑level impressions recorded during each brief date (e.g., attraction, perceived similarity, desire to say “yes”), and (3) longitudinal follow‑up responses across subsequent weeks for pairs who continued interacting. These layers of data are typically stored in separate tables with many NAs and require extensive preprocessing before analysis. But in an LPG, they are represented as interconnected components of a single, coherent graph structure.
+
+## Entities as Nodes Three principal node types are used in the LPG representation:
 
 Participant nodes represent individuals in the study and store stable demographic properties such as age, ethnicity, and sex (from the codebook variables DemAge, DemEthn, and sex_M1_F2)..docx.pdf).docx.pdf) [OSF \_ Vari...2015).docx \| PDF]
 
@@ -129,7 +124,7 @@ These correspond directly to the interaction‑record variables in the dataset..
 
 FollowUp nodes represent week‑level longitudinal responses, including relationship status, romantic interest, sexual desire, and commitment indicators (e.g., FUStatus, FURomInterest, FUSexDesire, FUCommitted), captured only for participants who matched and continued interacting..docx.pdf) [OSF \_ Vari...2015).docx \| PDF]
 
-3.2 Relationships as Edges Edges define how these nodes are linked and encode psychological structure directly:
+## Relationships as Edges Edges define how these nodes are linked and encode psychological structure directly:
 
 HAD_DATE edges connect Participants to the DateEvents in which they took part, indicating the rater’s perspective on that interaction.
 
@@ -139,14 +134,13 @@ FOLLOWED_UP edges link Participants to their FollowUp nodes, representing relati
 
 Optionally, a MUTUAL_MATCH_WITH edge can be created between two Participants when the mutmatch property equals 1, providing a direct representation of reciprocal liking—a relationship that is invisible in rectangular data but naturally expressed in graph form.
 
-3.3 Why This Matters for Psychological Research This structure offers several methodological advantages:
+## Why This Matters for Psychological Research This structure offers several methodological advantages:
 
 Psychological data retain their natural relational structure.
 Dyadic interactions are modeled as shared events rather than duplicated rows, preserving the topology of social and romantic processes as they occur in the real world.
 
 Temporal processes become navigable.
-Follow‑up nodes can be traversed sequentially, enabling queries such as “How early do committed feelings emerge among mutually matched pairs?”
-or “Does initial sexual attraction predict later romantic interest?”
+Follow‑up nodes can be traversed sequentially, enabling queries such as “How early do committed feelings emerge among mutually matched pairs?” or “Does initial sexual attraction predict later romantic interest?”
 
 Missingness is handled structurally, not numerically.
 Participants who did not match simply lack follow‑up nodes; no NA encoding is required.
@@ -154,8 +148,7 @@ Participants who did not match simply lack follow‑up nodes; no NA encoding is 
 The model is inherently extensible.
 Additional constructs, such as personality traits or behavioral logs, can be attached as new nodes or properties without reconfiguring the existing database schema.
 
-In sum, LPGs allow behavioral scientists to represent complex, multi-level psychological phenomena in a way that relational tables cannot.
-The Speed‑Dating schema makes clear how impression formation, dyadic reciprocity, and longitudinal relationship development can be captured and analyzed within a single unified model.
+In sum, LPGs allow behavioral scientists to represent complex, multi-level psychological phenomena in a way that relational tables cannot. The Speed‑Dating schema makes clear how impression formation, dyadic reciprocity, and longitudinal relationship development can be captured and analyzed within a single unified model.
 
 # Why graph databases as psychological method
 
@@ -233,12 +226,12 @@ As the official documentation provides helpful material for newcomers, downloadi
 
 ## Prerrequisites and materials
 
-<<<<<<< HEAD
+
 ## Instance creation and data import
 =======
 
 ## STEP 1: Instance creation and data import
->>>>>>> cffb55eb7cedc76663b3792c72b8a97f527a94dc
+
 
 Instance creation is the first step in using graph databases with Neo4j.
 This is a top-level operation for setting up a new database environment, and involves allocating resources (memory, CPU, storage), defining a database version, and setting up initial user credentials by clicking one button.
