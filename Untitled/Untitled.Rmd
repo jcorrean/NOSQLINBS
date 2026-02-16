@@ -162,8 +162,7 @@ From a traditional perspective, the idea of working with huge datasets might see
 Nonetheless, big data research is no longer outside professional considerations and that explains why big data has been recently reviewed as a psychological method [@vezzoli2023].
 For example, previous works in network science has shown how to address complex behavioral phenomena such as the analysis of urban traffic at an individual level by tracking the movements of hundreds of thousands of drivers every two hours [@Gonzalez2008].
 In cases like this, graph databases excel because queries operate on localized portions of the graph rather than scanning the entire dataset.
-If edges store information such as commuting distances, queries can be designed to retrieve specific conditions (e.g., individuals who commute less than 10 miles versus persons who commute more than 20 miles).
-Consequently, execution time depends only on the size of the subgraph traversed, not the overall graph size.
+If edges store information such as commuting distances, queries can be designed to retrieve specific conditions (e.g., individuals who commute less than 10 miles versus persons who commute more than 20 miles). Consequently, execution time depends only on the size of the subgraph traversed, not the overall graph size.
 
 Another implication of graph databases is their flexibility.
 Behavioral scientists aim to connect data in ways that reflect their knowledge and expertise.
@@ -200,9 +199,7 @@ As a wrap-up, labeled property graphs are not merely a technical alternative to 
 
 # Applying graph database in behavioral research
 
-To illustrate the application of graph databases for behavioral scientists, I revisit data of delivery time fulfillment from restaurants offering food delivery in the city of Bogotá.
-The database is available in a public data repository [@segura2019] which refers to an associated research article [@correa2019a].
-Behavioral scientists who are familiar with structured datasets will find that this database is in a coma-separated values (.csv) file, just like most tables used in relational database management systems like Microsoft Access or SQLite.
+To illustrate the application of graph databases for behavioral scientists, I revisit the Speed‑Dating dataset [@Selterman2023] which provides a replication study from the seminal article by @Eastwick2008. The general description of this replication study is available in an [OSF repository](https://osf.io/ng6cc/overview). This repo provides access to the ``speed.dating.2.zip'' file which contains the raw data in an SPSS data format (.sav). This file can be easily read in SPSS, PSPP, Jasp, Jamovi, or RStudio.
 Given the wide variety of graph database management systems in the market (e.g., Neo4j, Microsoft Azure Cosmos, Aerospike, Amazon Web Services Neptune, NebulaGraph, Memgraph, TigerGraph, Giraph), the rest of this work relies on Neo4j [@Barrasa2023].
 
 Neo4j ranks as a leading freemium software for graph database management systems and has been used in several industry sectors including retail, finance, pharmaceutics, hospitality, and electronic commerce, among others.
@@ -210,6 +207,8 @@ Neo4j offers free and enterprise editions, which can be installed on local or se
 As the official documentation provides helpful material for newcomers, downloading and installation details are not necessary here, and the reader can consult specific details elsewhere [@vanBruggen2014].
 
 ## Prerrequisites and materials
+
+the Speed‑Dating dataset [@Selterman2023] which was a replication study from the original article by @Eastwick2008.
 
 ## STEP 1: Instance creation and data import
 

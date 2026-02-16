@@ -449,17 +449,17 @@ scalable, and conceptually transparent data models.
 research}\label{applying-graph-database-in-behavioral-research}
 
 To illustrate the application of graph databases for behavioral
-scientists, I revisit data of delivery time fulfillment from restaurants
-offering food delivery in the city of Bogotá. The database is available
-in a public data repository \citep{segura2019} which refers to an
-associated research article \citep{correa2019a}. Behavioral scientists
-who are familiar with structured datasets will find that this database
-is in a coma-separated values (.csv) file, just like most tables used in
-relational database management systems like Microsoft Access or SQLite.
-Given the wide variety of graph database management systems in the
-market (e.g., Neo4j, Microsoft Azure Cosmos, Aerospike, Amazon Web
-Services Neptune, NebulaGraph, Memgraph, TigerGraph, Giraph), the rest
-of this work relies on Neo4j \citep{Barrasa2023}.
+scientists, I revisit the Speed‑Dating dataset \citep{Selterman2023}
+which provides a replication study from the seminal article by
+\citet{Eastwick2008}. The general description of this replication study
+is available in an \href{https://osf.io/ng6cc/overview}{OSF repository}.
+This repo provides access to the ``speed.dating.2.zip'\,' file which
+contains the raw data in an SPSS data format (.sav). This file can be
+easily read in SPSS, PSPP, Jasp, Jamovi, or RStudio. Given the wide
+variety of graph database management systems in the market (e.g., Neo4j,
+Microsoft Azure Cosmos, Aerospike, Amazon Web Services Neptune,
+NebulaGraph, Memgraph, TigerGraph, Giraph), the rest of this work relies
+on Neo4j \citep{Barrasa2023}.
 
 Neo4j ranks as a leading freemium software for graph database management
 systems and has been used in several industry sectors including retail,
@@ -473,6 +473,9 @@ here, and the reader can consult specific details elsewhere
 
 \subsection{Prerrequisites and
 materials}\label{prerrequisites-and-materials}
+
+the Speed‑Dating dataset \citep{Selterman2023} which was a replication
+study from the original article by \citet{Eastwick2008}.
 
 \subsection{STEP 1: Instance creation and data
 import}\label{step-1-instance-creation-and-data-import}
