@@ -211,8 +211,6 @@ As the official documentation provides helpful material for newcomers, downloadi
 
 ## Prerrequisites and materials
 
-# \## Instance creation and data import
-
 ## STEP 1: Instance creation and data import
 
 Instance creation is the first step in using graph databases with Neo4j.
