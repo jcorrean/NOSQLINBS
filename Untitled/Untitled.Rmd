@@ -86,10 +86,9 @@ Psychologists have leveraged this framework to analyze the structure of psychopa
 Even though these examples show the versatility of social network analysis for psychological research, they do not rely on graph database management systems and this aspect is what differentiates this article.
 Here, I intend to illustrate how the network lenses, when applied as a database management system, unveils novel ways for modeling and analyzing behavioral and psychological data.
 
-# Networks in a nutshell {#sec2}
+# Graph-based databases: A gentle introduction {#sec2}
 
-@Estrada2011 defines a network as a collection of points (called nodes) joined together in pairs by lines (called arcs or edges) like those depicted in Figure [1](#fig:F1).
-Despite this simplistic definition, networks provide a powerful framework to model any type of system from planets in a galaxy to neurons in the nervous system [@Vazza2020].
+Any graph-based database relies on network basic terminology. Thus, a brief recap is useful here. @Estrada2011 defines a network as a collection of points (called nodes) joined together in pairs by lines (called arcs or edges) like those depicted in Figure [1](#fig:F1). Despite this simplistic definition, networks provide a powerful framework to model any type of system from planets in a galaxy to neurons in the nervous system [@Vazza2020].
 
 ```{r F1, echo=FALSE, fig.cap="A visual representation of four types of networks: A) non-directed unweighted network, B) non-directed weighted network, C) directed unweighted network, and D) directed weighted network.", fig.align="center", out.width="380px", fig.pos="H"}
 knitr::include_graphics("F1.png")
@@ -100,8 +99,6 @@ Graphs offer fundamental concepts for understanding how entities (nodes) and the
 From a data management viewpoint, the analysis of these data structures requires tools that go beyond the rigid tabular constraints of relational databases.
 As the concepts of graphs are thoroughly covered in introductory texts [@Newman2010], these will not be revisited here.
 Instead, this article aims to illustrate how graph databases can enrich the methodological toolbox of psychological researchers and behavioral scientists, enabling analyses that embrace complexity, dynamic relationships, and multi-level contingencies [@Robinson2015].
-
-# Graph databases: A gentle introduction
 
 @Robinson2015 define a graph database as a system that implements **C**reate, **R**ead, **U**pdate, and **D**elete (CRUD) operations on a graph data model, where entities are represented as nodes and relationships as edges like the one depicted in Figure [2](#fig:F2) derived from the Speed‑Dating dataset [@Selterman2023] which was a replication study from the original article by @Eastwick2008.
 
