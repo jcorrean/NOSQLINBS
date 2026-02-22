@@ -81,10 +81,10 @@ Whereas relational databases store structured data in tables (i.e., columns as v
 In this article, I examine graphs as a database paradigm that deviates from the traditional lenses of relational databases, where nodes and edges (instead of tables and joins) represent the basic elements of any behavior that can be represented as a network or a complex system.
 Networks have a long history in mathematics as "*graph theory*" [@Estrada2011].
 In sociology and social sciences, graph theory is known as "social network analysis" [@Wasserman1994].
-In this context, the term "social network" should not be confused with Instagram or Facebook, as they are online platforms that do not necessarily represent all aspects of social networks as an object of study.
-Psychologists have leveraged this framework to analyze the structure of psychopathology [@borsboom2013], conduct bibliometric analysis of cyberbehavior [@serafin2019], estimate the correct number of dimensions in psychological and educational instruments [@golino2017], or understand the measurement of organizational climate [@menezes2021].
-Even though these examples show the versatility of social network analysis for psychological research, they do not rely on graph database management systems and this aspect is what differentiates this article.
-Here, I intend to illustrate how the network lenses, when applied as a database management system, unveils novel ways for modeling and analyzing behavioral and psychological data.
+In this context, the term "social network" should not be confused with Instagram or Facebook, as they are online platforms that have nothing to do with social networks as an object of study.
+
+Psychologists have leveraged the framework of network science to analyze the structure of psychopathology [@borsboom2013], conduct bibliometric analysis of cyberbehavior [@serafin2019], estimate the correct number of dimensions in psychological and educational instruments [@golino2017], or understand the measurement of organizational climate [@menezes2021].
+Even though these examples show the utility of network science for psychological research, they do not rely on graph database management systems. This aspect is what differentiates this article from previous works. Here, I intend to illustrate how LPGs unveil novel ways for modeling and analyzing behavioral and psychological data.
 
 # Graph-based databases: A gentle introduction {#sec2}
 
