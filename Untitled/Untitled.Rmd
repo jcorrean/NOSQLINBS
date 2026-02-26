@@ -106,9 +106,9 @@ Instead, this article aims to illustrate how graph databases can enrich the meth
 knitr::include_graphics("F2.png")
 ```
 
-In contrast to relational databases (where relationships exist only implicitly through table joins) graph databases treat relationships as fundamental elements.
-This design enables researchers to traverse, query, and model highly interconnected data structures with exceptional efficiency.
-Figure [2](#fig:F2) shows information at three distinct levels: (1) stable participant characteristics (e.g., age, ethnicity, sex), (2) interaction‑level impressions recorded during each brief date (e.g., attraction, perceived similarity, desire to say “yes”), and (3) longitudinal follow‑up responses across subsequent weeks for pairs who continued interacting.
+In contrast to relational databases (where relationships exist only implicitly through table joins) graph databases treat relationships as fundamental elements. In the context of the study conducted by @Eastwick2008, the graph-based design enables researchers to traverse, query, and model highly interconnected data structures with exceptional efficiency and originality. 
+
+Figure [2](#fig:F2) shows the data at three distinct levels: (1) stable participant characteristics (e.g., age, ethnicity, sex), (2) interaction‑level impressions recorded during each brief date (e.g., attraction, perceived similarity, desire to say “yes”), and (3) longitudinal follow‑up responses across subsequent weeks for pairs who continued interacting.
 These layers of data are represented as interconnected components of a single, coherent graph structure.
 
 ## Entities as Nodes
