@@ -111,6 +111,8 @@ In contrast to relational databases (where relationships exist only implicitly t
 Figure [2](#fig:F2) shows the data at three distinct levels: (1) stable participant characteristics (e.g., age, ethnicity, sex), (2) interaction‑level impressions recorded during each brief date (e.g., attraction, perceived similarity, desire to say “yes”), and (3) longitudinal follow‑up responses across subsequent weeks for pairs who continued interacting.
 These layers of data are represented as interconnected components of a single, coherent graph structure.
 
+Voy a introducir un cambio en esta parte.
+
 ## Entities as Nodes
 
 `Participant` nodes represent individuals in the study and store stable demographic properties such as age, ethnicity, and sex (from the codebook variables DemAge, DemEthn, and sex_M1_F2).
