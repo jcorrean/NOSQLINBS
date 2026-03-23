@@ -114,23 +114,30 @@ Empresariales}, \orgname{Universidad
 Iberoamericana}, \orgaddress{\city{Mexico
 City}, \country{Mexico}, \postcode{01219}}}
 
-\abstract{Labeled property graphs (LPGs) offer a flexible and expressive
-framework for modeling psychological phenomena as complex systems. In an
-LPG, each node and edge can carry multiple labels (e.g., categories or
-types), arbitrary key--value properties (continuous, categorical, or
-textual), and richly structured schemas---without imposing the
-constraints of rectangular data formats. This representational
-versatility makes LPGs well suited for psychological data that are
-multimodal (behavioral, physiological, self‑report), hierarchical
-(individual, dyad, group, population), dynamic (momentary assessments,
-sensor streams), and semantically layered (latent constructs, metadata,
-interventions, contexts, experimental manipulations). This article
-provides a step‑by‑step primer for implementing LPGs in psychological
-research, illustrating how they can organize, integrate, and analyze
-complex datasets more naturally than traditional data structures. Fully
-reproducible materials---including code and data---are available via the
-Open Science Framework to facilitate adoption, transparency, and
-replication.}
+\abstract{Psychological data are inherently relational: they capture
+individuals embedded in dyads, groups, and institutions; behaviors
+unfolding across time; and constructs operating simultaneously at
+multiple levels of analysis. Yet the rectangular data formats that
+dominate psychological research impose tabular constraints that
+fragment, duplicate, or discard the relational structure that makes such
+data meaningful. This tutorial introduces labeled property graphs (LPGs)
+as a flexible and scalable database paradigm for modeling complex
+psychological data, and provides a step-by-step implementation guide
+using Neo4j and R. We illustrate the approach with the Speed-Dating
+replication dataset (Selterman et al., 2023), a publicly available
+resource whose dyadic, longitudinal, and multimodal structure makes it
+an ideal vehicle for demonstrating how LPGs preserve relational
+topology, handle structural missingness without numerical encoding, and
+support queries that rectangular formats cannot express without costly
+joins or data duplication. Compared to relational databases, LPGs offer
+three methodological advantages particularly relevant to psychological
+research: schema flexibility that accommodates evolving theoretical
+models, query performance that scales with local graph structure rather
+than total dataset size, and an ontological transparency that makes the
+researcher's assumptions about entities and relationships explicit and
+testable. All materials --- including annotated code, data, and a
+reproducible workflow --- are available via the Open Science Framework
+to facilitate adoption across subfields of psychology.}
 
 \keywords{Graph database, Network modeling, complex behavior}
 
