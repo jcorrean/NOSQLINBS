@@ -168,19 +168,20 @@ Networks have a long history in mathematics as ``\emph{graph theory}''
 \citep{Estrada2011}. In sociology and social sciences, graph theory is
 known as ``social network analysis'' \citep{Wasserman1994}. In this
 context, the term ``social network'' should not be confused with
-Instagram or Facebook, as they are online platforms that do not
-necessarily represent all aspects of social networks as an object of
-study. Psychologists have leveraged this framework to analyze the
-structure of psychopathology \citep{borsboom2013}, conduct bibliometric
-analysis of cyberbehavior \citep{serafin2019}, estimate the correct
-number of dimensions in psychological and educational instruments
-\citep{golino2017}, or understand the measurement of organizational
-climate \citep{menezes2021}. Even though these examples show the
-versatility of social network analysis for psychological research, they
-do not rely on graph database management systems and this aspect is what
-differentiates this article. Here, I intend to illustrate how the
-network lenses, when applied as a database management system, unveils
-novel ways for modeling and analyzing behavioral and psychological data.
+Instagram or Facebook, as they are online platforms that have nothing to
+do with social networks as an object of study.
+
+Psychologists have leveraged the framework of network science to analyze
+the structure of psychopathology \citep{borsboom2013}, conduct
+bibliometric analysis of cyberbehavior \citep{serafin2019}, estimate the
+correct number of dimensions in psychological and educational
+instruments \citep{golino2017}, or understand the measurement of
+organizational climate \citep{menezes2021}. Even though these examples
+show the utility of network science for psychological research, they do
+not rely on graph database management systems. This aspect is what
+differentiates this article from previous works. Here, I intend to
+illustrate how LPGs unveil novel ways for modeling and analyzing
+behavioral and psychological data.
 
 \section{Graph-based databases: A gentle introduction}\label{sec2}
 
@@ -235,16 +236,20 @@ article by \citet{Eastwick2008}.
 
 In contrast to relational databases (where relationships exist only
 implicitly through table joins) graph databases treat relationships as
-fundamental elements. This design enables researchers to traverse,
-query, and model highly interconnected data structures with exceptional
-efficiency. Figure \hyperref[fig:F2]{2} shows information at three
-distinct levels: (1) stable participant characteristics (e.g., age,
-ethnicity, sex), (2) interaction‑level impressions recorded during each
-brief date (e.g., attraction, perceived similarity, desire to say
-``yes''), and (3) longitudinal follow‑up responses across subsequent
-weeks for pairs who continued interacting. These layers of data are
-represented as interconnected components of a single, coherent graph
-structure.
+fundamental elements. In the context of the study conducted by
+\citet{Eastwick2008}, the graph-based design enables researchers to
+traverse, query, and model highly interconnected data structures with
+exceptional efficiency and originality.
+
+Figure \hyperref[fig:F2]{2} shows the data at three distinct levels: (1)
+stable participant characteristics (e.g., age, ethnicity, sex), (2)
+interaction‑level impressions recorded during each brief date (e.g.,
+attraction, perceived similarity, desire to say ``yes''), and (3)
+longitudinal follow‑up responses across subsequent weeks for pairs who
+continued interacting. These layers of data are represented as
+interconnected components of a single, coherent graph structure.
+
+Voy a introducir un cambio en esta parte.
 
 \subsection{Entities as Nodes}\label{entities-as-nodes}
 
