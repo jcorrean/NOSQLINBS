@@ -73,17 +73,28 @@ knitr::opts_chunk$set(echo = FALSE,
 
 # Introduction {#sec1}
 
-In a recent article, @soto2025 introduced relational databases and illustrated their use by behavioral scientists through real-world examples.
-Although relational databases with their standardized "structured query language" (SQL) remain the dominant paradigm in research and industry, alternative approaches are gaining traction.
-The so-called "Not Only SQL" (NoSQL) category includes database systems that employ non-tabular data models, such as key-value pairs, documents, wide columns, matrices, and graphs.
-Whereas relational databases store structured data in tables (i.e., columns as variables, rows as cases, and cells containing specific values), NoSQL systems accommodate flexible formats that better support evolving and highly connected data, which provides distinct advantages in psychological research.
+Psychological data are relational by nature. For example, @guimera2005 leveraged this relational nature of psychological data to understand the mechanisms of team assembly and how these mechanisms determine collaboration structure and team performance. Other examples include the analyses of the structure of psychopathology [@borsboom2013], the bibliometric approach to cyberbehavior [@serafin2019], the psychometric estimation of the correct number of dimensions in psychological and educational instruments [@golino2017], or the measurement of organizational climate [@menezes2021].
+  
+Despite the relational nature of psychological data, a significant amount of psychological research relies on structured data which are managed through relational databases with their standardized "structured query language" (SQL) which is the dominant database paradigm in research and industry [@soto2025]. An alternative database paradigm is the so-called "Not Only SQL" (NoSQL). This later paradigm includes database systems that employ non-tabular data models, such as key-value pairs, documents, wide columns, matrices, and graphs. Whereas relational databases store structured data in tables (i.e., columns as variables, rows as cases, and cells containing specific values), NoSQL systems accommodate flexible formats that better support evolving and highly connected data, which provides distinct advantages in psychological research. In this article, I examine graphs as a database paradigm that deviates from the traditional lenses of relational databases, where nodes and edges (instead of tables and joins) represent the basic elements of any behavior that can be represented as a network or a complex system.
 
-In this article, I examine graphs as a database paradigm that deviates from the traditional lenses of relational databases, where nodes and edges (instead of tables and joins) represent the basic elements of any behavior that can be represented as a network or a complex system.
+  
+  Paragraph 3 — The gap: graph-based analysis (igraph, etc.) exists in R,
+  but graph DATABASE MANAGEMENT SYSTEMS have been largely overlooked
+  as a psychological method. This is the novelty claim.
+  
+  Paragraph 4 — What this tutorial does: Neo4j + R, Speed-Dating dataset,
+  reproducible materials in OSF.
+  
+  Paragraph 5 — Road map paragraph: "The remainder of this article is
+  organized as follows..."
+  
+
+
 Networks have a long history in mathematics as "*graph theory*" [@Estrada2011].
 In sociology and social sciences, graph theory is known as "social network analysis" [@Wasserman1994].
 In this context, the term "social network" should not be confused with Instagram or Facebook, as they are online platforms that have nothing to do with social networks as an object of study.
 
-Psychologists have leveraged the framework of network science to analyze the structure of psychopathology [@borsboom2013], conduct bibliometric analysis of cyberbehavior [@serafin2019], estimate the correct number of dimensions in psychological and educational instruments [@golino2017], or understand the measurement of organizational climate [@menezes2021].
+Psychologists have leveraged the framework of network science to 
 Even though these examples show the utility of network science for psychological research, they do not rely on graph database management systems. This aspect is what differentiates this article from previous works. Here, I intend to illustrate how LPGs unveil novel ways for modeling and analyzing behavioral and psychological data.
 
 # Graph-based databases: A gentle introduction {#sec2}
