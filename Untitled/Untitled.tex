@@ -105,7 +105,9 @@ Data Modeling}
 %%                 \dgr{MSc, PhD}}\email{iauthor@gmail.com}
 %%=============================================================%%
 
-\author*[1]{\fnm{Juan} \spfx{C.} \sur{Correa} }\email{\href{mailto:juanc.correa.n@ibero.mx}{\nolinkurl{juanc.correa.n@ibero.mx}}}
+\author*[1]{\fnm{Juan} \spfx{C.} \sur{Correa} }\email{\href{mailto:juanc.correa@ibero.mx}{\nolinkurl{juanc.correa@ibero.mx}}}
+
+\author[2]{\fnm{María del Pilar} \sur{García-Chitiva} }
 
 
 
@@ -113,6 +115,8 @@ Data Modeling}
 Empresariales}, \orgname{Universidad
 Iberoamericana}, \orgaddress{\city{Mexico
 City}, \country{Mexico}, \postcode{01219}}}
+  \affil[2]{\orgdiv{Escuela de Educación}, \orgname{Politécnico
+Grancolombiano}, \orgaddress{\city{Bogotá}, \country{Colombia}, \postcode{110231}}}
 
 \abstract{Psychological data are inherently relational: they capture
 individuals embedded in dyads, groups, and institutions; behaviors
@@ -151,30 +155,51 @@ Psychological data are relational by nature. For example,
 \citet{guimera2005} leveraged this relational nature of psychological
 data to understand the mechanisms of team assembly and how these
 mechanisms determine collaboration structure and team performance. Other
-examples include the analyses of the structure of psychopathology
-\citep{borsboom2013}, the bibliometric approach to cyberbehavior
-\citep{serafin2019}, the psychometric estimation of the correct number
-of dimensions in psychological and educational instruments
-\citep{golino2017}, or the measurement of organizational climate
-\citep{menezes2021}.
+instances include the analyses of the causal interplay between
+psychopathological symptoms \citep{borsboom2013}, the scientific
+cooperation to understand cyberbehavior \citep{serafin2019}, the
+psychometric estimation of the correct number of dimensions in
+psychological and educational instruments \citep{golino2017}, or the
+measurement of organizational climate \citep{menezes2021}. Yet none of
+these examples relied on graph database management systems which
+represent the gap this article addresses.
 
-Despite the relational nature of psychological data, a significant
-amount of psychological research relies on structured data which are
-managed through relational databases with their standardized
-``structured query language'' (SQL) which is the dominant database
-paradigm in research and industry \citep{soto2025}. An alternative
-database paradigm is the so-called ``Not Only SQL'' (NoSQL). This later
-paradigm includes database systems that employ non-tabular data models,
-such as key-value pairs, documents, wide columns, matrices, and graphs.
-Whereas relational databases store structured data in tables (i.e.,
-columns as variables, rows as cases, and cells containing specific
-values), NoSQL systems accommodate flexible formats that better support
-evolving and highly connected data, which provides distinct advantages
-in psychological research. In this article, I examine graphs as a
-database paradigm that deviates from the traditional lenses of
-relational databases, where nodes and edges (instead of tables and
-joins) represent the basic elements of any behavior that can be
-represented as a network or a complex system.
+Relational databases have dominated psychological research for good
+reasons. They store data in tables where columns represent variables,
+rows represent cases, and relationships between entities are managed
+through the so-called ``SQL'' or Structured Query Language
+\citep{Soto2025}. Relational databases represent a paradigm that works
+well when data are rectangular and relationships are simple. However, as
+psychological phenomena grow more complex (i.e., spanning multiple
+levels of analysis, unfolding over time, and involving entities that
+relate to each other in qualitatively distinct ways) the tabular
+constraints of relational databases become a methodological liability
+rather than an asset. An alternative paradigm, broadly called ``Not Only
+SQL'' (NoSQL), includes systems designed for non-tabular, highly
+connected data. Among these, graph databases are particularly
+well-suited for psychological research because they treat relationships
+as first-class elements rather than implicit byproducts of table joins
+\citep{Robinson2015}. In this article, I examine graph databases as a
+methodological paradigm where nodes and edges --- rather than tables and
+joins --- become the basic representational units for any behavior that
+can be understood as a network or a complex system. Despite the
+relational nature of psychological data, a significant amount of
+psychological research relies on structured data which are managed
+through relational databases with their standardized ``structured query
+language'' (SQL) which is the dominant database paradigm in research and
+industry \citep{soto2025}. An alternative database paradigm is the
+so-called ``Not Only SQL'' (NoSQL). This later paradigm includes
+database systems that employ non-tabular data models, such as key-value
+pairs, documents, wide columns, matrices, and graphs. Whereas relational
+databases store structured data in tables (i.e., columns as variables,
+rows as cases, and cells containing specific values), NoSQL systems
+accommodate flexible formats that better support evolving and highly
+connected data, which provides distinct advantages in psychological
+research. In this article, I examine graphs as a database paradigm that
+deviates from the traditional lenses of relational databases, where
+nodes and edges (instead of tables and joins) represent the basic
+elements of any behavior that can be represented as a network or a
+complex system.
 
 Paragraph 3 --- The gap: graph-based analysis (igraph, etc.) exists in
 R, but graph DATABASE MANAGEMENT SYSTEMS have been largely overlooked as
