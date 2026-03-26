@@ -90,7 +90,8 @@
 \begin{document}
 
 
-\title[]{A Primer on Labeled Property Graphs}
+\title[]{A Primer on Labeled Property Graphs for Complex Psychological
+Data Modeling}
 
 %%=============================================================%%
 %% Prefix	-> \pfx{Dr}
@@ -189,10 +190,10 @@ why this database paradigm remains largely absent from psychological
 research requires first acknowledging what already exists.
 
 Computational libraries such as \texttt{sna}, \texttt{igraph},
-\texttt{tidygraph}, \texttt{qgraph}, or \texttt{psychonetrics} have made
-network analysis accessible to researchers working entirely within
-\texttt{R}, and their adoption has grown across subfields
-\citep{Luke2015}. However, these libraries mainly address the
+\texttt{qgraph}, or \texttt{psychonetrics} have made network analysis
+accessible to researchers working entirely within \texttt{R}
+\citep{Luke2015}, and their adoption in psychology is well-known
+\citep{Mair2018}. However, these libraries mainly address the
 statistical analysis of relational data, leaving the management of it
 under the hood. (i.e., the data must first be extracted from a
 rectangular format, reshaped into an edge list or adjacency matrix, and
@@ -221,12 +222,12 @@ and a reproducible RMarkdown file --- are available in a public
 repository.
 
 The remainder of this article is organized as follows. Section 2
-introduces the conceptual foundations of LPGs, contrasting their
-representational logic with that of relational databases and defining
-the core elements (i.e., nodes, edges, labels, and properties). We argue
-why these elements are particularly well-suited for psychological data.
-Section 3 motivates the tutorial through the Speed-Dating replication
-dataset \citep{Selterman2023}. We use this dataset to show how its
+introduces the conceptual foundations of labeled property graphs,
+contrasting their representational logic with that of relational
+databases and defining the core elements --- nodes, edges, labels, and
+properties --- that make them particularly well-suited for psychological
+data. Section 3 motivates the tutorial through the Speed-Dating
+replication dataset (Selterman et al., 2023), showing concretely how its
 dyadic, longitudinal, and multimodal structure exposes the limitations
 of rectangular formats. Section 4 presents the step-by-step tutorial
 itself, covering the full workflow from graph schema design and data
