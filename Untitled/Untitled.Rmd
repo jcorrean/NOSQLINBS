@@ -82,30 +82,17 @@ knitr::opts_chunk$set(echo = FALSE,
 
 # Introduction {#sec1}
 
-Psychological data are relational by nature. For example, @guimera2005 leveraged this relational nature of psychological data to understand the mechanisms of team assembly and how these mechanisms determine collaboration structure and team performance. Other instances include the analyses of the causal interplay between psychopathological symptoms [@borsboom2013], the scientific cooperation to understand cyberbehavior [@serafin2019], the psychometric estimation of the correct number of dimensions in psychological and educational instruments [@golino2017], or the measurement of organizational climate [@menezes2021]. Yet none of these examples relied on graph database management systems which represent the gap this article addresses.
+Psychological data are relational by nature. For example, @guimera2005 leveraged this relational nature of psychological data to understand the mechanisms of team assembly and how these mechanisms determine collaboration structure and team performance. Other instances include the analyses of the causal interplay between psychopathological symptoms [@borsboom2013], the scientific cooperation to understand cyberbehavior [@serafin2019], the psychometric estimation of the correct number of dimensions in psychological and educational instruments [@golino2017], or the measurement of organizational climate [@menezes2021]. What these examples share, however, is that relational structure was an analytical construction rather than a database design — and it is precisely that distinction that this article addresses.
 
-Relational databases have dominated psychological research for good reasons. They store data in tables where columns represent variables, rows represent cases, and relationships between entities are managed through the so-called "SQL" or Structured Query Language [@Soto2025]. Relational databases represent a paradigm that works well when data are rectangular and relationships are simple. However, as psychological phenomena grow more complex (i.e., spanning multiple levels of analysis, unfolding over time, and involving entities that relate to each other in qualitatively distinct ways) the tabular constraints of relational databases become a methodological liability rather than an asset. An alternative paradigm, broadly called "Not Only SQL" (NoSQL), includes systems designed for non-tabular, highly connected data. Among these, graph databases are particularly well-suited for psychological research because they treat relationships as first-class elements rather than implicit byproducts of table joins [@Robinson2015]. In this article, I examine graph databases as a methodological paradigm where nodes and edges — rather than tables and joins — become the basic representational units for any behavior that can be understood as a network or a complex system.
-Despite the relational nature of psychological data, a significant amount of psychological research relies on structured data which are managed through relational databases with their standardized "structured query language" (SQL) which is the dominant database paradigm in research and industry [@soto2025]. An alternative database paradigm is the so-called "Not Only SQL" (NoSQL). This later paradigm includes database systems that employ non-tabular data models, such as key-value pairs, documents, wide columns, matrices, and graphs. Whereas relational databases store structured data in tables (i.e., columns as variables, rows as cases, and cells containing specific values), NoSQL systems accommodate flexible formats that better support evolving and highly connected data, which provides distinct advantages in psychological research. In this article, I examine graphs as a database paradigm that deviates from the traditional lenses of relational databases, where nodes and edges (instead of tables and joins) represent the basic elements of any behavior that can be represented as a network or a complex system.
+Relational databases have dominated psychological research for good reasons. They store data in tables where columns represent variables, rows represent cases, and relationships between entities are managed through the so-called "SQL" or Structured Query Language [@soto2025]. Relational databases represent a paradigm that works well when data are rectangular and relationships are simple. However, as psychological phenomena grow more complex (i.e., spanning multiple levels of analysis, unfolding over time, and involving entities that relate to each other in qualitatively distinct ways) the tabular constraints of relational databases become a methodological liability rather than an asset. An alternative paradigm, broadly called "Not Only SQL" (NoSQL), includes systems designed for non-tabular, highly connected data. Among these, graph databases are particularly well-suited for psychological research because they treat relationships as first-class elements rather than implicit byproducts of table joins [@Robinson2015]. In this article, we examine graph databases as a methodological paradigm where nodes and edges (rather than tables and joins) become the basic representational units for any behavior that can be understood as a network or a complex system [@Krakauer2019;@Guastello2009]. Understanding why this paradigm has remained largely absent from psychological research requires first acknowledging what already exists.
 
+Graph-based analysis is not new to psychology. Computational libraries such as sna, igraph, tidygraph, qgraph, or psychonetrics have made network analysis accessible to psychological researchers working entirely within `R`, and their adoption has grown steadily across subfields [@Luke2015]. However, these tools address the statistical analysis of relational data, not the management of it. In other words, the data must first be extracted from a rectangular format, reshaped into an edge list or adjacency matrix, and then passed to the analytic tool. Thus, such a workflow reconstructs relational structure at the analysis stage rather than preserving it from the moment of data collection. Graph database management systems, by contrast, store, query, and retrieve data in graph form natively, so that relational structure is not an analytical construction but a representational commitment. To our knowledge, this distinction has received no systematic treatment as a psychological method.
   
-  Paragraph 3 — The gap: graph-based analysis (igraph, etc.) exists in R,
-  but graph DATABASE MANAGEMENT SYSTEMS have been largely overlooked
-  as a psychological method. This is the novelty claim.
+This article provides a step-by-step tutorial for implementing labeled property graphs (LPGs) in psychological research using `Neo4j` and `R`. We illustrate the approach with the Speed-Dating replication dataset [@Selterman2023], a publicly available resource whose dyadic, longitudinal, and multimodal structure makes it an ideal vehicle for demonstrating how LPGs preserve relational topology, handle structural missingness without numerical encoding, and support queries that rectangular formats cannot express without costly joins or data duplication. The tutorial covers the full workflow: designing a graph schema from psychological theory, importing data into Neo4j, querying the graph with Cypher, connecting Neo4j to R via the neo2R package, and conducting statistical analysis and visualization using tidygraph and ggraph. All materials — including annotated Cypher and R code, data, and a reproducible RMarkdown file — are available in a public repository.
   
-  Paragraph 4 — What this tutorial does: Neo4j + R, Speed-Dating dataset,
-  reproducible materials in OSF.
-  
-  Paragraph 5 — Road map paragraph: "The remainder of this article is
-  organized as follows..."
+The remainder of this article is organized as follows. Section 2 introduces the conceptual foundations of labeled property graphs, contrasting their representational logic with that of relational databases and defining the core elements — nodes, edges, labels, and properties — that make them particularly well-suited for psychological data. Section 3 motivates the tutorial through the Speed-Dating replication dataset (Selterman et al., 2023), showing concretely how its dyadic, longitudinal, and multimodal structure exposes the limitations of rectangular formats. Section 4 presents the step-by-step tutorial itself, covering the full workflow from graph schema design and data import in Neo4j through querying with Cypher and statistical analysis and visualization in R via the neo2R, tidygraph, and ggraph packages. Section 5 discusses the broader methodological implications of LPGs for psychological research, with particular attention to structural missingness, scalability, and ontological transparency. Section 6 concludes with a discussion of limitations and directions for future work. All code, data, and a fully reproducible RMarkdown file are available via the Open Science Framework at [OSF link].
   
 
-
-Networks have a long history in mathematics as "*graph theory*" [@Estrada2011].
-In sociology and social sciences, graph theory is known as "social network analysis" [@Wasserman1994].
-In this context, the term "social network" should not be confused with Instagram or Facebook, as they are online platforms that have nothing to do with social networks as an object of study.
-
-Psychologists have leveraged the framework of network science to 
-Even though these examples show the utility of network science for psychological research, they do not rely on graph database management systems. This aspect is what differentiates this article from previous works. Here, I intend to illustrate how LPGs unveil novel ways for modeling and analyzing behavioral and psychological data.
 
 # Graph-based databases: A gentle introduction {#sec2}
 
@@ -232,165 +219,12 @@ the Speed‑Dating dataset [@Selterman2023] which was a replication study from t
 
 ## STEP 1: Instance creation and data import
 
-Instance creation is the first step in using graph databases with Neo4j.
-This is a top-level operation for setting up a new database environment, and involves allocating resources (memory, CPU, storage), defining a database version, and setting up initial user credentials by clicking one button.
-When creating a new instance, neo4j asks the user to provide a name as part of the instance details.
-The user is asked to provide a password of eight characters as a security check for further interactions.
-The instance created is called "OFD," an acronym for "Online Food Delivery," and computational details can be found in our public GitHub repository.
-By default any instance created in neo4j is in "stopped" mode so the user needs to start it by clicking one button.
-The data import is straightforward using the import option depicted with a red circle in the left panel of neo4j (see Figure [3](#fig:F3)).
 
-```{r F3, echo=FALSE, fig.cap="The drag-and-drop import files option in the left panel of neo4j", fig.align="center", out.height="180px", out.height="200px", out.width="380px", fig.pos="H"}
-knitr::include_graphics("F3.png")
-```
-
-As described above, the database is a CSV file (newdata.csv) containing 19 variables.
-Delivery time fulfillment is recorded in seconds or minutes (in the last two columns of the dataset).
-According to @segura2019, this database was developed to evaluate the impact of traffic conditions on key performance indicators for a sample of restaurants offering food delivery services in Bogotá.
-It includes the physical locations of both restaurants and customers, as well as performance metrics and traffic data captured by the Google Maps API at three time points during Saturday rush hours.
 
 ## STEP 2: Understanding the context
 
-Traffic conditions in cities like Bogotá promote food delivery services as an alternative to cooking or driving to get food [@correa2019a].
-As Bogotá has long suffered traffic congestion problems, local governmental authorities have decided to impose a restriction program called "Pico y Placa" [@montero2025].
-This program was introduced in August 1998 and has been modified several times looking to extend its scope.
-For example, since July 2012, Pico y Placa affects the half of residential and commercial vehicles every other day of the week (excluding weekends) from 6:00 to 8:30 a.m.
-and then from 3:00 to 7:30 p.m, and buses, police cars, ambulances, fire trucks, government and diplomatic vehicles, school buses and vans, and electric and hybrid vehicles are exempt.
-To decide which half of the fleet is restricted in any given day, the Pico y Placa follows an odd–even schedule based on the last digit of the vehicle’s license plate [@montero2025].
 
-In this context, @correa2019a reported that the data collected from Google Maps API indicated that rush hours occur three times during Saturdays: in the morning (between 8:00 and 10:00 a.m); around midday (between 12:00 and 2:00 p.m); and in the evenings (between 6:00 and 8:00 p.m).
-Based on this information, @correa2019a classiﬁed the typical traﬃc in three categories: "free" or "green traﬃc" (G), "average" or "orange traﬃc" (O), and "heavy" or "red traﬃc" (R).
-By using letter triads they characterized the typical daily traﬃc with sequences like "G-G-G" or "R-O-R." Thus, for example, the sequence “R-O-G” means that the typical traﬃc changes from “red” in the morning to “orange” at noon and “green” in the afternoon, describing a place where traﬃc conditions improve as time passes.
+## STEP 3: Sketching a graph database model
 
-## Sketching a graph database model
-
-Sketching a graph database model is the next step after a successful data import in Neo4j.
-Given the benefits of the labeled property graph, an initial model can be modified multiple times.
-These modifications are important because they reflect the analyst’s expertise and highlight critical nodes and relationships to be mapped.
-An initial graph database model can consider the most elementary schema focused on the relationship between restaurants and customers (Figure [4](#fig:F4)).
-
-```{r F4, echo=FALSE, fig.cap="A visual representation of the initial schema about restaurants-customers relationship", fig.align="center", out.height="180px", out.height="90px", out.width="380px", fig.pos="H"}
-knitr::include_graphics("F4.png")
-```
-
-In this graph model, the node "`Restaurant`" has four hidden properties (i.e., web, name, latitude, and longitude), the node "`Customer`" has two hidden properties (i.e., ClientLatitude, ClientLongitude), and the relationship "`SERVES`" has one property (i.e., distance).
-Despite its simple visual representation, with this model we can examine several statistical aspects.
-For example, by using cypher (i.e., the declarative, SQL-like query language for property graphs in Neo4j) the following syntax provides the minimum, the mean, and the maximum distance coverage from restaurants to customers' location.
-
-```         
-MATCH (:Restaurant)-[s:SERVES]->(:Customer)
-RETURN round(avg(toFloat(s.Distance)), 1) AS avgDistanceMts,
-       min(toFloat(s.Distance))           AS minDistanceMts,
-       max(toFloat(s.Distance))           AS maxDistanceMts;
-```
-
-Despite the simplistic structure of the graph database model of Figure [4](#fig:F4), its complexity and scope can easily grow as long as the analyst intends to map other variable relationships.
-Before moving on how to increase the complexity of this graph database model, it is worth mentioning that it opens the possibility to examine the `Restaurant-SERVES-Customer` resulting network with a single cypher query like this one:
-
-```         
-// Show the Restaurant–Customer network for distance <= 2000 meters
-MATCH (r:Restaurant)-[s:SERVES]->(c:Customer)
-WHERE toFloat(s.Distance) <= 2000
-RETURN r, s, c;
-```
-
-With this cypher query, Neo4j produces a network visualization that shows the graph data structure like the one depicted in Figure [5](#fig:F5).
-Such a network-based data structure visualization unlocks further analyses via Neo4j's built-in plugin called "Graph Data Science" (GDS).
-This plugin provides extensive analytical capabilities centered around graph algorithms, including nodes community detection, centrality, similarity, path finding, and node embeddings, as well as graph catalog procedures and machine learning pipelines designed to support data science workflows for graphs.
-With GDS, all operations are designed for massive scale and parallelization, with a custom and general API tailored for graph-global processing, and highly optimized compressed in-memory data structures.
-
-```{r F5, echo=FALSE, fig.cap="A network-based visualization of the Restaurant-SERVES-Customer graph model", fig.align="center", out.width="250px", out.height="280px", out.width="380px", fig.pos="H"}
-knitr::include_graphics("F5.png")
-```
-
-From a methodological viewpoint, examining network-based data enables the identification and testing of confounding factors in behavioral non-experimental research designs.
-According to @Kerlinger1986, a confounding factor (or hidden variable) refers to the mixing of the statistical variance of one or more independent variables—typically extraneous to the research purpose—with the independent variable or variables of the research problem.
-For example, figure [5](#fig:F5) shows that the number of connections between restaurants (green nodes) and customers (pink nodes) is uneven when considering distances less than or equal to 2,000 meters (i.e., some restaurants have more clients than others).
-If this pattern holds for other distances, it is appropriate to analyze the restaurant-customer relationships in the entire network.
-If this pattern does not hold, then we can assume that restaurants' delivery time fulfillment might be non-linearly related to the distance between restaurant and customer locations.
-Non-linear relationships in network-like data structures arise because connections between nodes follow a scale-free, power-law distribution [@barabasi1999].
-
-The considerations described above entail further implications.
-As many networks exhibit a power-law distribution—where the probability of finding a highly connected node is relatively low compared to the high probability of finding nodes with few connections—the development of large networks is governed by "self-organization" which transcends the properties of individual nodes and is therefore intrinsically linked to the network structure.
-Self-organization is widely recognized in natural sciences such as physics or biology, but in psychology is not a mainstream framework [@correa2020].
-Rougly speaking, emergence refers to a property of the system that is not present by the individual parts that belong to the system.
-The popular phrase "the whole is greater than the sum of its parts" captures the idea of emergence, which in psychology is largely attributed to the Gestalt school of thought, but has been applied in ecological psychology [@Mace1977] and information processing in cognitive psychology [@Hollis2009].
-
-# Why complexity matters in psychology
-
-As previously noted, labeled property graphs are highly adaptable to new evidence.
-This flexibility allows the database model to evolve through the addition of nodes and edges.
-When a labeled property graph grows, it does more than just increasing its structural complexity because it mirrors the researcher’s awareness of potential confounders such as "omitted variables" whose absence might otherwise bias the rigor of subsequent statistical analyses.
-In causal modeling, omitted variable bias is a primary driver of "endogeneity" [@antonakis2010].
-Formally, endogeneity occurs when an independent variable ($x$) is correlated with the error term ($\epsilon$) in a regression equation ($y = \alpha + \beta x + \epsilon$).
-Beyond omitted variables, endogeneity also arises from "simultaneity" or reverse causality (when $x$ causes $y$ and $y$ causes $x$) and measurement error.
-
-While psychometric indices like McDonald’s $\Omega$ or Cronbach’s $\alpha$ help estimate measurement precision, simultaneity remains challenging in psychological research.
-As these problems are present in other technical domains such as structural equation modeling [@bollen2002], they still remain as a valid concern in recent approaches [@bollen2019].
-From a technical viewpoint, several reasons may explain why researchers omit one or more variables in a model.
-In some cases, operational costs for capturing or measuring variables can work as barriers.
-However, the impossibility to observe or measure variables has not prevented scientists to advance their knowledge in disciplines like quantum physics or theoretical biology, where mathematical modeling and computer simulations are used as scientific tools for building theories [@Luce1999].
-I elaborate upon these and other implications with the same dataset described above and increase the complexity of the initial graph database by adding a third node and a second edge (see Figure [6](#fig:F6)).
-
-```{r F6, echo=FALSE, fig.cap="The schema visualization for the Restaurant-FULFILLED-Order-TO-Customer model", fig.align="center", out.width="250px", out.height="100px", out.width="380px", fig.pos="H"}
-knitr::include_graphics("F6.png")
-```
-
-Compared with the previous model, the schema of Figure [6](#fig:F6) mirrors a slightly complex version.
-This complexity might not be visible in the visualization, but it is in the cypher query below.
-
-```         
-CREATE CONSTRAINT restaurant_web_unique IF NOT EXISTS
-FOR (r:Restaurant) REQUIRE r.web IS UNIQUE;
-
-CREATE CONSTRAINT customer_geo_unique IF NOT EXISTS
-FOR (c:Customer) REQUIRE (c.ClientLatitude, c.ClientLongitude) IS UNIQUE;
-
-CREATE CONSTRAINT order_number_unique IF NOT EXISTS
-FOR (o:Order) REQUIRE o.number IS UNIQUE;
-
-MERGE (r:Restaurant {web: $web})
-  ON CREATE SET r.name = $name, 
-  r.location = point({longitude: toFloat($Longitude), 
-  latitude: toFloat($Latitude)});
-MERGE (c:Customer {ClientLatitude: toFloat($ClientLatitude), 
-ClientLongitude: toFloat($ClientLongitude)})
-  ON CREATE SET c.location = point({longitude: toFloat($ClientLongitude), 
-  latitude: toFloat($ClientLatitude)});
-MERGE (o:Order {number: toInteger($number)})
-SET o.Moment = $Moment,
-    o.Distance_mts = toFloat($Distancemts),
-    o.Time_sec = toFloat($Timesec),
-    o.Time_min = toFloat($Timemin),
-    o.ExpectedDeliveryTime = toFloat($ExpectedDeliveryTime),
-    o.CostDelivery = toFloat($CostDelivery),
-    o.MinimumChargeOrdering = toFloat($MinimumChargeOrdering),
-    o.NumComments = toInteger($NumberOfComments);
-MERGE (r)-[:FULFILLED]->(o)
-MERGE (o)-[:TO]->(c);
-
-MATCH (r:Restaurant), (o:Order), (c:Customer)
-WITH r, o, c
-MERGE (r)-[:FULFILLED]->(o)
-MERGE (o)-[:TO]->(c)
-
-CALL db.schema.visualization();
-```
-
-Now, the cypher query encodes complexity through an additional node (i.e., Order).
-This node introduces a couple of edges (i.e., `FULFILLS` and `TO`) between the `Restaurant` and the `Customer`.
-In addition, the `Restaurant` has three properties: web, name, and a location (that has a latitude and longitude), the `Customer` has two properties (the latitude and longitude), and the `Order` has the following properties: number, moment, distance (in meters), time (in seconds), time (in minutes), expected delivery time, delivery cost, minimum charge ordering, and number of comments.
-Note that some properties are set as integers and others as float.
-This distinction is also important from an interdisciplinary viewpoint.
-In psychology and social sciences, @stevens1946 introduced a classic distinction of variables that dominates several introductory textbooks on statistics (i.e., nominal, ordinal, interval, and ratio), but this distinction is fairly distinct from the computational viewpoint (i.e., boolean, character, integer, and float) in dominating programming languages such as R or Python, which also have useful libraries that connect with Neo4j [@Godard2024; @Scifo2023].
-
-The analytical power of labeled property graphs such as those created in Neo4j resides in the property-rich event nodes and constraints that permit temporal slicing, spatial querying, and graph data science workflows.
-In our case, modeling `Order` as a node (rather than just a property on a relationship) is a best practice for "analytical power" for at least two reasons.
-First, it creates the possibility to connect to other nodes (i.e., `Restaurant` and `Customer`).
-The node `Order` can be enriched with more information or metadata (timestamps, amounts, restaurant category) allowing "multi-dimensional" filtering without complex joins.
-These filters, however, should not be confused with other sophisticated graph-based analyses focused on nodes similarity, community, and link prediction which are impossible or brittle with a single `SERVES` edge.
-The distinction between diagrammatic simplicity and code-level complexity is essential in psychological data modeling, where omitted variables and contextual contingencies often drive observed outcomes.
-
-Vamos a ver
 
 \backmatter
