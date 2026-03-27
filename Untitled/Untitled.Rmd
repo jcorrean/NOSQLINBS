@@ -96,7 +96,7 @@ The remainder of this article is organized as follows. Section 2 introduces the 
 
 # Labeled Property Graphs {#sec2}
 
-Any labeled property graph (LPG) is a network or collection of points or nodes joined together in pairs by lines or edges [@Newman2010]. As a database paradigm, LPGs offer fundamental concepts for understanding how entities (nodes) and their relationships (edges) form interconnected data structures. From a data management viewpoint, the analysis of these data structures requires tools that go beyond the rigid tabular constraints of relational databases.
+Any labeled property graph (LPG) is a network. In other words, it is a collection of points or nodes joined together in pairs by lines or edges [@Newman2010]. As a database paradigm, LPGs provide the basis for understanding how entities (nodes) and their relationships (edges) form interconnected data structures that go beyond the rigid tabular constraints of relational databases.
 
 As the concepts of graphs are thoroughly covered in introductory texts , these will not be revisited here.
 Instead, this article aims to illustrate how graph databases can enrich the methodological toolbox of psychological researchers and behavioral scientists, enabling analyses that embrace complexity, dynamic relationships, and multi-level contingencies [@Robinson2015].
