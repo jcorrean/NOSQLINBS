@@ -205,13 +205,13 @@ representational commitment. To our knowledge, this distinction has
 received no systematic treatment as a psychological method.
 
 This article provides a step-by-step tutorial for implementing labeled
-property graphs (LPGs) in psychological research using \texttt{Neo4j}
-and \texttt{R}. We illustrate the approach with the Speed-Dating
-replication dataset \citep{Selterman2023}, a publicly available resource
-whose dyadic, longitudinal, and multimodal structure makes it an ideal
-vehicle for demonstrating how LPGs preserve relational topology, handle
-structural missingness without numerical encoding, and support queries
-that rectangular formats cannot express without costly joins or data
+property graphs (LPGs) in psychological research. We illustrate the
+approach with the Speed-Dating replication dataset
+\citep{Selterman2023}, a publicly available resource whose dyadic,
+longitudinal, and multimodal structure makes it an ideal vehicle for
+demonstrating how LPGs preserve relational topology, handle structural
+missingness without numerical encoding, and support queries that
+rectangular formats cannot express without costly joins or data
 duplication. The tutorial covers the full workflow: designing a graph
 schema from psychological theory, importing data into Neo4j, querying
 the graph with Cypher, connecting Neo4j to R via the neo2R package, and
@@ -226,7 +226,7 @@ contrasting their representational logic with that of relational
 databases and defining the core elements --- nodes, edges, labels, and
 properties --- that make them particularly well-suited for psychological
 data. Section 3 motivates the tutorial through the Speed-Dating
-replication dataset (Selterman et al., 2023), showing concretely how its
+replication dataset \citep{Selterman2023}, showing concretely how its
 dyadic, longitudinal, and multimodal structure exposes the limitations
 of rectangular formats. Section 4 presents the step-by-step tutorial
 itself, covering the full workflow from graph schema design and data
@@ -239,39 +239,22 @@ concludes with a discussion of limitations and directions for future
 work. All code, data, and a fully reproducible RMarkdown file are
 available via the Open Science Framework at {[}OSF link{]}.
 
-\section{Graph-based databases: A gentle introduction}\label{sec2}
+\section{Labeled Property Graphs}\label{sec2}
 
-Any graph-based database relies on network basic terminology. Thus, a
-brief recap is useful here. \citet{Estrada2011} defines a network as a
-collection of points (called nodes) joined together in pairs by lines
-(called arcs or edges) like those depicted in Figure
-\hyperref[fig:F1]{1}. Despite this simplistic definition, networks
-provide a powerful framework to model any type of system from planets in
-a galaxy to neurons in the nervous system \citep{Vazza2020}.
+Any labeled property graph (LPG) is a network or collection of points or
+nodes joined together in pairs by lines or edges \citep{Newman2010}. As
+a database paradigm, LPGs offer fundamental concepts for understanding
+how entities (nodes) and their relationships (edges) form interconnected
+data structures. From a data management viewpoint, the analysis of these
+data structures requires tools that go beyond the rigid tabular
+constraints of relational databases.
 
-\begin{figure}[H]
-
-{\centering \includegraphics[width=380px,]{F1} 
-
-}
-
-\caption{A visual representation of four types of networks: A) non-directed unweighted network, B) non-directed weighted network, C) directed unweighted network, and D) directed weighted network.}\label{fig:F1}
-\end{figure}
-
-In behavioral sciences, networks have been used to understand the
-mechanisms of team assembly and how these mechanisms determine
-collaboration structure and team performance \citep{guimera2005}. Graphs
-offer fundamental concepts for understanding how entities (nodes) and
-their relationships (edges) form interconnected data structures. From a
-data management viewpoint, the analysis of these data structures
-requires tools that go beyond the rigid tabular constraints of
-relational databases. As the concepts of graphs are thoroughly covered
-in introductory texts \citep{Newman2010}, these will not be revisited
-here. Instead, this article aims to illustrate how graph databases can
-enrich the methodological toolbox of psychological researchers and
-behavioral scientists, enabling analyses that embrace complexity,
-dynamic relationships, and multi-level contingencies
-\citep{Robinson2015}.
+As the concepts of graphs are thoroughly covered in introductory texts ,
+these will not be revisited here. Instead, this article aims to
+illustrate how graph databases can enrich the methodological toolbox of
+psychological researchers and behavioral scientists, enabling analyses
+that embrace complexity, dynamic relationships, and multi-level
+contingencies \citep{Robinson2015}.
 
 \citet{Robinson2015} define a graph database as a system that implements
 \textbf{C}reate, \textbf{R}ead, \textbf{U}pdate, and \textbf{D}elete
@@ -304,8 +287,6 @@ attraction, perceived similarity, desire to say ``yes''), and (3)
 longitudinal follow‑up responses across subsequent weeks for pairs who
 continued interacting. These layers of data are represented as
 interconnected components of a single, coherent graph structure.
-
-Voy a introducir un cambio en esta parte.
 
 \subsection{Entities as Nodes}\label{entities-as-nodes}
 
