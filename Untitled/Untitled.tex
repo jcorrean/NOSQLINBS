@@ -141,41 +141,37 @@ about entities and relationships explicit and testable.}
 The relational nature of psychological data is evident across multiple
 research domains. For example, \citet{guimera2005} examined team
 assembly mechanisms to show how patterns of collaboration emerge from
-relational constraints; \citet{borsboom2013} introduced network-based
+relational constraints and \citet{borsboom2013} introduced network-based
 models to analyze the causal interplay among psychopathological
-symptoms; \citet{serafin2019} applied network analysis to study patterns
-of scientific cooperation in cyberbehavior research; \citet{golino2017}
-demonstrated how network-based approaches can be used to estimate the
-dimensionality of psychological and educational instruments; and
-\citet{menezes2021} applied similar methods to the measurement of
-organizational climate. What these approaches share is that their
-relational structure is treated as an analytical construction,
-reconstructed from rectangular data formats, rather than as a database
-design principle. Treating psychological data as a graph database design
-represents a fundamentally different methodological paradigm that has
-received little explicit attention in psychological research.
+symptoms. What these approaches share is that their relational structure
+is treated as an analytical construction, reconstructed from rectangular
+data formats, rather than as a database design principle. Treating
+psychological data as a graph database design represents a fundamentally
+different methodological paradigm that has received little explicit
+attention in psychological research.
 
 Relational databases have dominated psychological research for good
 reasons. They store data in tables where columns represent variables,
 rows represent cases, and relationships between entities are managed
-through the so-called ``SQL'' or Structured Query Language. Relational
-databases represent a paradigm that works well when data are rectangular
-and relationships are simple \citep{soto2025}. However, as psychological
-phenomena grow more complex (i.e., spanning multiple levels of analysis,
-unfolding over time, and involving entities that relate to each other in
-qualitatively distinct ways) the tabular constraints of relational
-databases become a methodological liability rather than an asset. An
-alternative paradigm, broadly called ``Not Only SQL'' (NoSQL), includes
-systems designed for non-tabular, highly connected data. Among these,
-graph databases are particularly well-suited for psychological research
-because they treat relationships as first-class elements rather than
-implicit byproducts of table joins \citep{Robinson2015}. In this
-article, we examine graph databases as a methodological paradigm where
-nodes and edges (rather than tables and joins) become the basic
-representational units for any behavior. One of the benefits that
-results from this database paradigm is that the behavior under scrutiny
-can be modeled as a complex system in a way that deviates from previous
-approaches \citep{Guastello2009}. Understanding why this database
+through the so-called ``Structured Query Language'' (SQL). This paradigm
+works well when data are rectangular and relationships are simple
+\citep{soto2025}. However, as psychological phenomena grow more complex
+(i.e., spanning multiple levels of analysis, unfolding over time, and
+involving entities that relate to each other in qualitatively distinct
+ways) the tabular constraints of relational databases become a
+methodological liability rather than an asset.
+
+An alternative paradigm, broadly referred to as ``Not Only SQL''
+(NoSQL), includes systems designed for non-tabular, highly connected
+data. Among these, graph databases are particularly well suited for
+psychological research because they treat relationships as first-class
+elements rather than as implicit byproducts of table joins
+\citep{Robinson2015}. This database paradigm allows behavior to be
+modeled as a complex system in a way that differs fundamentally from
+traditional approaches \citep{Guastello2009}. In this article, we
+examine graph databases as a methodological paradigm in which nodes and
+edges (rather than tables and joins) constitute the basic
+representational units of behavior. Understanding why this database
 paradigm remains largely absent from psychological research requires
 first acknowledging what already exists.
 
@@ -211,23 +207,24 @@ All materials --- including annotated Cypher and R code, data, and a
 reproducible RMarkdown file --- are available in a public repository.
 
 The remainder of this article is organized as follows. Section 2
-introduces the conceptual foundations of labeled property graphs,
-contrasting their representational logic with that of relational
-databases and defining the core elements --- nodes, edges, labels, and
-properties --- that make them particularly well-suited for psychological
-data. Section 3 motivates the tutorial through the Speed-Dating
-replication dataset \citep{Selterman2023}, showing concretely how its
+introduces the conceptual foundations of graph databases, contrasting
+their representational logic with that of relational databases and
+defining the core elements --- nodes, edges, labels, and properties ---
+that make them particularly well-suited for psychological data. Section
+3 motivates our tutorial through the Speed-Dating replication dataset
+\citep{Selterman2023}. This tutorial shows how this dataset and its
 dyadic, longitudinal, and multimodal structure exposes the limitations
 of rectangular formats. Section 4 presents the step-by-step tutorial
 itself, covering the full workflow from graph schema design and data
-import in Neo4j through querying with Cypher and statistical analysis
-and visualization in R via the neo2R, tidygraph, and ggraph packages.
-Section 5 discusses the broader methodological implications of LPGs for
-psychological research, with particular attention to structural
-missingness, scalability, and ontological transparency. Section 6
-concludes with a discussion of limitations and directions for future
-work. All code, data, and a fully reproducible RMarkdown file are
-available via the Open Science Framework at {[}OSF link{]}.
+import in \texttt{Neo4j} through querying with \texttt{Cypher} and
+statistical analysis and visualization in R via the neo2R, tidygraph,
+and ggraph packages. Section 5 discusses the broader methodological
+implications of graph databases for psychological research, with
+particular attention to structural missingness, scalability, and
+ontological transparency. Section 6 concludes with a discussion of
+limitations and directions for future work. All code, data, and a fully
+reproducible RMarkdown file are available via the Open Science Framework
+at {[}OSF link{]}.
 
 \section{Labeled Property Graphs}\label{sec2}
 
