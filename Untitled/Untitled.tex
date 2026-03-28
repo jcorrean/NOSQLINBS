@@ -90,7 +90,7 @@
 \begin{document}
 
 
-\title[]{A Primer on Labeled Property Graphs}
+\title[]{Graph Databases as a Psychological Method}
 
 %%=============================================================%%
 %% Prefix	-> \pfx{Dr}
@@ -117,30 +117,18 @@ City}, \country{Mexico}, \postcode{01219}}}
   \affil[2]{\orgdiv{Escuela de Educación}, \orgname{Politécnico
 Grancolombiano}, \orgaddress{\city{Bogotá}, \country{Colombia}, \postcode{110231}}}
 
-\abstract{Psychological data are inherently relational: they capture
-individuals embedded in dyads, groups, and institutions; behaviors
-unfolding across time; and constructs operating simultaneously at
-multiple levels of analysis. Yet the rectangular data formats that
-dominate psychological research impose tabular constraints that
-fragment, duplicate, or discard the relational structure that makes such
-data meaningful. This tutorial introduces labeled property graphs (LPGs)
-as a flexible and scalable database paradigm for modeling complex
-psychological data, and provides a step-by-step implementation guide
-using Neo4j and R. We illustrate the approach with the Speed-Dating
-replication dataset (Selterman et al., 2023), a publicly available
-resource whose dyadic, longitudinal, and multimodal structure makes it
-an ideal vehicle for demonstrating how LPGs preserve relational
-topology, handle structural missingness without numerical encoding, and
-support queries that rectangular formats cannot express without costly
-joins or data duplication. Compared to relational databases, LPGs offer
-three methodological advantages particularly relevant to psychological
-research: schema flexibility that accommodates evolving theoretical
-models, query performance that scales with local graph structure rather
-than total dataset size, and an ontological transparency that makes the
-researcher's assumptions about entities and relationships explicit and
-testable. All materials --- including annotated code, data, and a
-reproducible workflow --- are available via the Open Science Framework
-to facilitate adoption across subfields of psychology.}
+\abstract{This article provides a tutorial on labeled property graphs as
+a graph database paradigm well suited for psychological research. We
+show how this paradigm addresses the tabular constraints that fragment,
+duplicate, or obscure the relational structure of human behavior, and
+how it supports the representation, management, and analysis of complex
+behavioral data. Using the Speed-Dating replication dataset as a running
+example, we demonstrate that graph databases offer three methodological
+advantages particularly relevant to psychological research: (a) schema
+flexibility that accommodates evolving theoretical models, (b) query
+performance that exploits local relational structure rather than global
+table joins, and (c) ontological transparency that makes assumptions
+about entities and relationships explicit and testable.}
 
 \keywords{Graph database, Network modeling, complex behavior}
 
@@ -150,43 +138,46 @@ to facilitate adoption across subfields of psychology.}
 
 \section{Introduction}\label{sec1}
 
-Psychological data are relational by nature. For example,
-\citet{guimera2005} leveraged this relational nature of psychological
-data to understand the mechanisms of team assembly and how these
-mechanisms determine collaboration structure and team performance. Other
-instances include the analyses of the causal interplay between
-psychopathological symptoms \citep{borsboom2013}, the scientific
-cooperation to understand cyberbehavior \citep{serafin2019}, the
-psychometric estimation of the correct number of dimensions in
-psychological and educational instruments \citep{golino2017}, or the
-measurement of organizational climate \citep{menezes2021}. What these
-examples share, however, is that relational structure was an analytical
-construction rather than a database design --- and it is precisely that
-distinction that this article addresses.
+The relational nature of psychological data is evident across multiple
+research domains. For example, \citet{guimera2005} examined team
+assembly mechanisms to show how patterns of collaboration emerge from
+relational constraints; \citet{borsboom2013} introduced network-based
+models to analyze the causal interplay among psychopathological
+symptoms; \citet{serafin2019} applied network analysis to study patterns
+of scientific cooperation in cyberbehavior research; \citet{golino2017}
+demonstrated how network-based approaches can be used to estimate the
+dimensionality of psychological and educational instruments; and
+\citet{menezes2021} applied similar methods to the measurement of
+organizational climate. What these approaches share is that their
+relational structure is treated as an analytical construction,
+reconstructed from rectangular data formats, rather than as a database
+design principle. Treating psychological data as a graph database design
+represents a fundamentally different methodological paradigm that has
+received little explicit attention in psychological research.
 
 Relational databases have dominated psychological research for good
 reasons. They store data in tables where columns represent variables,
 rows represent cases, and relationships between entities are managed
-through the so-called ``SQL'' or Structured Query Language
-\citep{soto2025}. Relational databases represent a paradigm that works
-well when data are rectangular and relationships are simple. However, as
-psychological phenomena grow more complex (i.e., spanning multiple
-levels of analysis, unfolding over time, and involving entities that
-relate to each other in qualitatively distinct ways) the tabular
-constraints of relational databases become a methodological liability
-rather than an asset. An alternative paradigm, broadly called ``Not Only
-SQL'' (NoSQL), includes systems designed for non-tabular, highly
-connected data. Among these, graph databases are particularly
-well-suited for psychological research because they treat relationships
-as first-class elements rather than implicit byproducts of table joins
-\citep{Robinson2015}. In this article, we examine graph databases as a
-methodological paradigm where nodes and edges (rather than tables and
-joins) become the basic representational units for any behavior. One of
-the benefits that results from this database paradigm is that the
-behavior under scrutiny can be modeled as a complex system in a way that
-deviates from previous approaches \citep{Guastello2009}. Understanding
-why this database paradigm remains largely absent from psychological
-research requires first acknowledging what already exists.
+through the so-called ``SQL'' or Structured Query Language. Relational
+databases represent a paradigm that works well when data are rectangular
+and relationships are simple \citep{soto2025}. However, as psychological
+phenomena grow more complex (i.e., spanning multiple levels of analysis,
+unfolding over time, and involving entities that relate to each other in
+qualitatively distinct ways) the tabular constraints of relational
+databases become a methodological liability rather than an asset. An
+alternative paradigm, broadly called ``Not Only SQL'' (NoSQL), includes
+systems designed for non-tabular, highly connected data. Among these,
+graph databases are particularly well-suited for psychological research
+because they treat relationships as first-class elements rather than
+implicit byproducts of table joins \citep{Robinson2015}. In this
+article, we examine graph databases as a methodological paradigm where
+nodes and edges (rather than tables and joins) become the basic
+representational units for any behavior. One of the benefits that
+results from this database paradigm is that the behavior under scrutiny
+can be modeled as a complex system in a way that deviates from previous
+approaches \citep{Guastello2009}. Understanding why this database
+paradigm remains largely absent from psychological research requires
+first acknowledging what already exists.
 
 Computational libraries such as \texttt{sna}, \texttt{igraph},
 \texttt{qgraph}, or \texttt{psychonetrics} have made network analysis
@@ -194,7 +185,7 @@ accessible to researchers working entirely within \texttt{R}
 \citep{Luke2015}, and their adoption in psychology is well-known
 \citep{Mair2018}. However, these libraries mainly address the
 statistical analysis of relational data, leaving the management of it
-under the hood. (i.e., the data must first be extracted from a
+under the hood (i.e., the data must first be extracted from a
 rectangular format, reshaped into an edge list or adjacency matrix, and
 then passed to the analytic tool). Thus, such a workflow reconstructs
 relational structure at the analysis stage rather than preserving it
@@ -208,17 +199,16 @@ This article provides a step-by-step tutorial for implementing labeled
 property graphs (LPGs) in psychological research. We illustrate the
 approach with the Speed-Dating replication dataset
 \citep{Selterman2023}, a publicly available resource whose dyadic,
-longitudinal, and multimodal structure makes it an ideal vehicle for
+longitudinal, and multimodal structure provides an ideal scenario for
 demonstrating how LPGs preserve relational topology, handle structural
 missingness without numerical encoding, and support queries that
 rectangular formats cannot express without costly joins or data
 duplication. The tutorial covers the full workflow: designing a graph
-schema from psychological theory, importing data into Neo4j, querying
-the graph with Cypher, connecting Neo4j to R via the neo2R package, and
-conducting statistical analysis and visualization using tidygraph and
-ggraph. All materials --- including annotated Cypher and R code, data,
-and a reproducible RMarkdown file --- are available in a public
-repository.
+schema, importing data into Neo4j, querying the graph with Cypher,
+connecting Neo4j to R via the neo2R package, and conducting statistical
+analysis and visualization using \texttt{tidygraph} and \texttt{ggraph}.
+All materials --- including annotated Cypher and R code, data, and a
+reproducible RMarkdown file --- are available in a public repository.
 
 The remainder of this article is organized as follows. Section 2
 introduces the conceptual foundations of labeled property graphs,
@@ -247,7 +237,7 @@ collection of points or nodes joined together in pairs by lines or edges
 implements \textbf{C}reate, \textbf{R}ead, \textbf{U}pdate, and
 \textbf{D}elete (CRUD) operations on a graph data model, where entities
 are represented as nodes and relationships as edges like the one
-depicted in Figure \hyperref[fig:F2]{2} derived from the
+depicted in Figure \hyperref[fig:F2]{1} derived from the
 \href{https://osf.io/hcfmi/files/h62a3}{Speed‑Dating dataset}
 \citep{Selterman2023} which was a replication study from the original
 article by \citet{Eastwick2008}.
