@@ -96,12 +96,7 @@ The remainder of this article is organized as follows. Section 2 introduces the 
 
 # Labeled Property Graphs {#sec2}
 
-Any labeled property graph (LPG) is a network. In other words, it is a collection of points or nodes joined together in pairs by lines or edges [@Newman2010]. As a database paradigm, LPGs provide the basis for understanding how entities (nodes) and their relationships (edges) form interconnected data structures that go beyond the rigid tabular constraints of relational databases.
-
-As the concepts of graphs are thoroughly covered in introductory texts , these will not be revisited here.
-Instead, this article aims to illustrate how graph databases can enrich the methodological toolbox of psychological researchers and behavioral scientists, enabling analyses that embrace complexity, dynamic relationships, and multi-level contingencies [@Robinson2015].
-
-@Robinson2015 define a graph database as a system that implements **C**reate, **R**ead, **U**pdate, and **D**elete (CRUD) operations on a graph data model, where entities are represented as nodes and relationships as edges like the one depicted in Figure [2](#fig:F2) derived from the Speed‑Dating dataset [@Selterman2023] which was a replication study from the original article by @Eastwick2008.
+Any labeled property graph (LPG) is a network. In other words, it is a collection of points or nodes joined together in pairs by lines or edges [@Newman2010]. As a database paradigm, LPGs represent a system that implements **C**reate, **R**ead, **U**pdate, and **D**elete (CRUD) operations on a graph data model, where entities are represented as nodes and relationships as edges like the one depicted in Figure [2](#fig:F2) derived from the [Speed‑Dating dataset](https://osf.io/hcfmi/files/h62a3) [@Selterman2023] which was a replication study from the original article by @Eastwick2008.
 
 ```{r F2, echo=FALSE, fig.cap="A visual representation of a graph database that combines persons, companies, and routes", fig.align="center", out.height="180px", out.width="350px", fig.pos="H"}
 knitr::include_graphics("F2.png")

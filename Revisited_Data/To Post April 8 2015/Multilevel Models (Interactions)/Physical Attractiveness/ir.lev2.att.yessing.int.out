@@ -1,0 +1,323 @@
+Mplus VERSION 7.11
+MUTHEN & MUTHEN
+07/29/2014  12:27 PM
+
+INPUT INSTRUCTIONS
+
+   TITLE: Physical Attractiveness predicting 'yessing' w. Interaction
+
+      DATA:
+      FILE IS
+    speed.dating.mplus.10.dat;
+
+      VARIABLE: NAMES ARE Part_num MatchID_clean Follow_clean
+      IRLikedPartner IRSayYes IRSexAttract
+        IRThinkCareer IRThinkAmbitious IRThinkPhys
+        IRThinkHot IRThinkFun IRThinkResponsive
+        IRThinkDependable IRThinkFriendly IRCommon
+        IRPersonality IRConnection yessing mutmatch PMexcited
+        PMSelfinit PMMatchinit FUEager FUInitiate FUEnjoy
+        FUSexDesire FUSoulMate FURomInterest FUOnlyWith
+        FUMind FUOneNight FUCasual FUSerious FUCommitted
+        FUExtentPhys FUExtentCareer FUExtentAmbitious
+        FUExtentHot FUExtentFun FUExtentRespons
+        FUExtentFriendly DemAge DemEthn FUPhysContact
+        FUInitiatePhys FUEnjoyContact FUContactBad
+        IRpatt IRepro IRpers IRrdes IRchem FUpasn FUpatt FUepro
+        FUpers FUStatus sex_M1_F2;
+
+      CLUSTER =Part_num;
+      WITHIN = IRpatt sexint;
+      BETWEEN = sex_M1_F2;
+
+  USEVARIABLES ARE Part_num IRpatt yessing sex_M1_F2 sexint;
+
+  CATEGORICAL IS yessing;
+
+   USEOBS Follow_clean EQ 1;
+
+  CLUSTER = Part_num;
+  MISSING ARE ALL (-999);
+
+  DEFINE:
+
+  sexint = sex_M1_F2 * IRpatt;
+
+   ANALYSIS:
+  TYPE=TWOLEVEL;
+  ESTIMATOR = MLR;
+
+  MODEL:
+  %WITHIN%
+  yessing ON IRpatt sexint;
+
+  %BETWEEN%
+  yessing ON sex_M1_F2;
+
+
+  OUTPUT: SAMPSTAT STDYX;
+
+
+
+
+
+*** WARNING in VARIABLE command
+  Note that only the first 8 characters of variable names are used in the output.
+  Shorten variable names to avoid any confusion.
+*** WARNING
+  Data set contains cases with missing on x-variables.
+  These cases were not included in the analysis.
+  Number of cases with missing on x-variables:  114
+*** WARNING
+  Data set contains cases with missing on all variables except
+  x-variables.  These cases were not included in the analysis.
+  Number of cases with missing on all variables except x-variables:  177
+   3 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+Physical Attractiveness predicting 'yessing' w. Interaction
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        2525
+
+Number of dependent variables                                    1
+Number of independent variables                                  3
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Binary and ordered categorical (ordinal)
+   YESSING
+
+Observed independent variables
+   IRPATT      SEX_M1_F    SEXINT
+
+Variables with special functions
+
+  Cluster variable      PART_NUM
+
+  Within variables
+   IRPATT      SEXINT
+
+  Between variables
+   SEX_M1_F
+
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Optimization Specifications for the Quasi-Newton Algorithm for
+Continuous Outcomes
+  Maximum number of iterations                                 100
+  Convergence criterion                                  0.100D-05
+Optimization Specifications for the EM Algorithm
+  Maximum number of iterations                                 500
+  Convergence criteria
+    Loglikelihood change                                 0.100D-02
+    Relative loglikelihood change                        0.100D-05
+    Derivative                                           0.100D-02
+Optimization Specifications for the M step of the EM Algorithm for
+Categorical Latent variables
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-02
+  Basis for M step termination                           ITERATION
+Optimization Specifications for the M step of the EM Algorithm for
+Censored, Binary or Ordered Categorical (Ordinal), Unordered
+Categorical (Nominal) and Count Outcomes
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-02
+  Basis for M step termination                           ITERATION
+  Maximum value for logit thresholds                            15
+  Minimum value for logit thresholds                           -15
+  Minimum expected cell size for chi-square              0.100D-01
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization algorithm                                         EMA
+Integration Specifications
+  Type                                                    STANDARD
+  Number of integration points                                  15
+  Dimensions of numerical integration                            1
+  Adaptive quadrature                                           ON
+Link                                                         LOGIT
+Cholesky                                                        ON
+
+Input data file(s)
+  speed.dating.mplus.10.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             1
+     Number of clusters                        285
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    YESSING
+      Category 1    0.718     1812.000
+      Category 2    0.282      713.000
+
+
+SAMPLE STATISTICS
+
+
+     SAMPLE STATISTICS
+
+
+           Means
+              IRPATT        SEXINT        SEX_M1_F
+              ________      ________      ________
+ 1              4.757        -0.362        -0.002
+
+
+           Covariances
+              IRPATT        SEXINT        SEX_M1_F
+              ________      ________      ________
+ IRPATT         5.340
+ SEXINT        -1.602         6.863
+ SEX_M1_F      -0.352         1.189         0.250
+
+
+           Correlations
+              IRPATT        SEXINT        SEX_M1_F
+              ________      ________      ________
+ IRPATT         1.000
+ SEXINT        -0.265         1.000
+ SEX_M1_F      -0.304         0.907         1.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                        5
+
+Loglikelihood
+
+          H0 Value                       -1157.934
+          H0 Scaling Correction Factor      1.3900
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                    2325.868
+          Bayesian (BIC)                  2355.038
+          Sample-Size Adjusted BIC        2339.152
+            (n* = (n + 2) / 24)
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Within Level
+
+ YESSING    ON
+    IRPATT             0.735      0.054     13.500      0.000
+    SEXINT            -0.143      0.098     -1.451      0.147
+
+Between Level
+
+ YESSING    ON
+    SEX_M1_F2          0.895      0.641      1.397      0.162
+
+ Thresholds
+    YESSING$1          5.097      0.357     14.286      0.000
+
+ Residual Variances
+    YESSING            1.728      0.339      5.093      0.000
+
+
+LOGISTIC REGRESSION ODDS RATIO RESULTS
+
+Within Level
+
+ YESSING    ON
+    IRPATT             2.086
+    SEXINT             0.867
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Within Level
+
+ YESSING    ON
+    IRPATT             0.659      0.031     21.343      0.000
+    SEXINT            -0.145      0.094     -1.534      0.125
+
+Between Level
+
+ YESSING    ON
+    SEX_M1_F2          0.322      0.211      1.529      0.126
+
+ Thresholds
+    YESSING$1          3.671      0.348     10.559      0.000
+
+ Residual Variances
+    YESSING            0.896      0.136      6.597      0.000
+
+
+R-SQUARE
+
+Within Level
+
+    Observed                                        Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    YESSING            0.505      0.051      9.958      0.000
+
+Between Level
+
+    Observed                                        Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    YESSING            0.104      0.136      0.764      0.445
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.111E-02
+       (ratio of smallest to largest eigenvalue)
+
+
+DIAGRAM INFORMATION
+
+  Mplus diagrams are currently not available for multilevel analysis.
+  No diagram output was produced.
+
+
+     Beginning Time:  12:27:22
+        Ending Time:  12:27:23
+       Elapsed Time:  00:00:01
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2013 Muthen & Muthen

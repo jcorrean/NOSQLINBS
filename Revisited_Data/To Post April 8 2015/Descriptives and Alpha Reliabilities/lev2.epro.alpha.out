@@ -1,0 +1,339 @@
+Mplus VERSION 7.11
+MUTHEN & MUTHEN
+07/23/2014   3:10 PM
+
+INPUT INSTRUCTIONS
+
+   TITLE: Level 2 Earning Prospects Alpha Reliability
+
+     DATA:
+    FILE IS
+  speed.dating.mplus.10.dat;
+
+    VARIABLE: NAMES ARE Part_num MatchID_clean Follow_clean
+    IRLikedPartner IRSayYes IRSexAttract
+      IRThinkCareer IRThinkAmbitious IRThinkPhys
+      IRThinkHot IRThinkFun IRThinkResponsive
+      IRThinkDependable IRThinkFriendly IRCommon
+      IRPersonality IRConnection yessing mutmatch PMexcited
+      PMSelfinit PMMatchinit FUEager FUInitiate FUEnjoy
+      FUSexDesire FUSoulMate FURomInterest FUOnlyWith
+      FUMind FUOneNight FUCasual FUSerious FUCommitted
+      FUExtentPhys FUExtentCareer FUExtentAmbitious
+      FUExtentHot FUExtentFun FUExtentRespons
+      FUExtentFriendly DemAge DemEthn FUPhysContact
+      FUInitiatePhys FUEnjoyContact FUContactBad
+      IRpatt IRepro IRpers IRrdes IRchem FUpasn FUpatt FUepro
+      FUpers FUStatus sex_M1_F2;
+
+      CLUSTER =Part_num;
+
+  USEVARIABLES ARE Part_num IRThinkCareer IRThinkAmbitious ;
+
+   USEOBS Follow_clean EQ 1;
+
+  CLUSTER = Part_num;
+  MISSING ARE ALL (-999);
+
+   ANALYSIS:
+  TYPE=TWOLEVEL;
+
+  MODEL:
+
+  %WITHIN%
+  IRThinkCareer WITH IRThinkAmbitious;
+
+  %BETWEEN%
+  IRThinkCareer WITH IRThinkAmbitious;
+
+  OUTPUT: SAMPSTAT STDYX;
+
+
+
+
+
+*** WARNING in VARIABLE command
+  Note that only the first 8 characters of variable names are used in the output.
+  Shorten variable names to avoid any confusion.
+*** WARNING
+  Data set contains cases with missing on all variables.
+  These cases were not included in the analysis.
+  Number of cases with missing on all variables:  134
+   2 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+Level 2 Earning Prospects Alpha Reliability
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        2682
+
+Number of dependent variables                                    2
+Number of independent variables                                  0
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   IRTHINKCAR  IRTHINKAMB
+
+Variables with special functions
+
+  Cluster variable      PART_NUM
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Maximum number of iterations                                   100
+Convergence criterion                                    0.100D-05
+Maximum number of EM iterations                                500
+Convergence criteria for the EM algorithm
+  Loglikelihood change                                   0.100D-02
+  Relative loglikelihood change                          0.100D-05
+  Derivative                                             0.100D-03
+Minimum variance                                         0.100D-03
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization algorithm                                         EMA
+
+Input data file(s)
+  speed.dating.mplus.10.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             3
+     Number of clusters                        304
+
+     Average cluster size        8.822
+
+     Estimated Intraclass Correlations for the Y Variables
+
+                Intraclass              Intraclass
+     Variable  Correlation   Variable  Correlation
+
+     IRTHINKC     0.266      IRTHINKA     0.286
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              IRTHINKC      IRTHINKA
+              ________      ________
+ IRTHINKC       0.998
+ IRTHINKA       0.991         0.993
+
+
+SAMPLE STATISTICS
+
+NOTE:  The sample statistics for within and between refer to the
+       maximum-likelihood estimated within and between covariance
+       matrices, respectively.
+
+
+     ESTIMATED SAMPLE STATISTICS FOR WITHIN
+
+
+           Means
+              IRTHINKC      IRTHINKA
+              ________      ________
+ 1              0.000         0.000
+
+
+           Covariances
+              IRTHINKC      IRTHINKA
+              ________      ________
+ IRTHINKC       2.695
+ IRTHINKA       2.069         2.481
+
+
+           Correlations
+              IRTHINKC      IRTHINKA
+              ________      ________
+ IRTHINKC       1.000
+ IRTHINKA       0.800         1.000
+
+
+     ESTIMATED SAMPLE STATISTICS FOR BETWEEN
+
+
+           Means
+              IRTHINKC      IRTHINKA
+              ________      ________
+ 1              6.341         6.353
+
+
+           Covariances
+              IRTHINKC      IRTHINKA
+              ________      ________
+ IRTHINKC       0.975
+ IRTHINKA       0.949         0.995
+
+
+           Correlations
+              IRTHINKC      IRTHINKA
+              ________      ________
+ IRTHINKC       1.000
+ IRTHINKA       0.964         1.000
+
+
+     MAXIMUM LOG-LIKELIHOOD VALUE FOR THE UNRESTRICTED (H1) MODEL IS -9056.638
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                        8
+
+Loglikelihood
+
+          H0 Value                       -9056.638
+          H0 Scaling Correction Factor      2.5816
+            for MLR
+          H1 Value                       -9056.638
+          H1 Scaling Correction Factor      2.5816
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                   18129.276
+          Bayesian (BIC)                 18176.431
+          Sample-Size Adjusted BIC       18151.013
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                              0.000*
+          Degrees of Freedom                     0
+          P-Value                           1.0000
+          Scaling Correction Factor         1.0000
+            for MLR
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.000
+
+CFI/TLI
+
+          CFI                                1.000
+          TLI                                1.000
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                            676.496
+          Degrees of Freedom                     2
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value for Within                   0.000
+          Value for Between                  0.000
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Within Level
+
+ IRTHINKC WITH
+    IRTHINKAMB         2.069      0.129     16.013      0.000
+
+ Variances
+    IRTHINKCAR         2.695      0.151     17.809      0.000
+    IRTHINKAMB         2.481      0.139     17.788      0.000
+
+Between Level
+
+ IRTHINKC WITH
+    IRTHINKAMB         0.949      0.104      9.108      0.000
+
+ Means
+    IRTHINKCAR         6.341      0.065     97.046      0.000
+    IRTHINKAMB         6.353      0.065     97.399      0.000
+
+ Variances
+    IRTHINKCAR         0.975      0.117      8.330      0.000
+    IRTHINKAMB         0.995      0.109      9.126      0.000
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Within Level
+
+ IRTHINKC WITH
+    IRTHINKAMB         0.800      0.016     51.018      0.000
+
+ Variances
+    IRTHINKCAR         1.000      0.000    999.000    999.000
+    IRTHINKAMB         1.000      0.000    999.000    999.000
+
+Between Level
+
+ IRTHINKC WITH
+    IRTHINKAMB         0.964      0.012     83.753      0.000
+
+ Means
+    IRTHINKCAR         6.422      0.402     15.965      0.000
+    IRTHINKAMB         6.368      0.369     17.261      0.000
+
+ Variances
+    IRTHINKCAR         1.000      0.000    999.000    999.000
+    IRTHINKAMB         1.000      0.000    999.000    999.000
+
+
+R-SQUARE
+
+Within Level
+
+Between Level
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.356E-03
+       (ratio of smallest to largest eigenvalue)
+
+
+     Beginning Time:  15:10:56
+        Ending Time:  15:10:56
+       Elapsed Time:  00:00:00
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2013 Muthen & Muthen
