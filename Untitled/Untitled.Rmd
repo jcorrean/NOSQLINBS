@@ -239,13 +239,8 @@ As the official documentation provides helpful material for newcomers, downloadi
 
 ## STEP 2: Instance creation and data import
 
-As Neo4j does not support SPSS datasets, we open the .sav file in RStudio with the standard `read_sav` syntax provided by the `haven` R library [@Wickham2025] and exported it as a standard coma separated value file (.csv) with the `write.csv` syntax provided by the `utils` R library [@RCore2025].
-```{r, echo=TRUE}
-library(haven)
-speed_dating <- read_sav("/home/jcc/Documents/GitHub/NOSQLINBS/Revisited_Data/To Post April 8 2015/speed.dating.3lev.small.july25.2014.sav")
-library(utils)
-speed_dating <- write.csv(speed_dating, file = "speed_dating.csv")
-```
+As Neo4j does not support SPSS datasets, we suggest to open the .sav file in RStudio with the standard `read_sav` syntax provided by the `haven` R library [@Wickham2025] and exported it as a standard coma separated value file (.csv) with the `write.csv` syntax provided by the `utils` R library [@RCore2025]. We named this csv file as `speed_dating.csv`.
+
 
 
 ## STEP 2: Understanding the context
