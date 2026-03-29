@@ -264,7 +264,7 @@ interactions.
 \end{figure}
 
 The labeled property graph illustrated in Figure \hyperref[fig:F2]{1}
-helps to recreate the context of the study conducted initially by
+helps to recreate the context of the study published by
 \citet{Eastwick2008} and replicated by \citet{Selterman2023}. Here, this
 design enables researchers to traverse, query, and model highly
 interconnected data structures with exceptional efficiency and
@@ -284,56 +284,57 @@ instantiated explicitly within an LPG.
 
 \texttt{Participant} nodes represent individuals in the study and store
 stable demographic properties such as age, ethnicity, and sex (from the
-codebook variables DemAge, DemEthn, and sex\_M1\_F2). \texttt{DateEvent}
-nodes represent each dyadic interaction and store the full set of
-impression‑formation ratings provided by participants during
-speed‑dating (e.g., IRLikedPartner, IRSexAttract, IRCommon, IRSayYes,
-yessing, mutmatch). These correspond directly to the interaction‑record
-variables in the dataset. \texttt{FollowUp} nodes represent week‑level
-longitudinal responses, including relationship status, romantic
-interest, sexual desire, and commitment indicators (e.g., FUStatus,
-FURomInterest, FUSexDesire, FUCommitted), captured only for participants
-who matched and continued interacting.
+codebook variables DemAge, DemEthn, and sex\_M1\_F2). The
+\texttt{DateEvent} node encompasses a series of dyadic interactions and
+store the full set of impression‑formation ratings provided by
+participants during speed‑dating (e.g., IRLikedPartner, IRSexAttract,
+IRCommon, IRSayYes, yessing, mutmatch). These correspond directly to the
+interaction‑record variables in the dataset. The \texttt{FollowUp} node
+represents week‑level longitudinal responses, including relationship
+status, romantic interest, sexual desire, and commitment indicators
+(e.g., FUStatus, FURomInterest, FUSexDesire, FUCommitted), captured only
+for participants who matched and continued interacting.
 
 \subsection{Relationships as Edges}\label{relationships-as-edges}
 
 Edges define how these nodes are linked and encode psychological
-structure directly. \texttt{HAD\_DATE} edges connect Participants to the
-DateEvents in which they took part, indicating the rater's perspective
-on that interaction. \texttt{WITH} edges connect the DateEvent back to
-the other participant, allowing the system to explicitly represent
-dyadic structure. \texttt{FOLLOWED\_UP} edges link \texttt{Participants}
-to their \texttt{FollowUp} nodes, representing relational trajectories
-across weeks. Optionally, a \texttt{MUTUAL\_MATCH\_WITH} edge can be
-created between two \texttt{Participants} when the \texttt{mutmatch}
-property equals 1, providing a direct representation of reciprocal
-liking (i.e., a relationship that is invisible in rectangular data but
-naturally expressed in graph form).
+structure directly. The \texttt{HAD\_DATE} edge connect participants to
+the \texttt{DateEvent} in which they took part, indicating the rater's
+perspective on that interaction. The edge labeled as \texttt{WITH}
+connects the \texttt{DateEvent} back to the other participant, allowing
+the system to explicitly represent dyadic structure. The edge labeled as
+\texttt{FOLLOWED\_UP} links \texttt{Participants} to their
+\texttt{FollowUp} node, representing relational trajectories across
+weeks. Optionally, a \texttt{MUTUAL\_MATCH\_WITH} edge can be created
+between two \texttt{Participants} when the \texttt{mutmatch} property
+equals 1, providing a direct representation of reciprocal liking (i.e.,
+a relationship that is invisible in rectangular data but naturally
+expressed in graph form).
 
-\subsection{Why This Matters for Psychological
-Research}\label{why-this-matters-for-psychological-research}
+\subsection{Why Graph Databases Matter for Psychological
+Research}\label{why-graph-databases-matter-for-psychological-research}
 
-This structure offers several methodological advantages. Psychological
-data retain their natural relational structure. Dyadic interactions are
-modeled as shared events rather than duplicated rows, preserving the
-topology of social and romantic processes as they occur in the real
-world. Temporal processes become navigable. \texttt{Follow‑up} nodes can
-be traversed sequentially, enabling queries such as ``How early do
-committed feelings emerge among mutually matched pairs?'\,' or ``Does
-initial sexual attraction predict later romantic interest?'\,'
+The structure of Figure \hyperref[fig:F2]{1} offers several
+methodological advantages. Psychological data retain their natural
+relational structure. Dyadic interactions are modeled as shared events
+rather than duplicated rows, preserving the topology of social and
+romantic processes as they occur in the real world. Temporal processes
+become navigable. The \texttt{FollowUp} node can be traversed
+sequentially, enabling queries such as ``How early do committed feelings
+emerge among mutually matched pairs?'\,' or ``Does initial sexual
+attraction predict later romantic interest?'\,'
 
 In addition, missingness is handled structurally, not numerically.
-Participants who did not match simply lack \texttt{follow‑up} nodes; no
-NA encoding is required. The model is inherently extensible. Additional
+Participants who did not match simply lack \texttt{FollowUp}; no NA
+encoding is required. The model is inherently extensible. Additional
 constructs, such as personality traits or behavioral logs, can be
 attached as new nodes or properties without reconfiguring the existing
-database schema.
-
-In sum, LPGs allow behavioral scientists to represent complex,
-multi-level psychological phenomena in a way that relational tables
-cannot. The Speed‑Dating schema makes clear how impression formation,
-dyadic reciprocity, and longitudinal relationship development can be
-captured and analyzed within a single unified model.
+database schema. In sum, LPGs allow behavioral scientists to represent
+complex, multi-level psychological phenomena in a way that relational
+tables cannot. The Speed‑Dating schema illustrated in Figure
+\hyperref[fig:F2]{1} makes clear how impression formation, dyadic
+reciprocity, and longitudinal relationship development can be captured
+and analyzed within a single unified model.
 
 \section{Why graph databases as psychological
 method}\label{why-graph-databases-as-psychological-method}
@@ -475,14 +476,17 @@ relational data management systems like Microsoft Access, PostgreSQL, or
 SQLite become burdened with large join tables, sparsely populated rows,
 and extensive null-checking logic. Greater interconnectedness in
 relational databases leads to more joins, which degrade performance and
-complicate adaptation to evolving requirements. \citet{soto2025} has
-highlighted some of these limitations as ``challenges to adoption.''
-From the lenses of graph databases, however, these challenges are not
-even necessary. I will elaborate upon this particular aspect in the next
-section. As a wrap-up, labeled property graphs are not merely a
-technical alternative to relational schemas; they represent a
-methodological advance that aligns with psychology's need for flexible,
-scalable, and conceptually transparent data models.
+complicate adaptation to evolving requirements. Although
+\citet{soto2025} strongly advocates for relational databases in
+behavioral research, he also notes several challenges to their adoption
+in practice. From the perspective advanced here, these challenges point
+to the benefits of alternative data representation paradigms such as
+graph databases.
+
+As a wrap-up, labeled property graphs are not merely a technical
+alternative to relational schemas; they represent a methodological
+advance that aligns with psychology's need for flexible, scalable, and
+conceptually transparent data models.
 
 \section{Applying graph database in behavioral
 research}\label{applying-graph-database-in-behavioral-research}
