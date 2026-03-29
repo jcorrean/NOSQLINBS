@@ -150,11 +150,11 @@ psychological data as a graph database design represents a fundamentally
 different methodological paradigm that has received little explicit
 attention in psychological research.
 
-Relational databases have dominated psychological research for good
-reasons. They store data in tables where columns represent variables,
-rows represent cases, and relationships between entities are managed
-through the so-called ``Structured Query Language'' (SQL). This paradigm
-works well when data are rectangular and relationships are simple
+Relational databases dominate psychological research for good reasons.
+They store data in tables where columns represent variables, rows
+represent cases, and relationships between entities are managed through
+the so-called ``Structured Query Language'' (SQL). This paradigm works
+well when data are rectangular and relationships are simple
 \citep{soto2025}. However, as psychological phenomena grow more complex
 (i.e., spanning multiple levels of analysis, unfolding over time, and
 involving entities that relate to each other in qualitatively distinct
@@ -226,18 +226,29 @@ limitations and directions for future work. All code, data, and a fully
 reproducible RMarkdown file are available via the Open Science Framework
 at {[}OSF link{]}.
 
-\section{Labeled Property Graphs}\label{sec2}
+\section{Introducing Graph Databases}\label{sec2}
 
-Any labeled property graph (LPG) is a network. In other words, it is a
-collection of points or nodes joined together in pairs by lines or edges
-\citep{Newman2010}. As a database paradigm, LPGs represent a system that
-implements \textbf{C}reate, \textbf{R}ead, \textbf{U}pdate, and
-\textbf{D}elete (CRUD) operations on a graph data model, where entities
-are represented as nodes and relationships as edges like the one
-depicted in Figure \hyperref[fig:F2]{1} derived from the
-\href{https://osf.io/hcfmi/files/h62a3}{Speed‑Dating dataset}
-\citep{Selterman2023} which was a replication study from the original
-article by \citet{Eastwick2008}.
+Graph databases are data management systems that implement
+\textbf{C}reate, \textbf{R}ead, \textbf{U}pdate, and \textbf{D}elete
+(CRUD) operations on a graph data model, in which entities are
+represented as nodes and relationships are represented as edges
+\citep{Robinson2015}. A fundamental element of graph databases is the
+``labeled property graph'' (LPG) in which both nodes and edges can carry
+labels and properties, allowing attributes of entities and relationships
+to be stored directly within the graph structure. Unlike relational
+databases (where relationships are encoded indirectly through foreign
+keys and joins) graph databases treat relationships as first-class
+components of the data model.
+
+In psychological research, this paradigm maps naturally onto relational
+phenomena. Participants, events, instruments, or observational units can
+be represented as nodes, whereas dyadic interactions, temporal
+transitions, or participation in shared activities can be represented as
+edges. Figure \hyperref[fig:F2]{1} illustrates this representation using
+the \href{https://osf.io/hcfmi/files/h62a3}{Speed‑Dating dataset}
+\citep{Selterman2023}, in which participants and dating events are
+modeled as nodes connected by relational ties derived from observed
+interactions.
 
 \begin{figure}[H]
 
