@@ -226,26 +226,30 @@ limitations and directions for future work. All code, data, and a fully
 reproducible RMarkdown file are available via the Open Science Framework
 at {[}OSF link{]}.
 
-\section{Introducing Graph Databases}\label{sec2}
+\section{Graph Databases and Labeled Property Graphs}\label{sec2}
 
-Graph databases are data management systems that implement
-\textbf{C}reate, \textbf{R}ead, \textbf{U}pdate, and \textbf{D}elete
-(CRUD) operations on a graph data model, in which entities are
+Graph databases are data management systems that implement the basic
+operations of \textbf{C}reate, \textbf{R}ead, \textbf{U}pdate, and
+\textbf{D}elete (CRUD) on a graph data model, in which entities are
 represented as nodes and relationships are represented as edges
-\citep{Robinson2015}. A fundamental element of graph databases is the
-``labeled property graph'' (LPG) in which both nodes and edges can carry
+\citep{Robinson2015}. A fundamental element of this paradigm is the
+labeled property graph (LPG), in which both nodes and edges can carry
 labels and properties, allowing attributes of entities and relationships
 to be stored directly within the graph structure. Unlike relational
-databases (where relationships are encoded indirectly through foreign
-keys and joins) graph databases treat relationships as first-class
-components of the data model.
+databases (i.e., where relationships are encoded indirectly through
+foreign keys and join operations) graph databases treat relationships as
+first-class components of the data model. As a result, relational
+structure becomes an explicit feature of data representation, rather
+than a construct introduced retrospectively at the analytical stage of
+research.
 
-In psychological research, this paradigm maps naturally onto relational
-phenomena. Participants, events, instruments, or observational units can
-be represented as nodes, whereas dyadic interactions, temporal
-transitions, or participation in shared activities can be represented as
-edges. Figure \hyperref[fig:F2]{1} illustrates this representation using
-the \href{https://osf.io/hcfmi/files/h62a3}{Speed‑Dating dataset}
+In psychological research, the graph database paradigm maps naturally
+onto relational phenomena. Participants, events, instruments, or
+observational units can be represented as nodes, whereas dyadic
+interactions, temporal transitions, or participation in shared
+activities can be represented as edges. Figure \hyperref[fig:F2]{1}
+illustrates this representation using the
+\href{https://osf.io/hcfmi/files/h62a3}{Speed‑Dating dataset}
 \citep{Selterman2023}, in which participants and dating events are
 modeled as nodes connected by relational ties derived from observed
 interactions.
@@ -256,23 +260,25 @@ interactions.
 
 }
 
-\caption{A visual representation of a graph database that combines persons, companies, and routes}\label{fig:F2}
+\caption{A labeled property graph of the speed-dating dataset by Selterman et al. (2023)}\label{fig:F2}
 \end{figure}
 
-In contrast to relational databases (where relationships exist only
-implicitly through table joins) graph databases treat relationships as
-fundamental elements. In the context of the study conducted by
-\citet{Eastwick2008}, the graph-based design enables researchers to
-traverse, query, and model highly interconnected data structures with
-exceptional efficiency and originality.
-
-Figure \hyperref[fig:F2]{2} shows the data at three distinct levels: (1)
-stable participant characteristics (e.g., age, ethnicity, sex), (2)
-interaction‑level impressions recorded during each brief date (e.g.,
-attraction, perceived similarity, desire to say ``yes''), and (3)
-longitudinal follow‑up responses across subsequent weeks for pairs who
-continued interacting. These layers of data are represented as
-interconnected components of a single, coherent graph structure.
+The labeled property graph illustrated in Figure \hyperref[fig:F2]{1}
+helps to recreate the context of the study conducted initially by
+\citet{Eastwick2008} and replicated by \citet{Selterman2023}. Here, this
+design enables researchers to traverse, query, and model highly
+interconnected data structures with exceptional efficiency and
+originality compared with what a researcher could do from the
+traditional relational database paradigm. Figure \hyperref[fig:F2]{1}
+shows the data at three distinct levels: (1) stable participant
+characteristics (e.g., age, ethnicity, sex), (2) interaction‑level
+impressions recorded during each brief date (e.g., attraction, perceived
+similarity, desire to say ``yes''), and (3) longitudinal follow‑up
+responses across subsequent weeks for pairs who continued interacting.
+These layers of data are represented as interconnected components of a
+single, coherent graph structure. On this basis, the following sections
+describe how psychological entities and relationships can be
+instantiated explicitly within an LPG.
 
 \subsection{Entities as Nodes}\label{entities-as-nodes}
 
