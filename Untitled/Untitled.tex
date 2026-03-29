@@ -516,20 +516,67 @@ editions, which can be installed on local or server environments
 following official documentation. As the official documentation provides
 helpful material for newcomers, downloading and installation details for
 Mac, Windows, and Linux users are not necessary here, so the reader can
-consult specific details elsewhere \citep{vanBruggen2014}.
-
-\subsection{STEP 2: Instance creation and data
-import}\label{step-2-instance-creation-and-data-import}
-
-As Neo4j does not support SPSS datasets, we suggest to open the .sav
-file in RStudio with the standard \texttt{read\_sav} syntax provided by
-the \texttt{haven} R library \citep{Wickham2025} and exported it as a
+consult specific details elsewhere \citep{vanBruggen2014}. As Neo4j does
+not support SPSS datasets, we suggest to open the .sav file in RStudio
+with the standard \texttt{read\_sav} syntax provided by the
+\texttt{haven} R library \citep{Wickham2025} and exported it as a
 standard coma separated value file (.csv) with the \texttt{write.csv}
 syntax provided by the \texttt{utils} R library \citep{RCore2025}. We
-named this csv file as \texttt{speed\_dating.csv}.
+named this csv file as \texttt{speed\_dating.csv} and use it as input in
+the second step.
 
-\subsection{STEP 2: Understanding the
-context}\label{step-2-understanding-the-context}
+\subsection{STEP 2: Instance creation}\label{step-2-instance-creation}
+
+In this step, we suggest to open Neo4j as a standard software locally
+installed in the computer and clic in the ``Create Instance'' button in
+the upper right corner. Name the instance as ``SpeedDating'' and provide
+an easy-to-recall password for further sessions. Then, clic on the
+``Start instance'' button as illustrated in Figure \hyperref[fig:F3]{3}.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=400px,height=150px,]{F3} 
+
+}
+
+\caption{The resulting SpeedDating instance created in Neo4j}\label{fig:F3}
+\end{figure}
+
+The word ``RUNNING'' in green letters should be visible right below the
+name ``SpeedDating'' as illustrated in Figure \hyperref[fig:F4]{4}. This
+mark shows to the user that new graph database is running and ready to
+be populated with datasets. In our case, however, the graph database
+will be filled with just one dataset.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=400px,height=150px,]{F4} 
+
+}
+
+\caption{The SpeedDating instance running in Neo4j}\label{fig:F4}
+\end{figure}
+
+\subsection{STEP 2: Data import and understanding the
+data}\label{step-2-data-import-and-understanding-the-data}
+
+To initialize the data import, the user should copy the
+\texttt{speed\_dating.csv} and paste it inside the import/ folder of the
+initialized instance. The import folder can be easily located in Neo4j
+by clicking on the folder icon that is illustrated in Figure
+\hyperref[fig:F5]{5}.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=400px,height=150px,]{F5} 
+
+}
+
+\caption{The SpeedDating instance running in Neo4j}\label{fig:F5}
+\end{figure}
+
+, luego pega los bloques en Neo4j Browser en orden. Los bloques de
+verificación al final te confirmarán los conteos esperados.
 
 \subsection{STEP 3: Sketching a graph database
 model}\label{step-3-sketching-a-graph-database-model}

@@ -235,15 +235,31 @@ This tutorial examines a dataset on men and women exhibited preferences for mate
 This repo provides access to several files. In the files preview menu, the `speed.dating.2.zip` can be downloaded from the Final Report option. The zip file contains the raw data in an SPSS data format (.sav). This file can be easily read in SPSS, PSPP, Jasp, Jamovi, or RStudio. We decided to use RStudio to open the original dataset.
 
 Given the wide variety of graph database management systems in the market (e.g., Neo4j, Microsoft Azure Cosmos, Aerospike, Amazon Web Services Neptune, NebulaGraph, Memgraph, TigerGraph, Giraph), the rest of this work relies on RStudio and Neo4j [@Barrasa2023]. While RStudio is well-known in psychology, Neo4j might require a brief presentation. Neo4j ranks as a leading freemium software for graph database management systems and has been used in several industry sectors including retail, finance, pharmaceutics, hospitality, and electronic commerce, among others. Neo4j offers free and enterprise editions, which can be installed on local or server environments following official documentation.
-As the official documentation provides helpful material for newcomers, downloading and installation details for Mac, Windows, and Linux users are not necessary here, so the reader can consult specific details elsewhere [@vanBruggen2014].
+As the official documentation provides helpful material for newcomers, downloading and installation details for Mac, Windows, and Linux users are not necessary here, so the reader can consult specific details elsewhere [@vanBruggen2014]. As Neo4j does not support SPSS datasets, we suggest to open the .sav file in RStudio with the standard `read_sav` syntax provided by the `haven` R library [@Wickham2025] and exported it as a standard coma separated value file (.csv) with the `write.csv` syntax provided by the `utils` R library [@RCore2025]. We named this csv file as `speed_dating.csv` and use it as input in the second step.
 
-## STEP 2: Instance creation and data import
+## STEP 2: Instance creation
 
-As Neo4j does not support SPSS datasets, we suggest to open the .sav file in RStudio with the standard `read_sav` syntax provided by the `haven` R library [@Wickham2025] and exported it as a standard coma separated value file (.csv) with the `write.csv` syntax provided by the `utils` R library [@RCore2025]. We named this csv file as `speed_dating.csv`.
+In this step, we suggest to open Neo4j as a standard software locally installed in the computer and clic in the "Create Instance" button in the upper right corner. Name the instance as "SpeedDating" and provide an easy-to-recall password for further sessions. Then, clic on the "Start instance" button as illustrated in Figure [3](#fig:F3). 
 
+```{r F3, echo=FALSE, fig.cap="The resulting SpeedDating instance created in Neo4j", fig.align="center", out.height="150px", out.width="400px", fig.pos="H"}
+knitr::include_graphics("F3.png")
+```
 
+The word "RUNNING" in green letters should be visible right below the name "SpeedDating" as illustrated in Figure [4](#fig:F4). This mark shows to the user that new graph database is running and ready to be populated with datasets. In our case, however, the graph database will be filled with just one dataset.
 
-## STEP 2: Understanding the context
+```{r F4, echo=FALSE, fig.cap="The SpeedDating instance running in Neo4j", fig.align="center", out.height="150px", out.width="400px", fig.pos="H"}
+knitr::include_graphics("F4.png")
+```
+
+## STEP 2: Data import and understanding the data
+
+To initialize the data import, the user should copy the `speed_dating.csv` and paste it inside the import/ folder of the initialized instance. The import folder can be easily located in Neo4j by clicking on the folder icon that is illustrated in Figure [5](#fig:F5). 
+
+```{r F5, echo=FALSE, fig.cap="The SpeedDating instance running in Neo4j", fig.align="center", out.height="150px", out.width="400px", fig.pos="H"}
+knitr::include_graphics("F5.png")
+```
+
+, luego pega los bloques en Neo4j Browser en orden. Los bloques de verificación al final te confirmarán los conteos esperados.
 
 ## STEP 3: Sketching a graph database model
 
