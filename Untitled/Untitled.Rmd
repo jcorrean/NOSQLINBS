@@ -82,136 +82,174 @@ knitr::opts_chunk$set(echo = FALSE,
 
 # Introduction {#sec1}
 
-The relational nature of psychological data is evident across multiple research domains. For example, @guimera2005 examined team assembly mechanisms to show how patterns of collaboration emerge from relational constraints and @borsboom2013 introduced network-based models to analyze the causal interplay among psychopathological symptoms. What these approaches share is that their relational structure is treated as an analytical construction, reconstructed from rectangular data formats, rather than as a database design principle. Treating psychological data as a graph database design represents a fundamentally different methodological paradigm that has received little explicit attention in psychological research.
+The relational nature of psychological data is evident across multiple research domains.
+For example, @guimera2005 examined team assembly mechanisms to show how patterns of collaboration emerge from relational constraints and @borsboom2013 introduced network-based models to analyze the causal interplay among psychopathological symptoms.
+What these approaches share is that their relational structure is treated as an analytical construction, reconstructed from rectangular data formats, rather than as a database design principle.
+Treating psychological data as a graph database design represents a fundamentally different methodological paradigm that has received little explicit attention in psychological research.
 
-Relational databases dominate psychological research for good reasons. They store data in tables where columns represent variables, rows represent cases, and relationships between entities are managed through the so-called "Structured Query Language" (SQL). This paradigm works well when data are rectangular and relationships are simple [@soto2025]. However, as psychological phenomena grow more complex (i.e., spanning multiple levels of analysis, unfolding over time, and involving entities that relate to each other in qualitatively distinct ways) the tabular constraints of relational databases become a methodological liability rather than an asset.
+Relational databases dominate psychological research for good reasons.
+They store data in tables where columns represent variables, rows represent cases, and relationships between entities are managed through the so-called "Structured Query Language" (SQL).
+This paradigm works well when data are rectangular and relationships are simple [@soto2025].
+However, as psychological phenomena grow more complex (i.e., spanning multiple levels of analysis, unfolding over time, and involving entities that relate to each other in qualitatively distinct ways) the tabular constraints of relational databases become a methodological liability rather than an asset.
 
-An alternative paradigm, broadly referred to as "Not Only SQL" (NoSQL), includes systems designed for non-tabular, highly connected data. Among these, graph databases are particularly well suited for psychological research because they treat relationships as first-class elements rather than as implicit byproducts of table joins [@Robinson2015]. This database paradigm allows behavior to be modeled as a complex system in a way that differs fundamentally from traditional approaches [@Guastello2009]. In this article, we examine graph databases as a methodological paradigm in which nodes and edges (rather than tables and joins) constitute the basic representational units of behavior. Understanding why this database paradigm remains largely absent from psychological research requires first acknowledging what already exists.
+An alternative paradigm, broadly referred to as "Not Only SQL" (NoSQL), includes systems designed for non-tabular, highly connected data.
+Among these, graph databases are particularly well suited for psychological research because they treat relationships as first-class elements rather than as implicit byproducts of table joins [@Robinson2015].
+This database paradigm allows behavior to be modeled as a complex system in a way that differs fundamentally from traditional approaches [@Guastello2009].
+In this article, we examine graph databases as a methodological paradigm in which nodes and edges (rather than tables and joins) constitute the basic representational units of behavior.
+Understanding why this database paradigm remains largely absent from psychological research requires first acknowledging what already exists.
 
-Computational libraries such as `sna`, `igraph`, `qgraph`, or `psychonetrics` have made network analysis accessible to researchers working entirely within `R` [@Luke2015], and their adoption in psychology is well-known [@Mair2018]. However, these libraries mainly address the statistical analysis of relational data, leaving the management of it under the hood (i.e., the data must first be extracted from a rectangular format, reshaped into an edge list or adjacency matrix, and then passed to the analytic tool). Thus, such a workflow reconstructs relational structure at the analysis stage rather than preserving it from the moment of data collection. Graph database management systems, by contrast, store, query, and retrieve data in graph form natively, so that relational structure is not an analytical construction but a representational commitment. To our knowledge, this distinction has received no systematic treatment as a psychological method.
-  
-This article provides a step-by-step tutorial for implementing labeled property graphs (LPGs) in psychological research. We illustrate the approach with the Speed-Dating replication dataset [@Selterman2023], a publicly available resource whose dyadic, longitudinal, and multimodal structure provides an ideal scenario for demonstrating how LPGs preserve relational topology, handle structural missingness without numerical encoding, and support queries that rectangular formats cannot express without costly joins or data duplication. The tutorial covers the full workflow: designing a graph schema, importing data into Neo4j, querying the graph with Cypher, connecting Neo4j to R via the neo2R package, and conducting statistical analysis and visualization using `tidygraph` and `ggraph`. All materials — including annotated Cypher and R code, data, and a reproducible RMarkdown file — are available in a public repository.
-  
-The remainder of this article is organized as follows. Section 2 introduces the conceptual foundations of graph databases, contrasting their representational logic with that of relational databases and defining the core elements — nodes, edges, labels, and properties — that make them particularly well-suited for psychological data. Section 3 motivates our tutorial through the Speed-Dating replication dataset [@Selterman2023]. This tutorial shows how this dataset and its dyadic, longitudinal, and multimodal structure exposes the limitations of rectangular formats. Section 4 presents the step-by-step tutorial itself, covering the full workflow from graph schema design and data import in `Neo4j` through querying with `Cypher` and statistical analysis and visualization in R via the neo2R, tidygraph, and ggraph packages. Section 5 discusses the broader methodological implications of graph databases for psychological research, with particular attention to structural missingness, scalability, and ontological transparency. Section 6 concludes with a discussion of limitations and directions for future work. All code, data, and a fully reproducible RMarkdown file are available via the Open Science Framework at [OSF link].
-  
+Computational libraries such as `sna`, `igraph`, `qgraph`, or `psychonetrics` have made network analysis accessible to researchers working entirely within `R` [@Luke2015], and their adoption in psychology is well-known [@Mair2018].
+However, these libraries mainly address the statistical analysis of relational data, leaving the management of it under the hood (i.e., the data must first be extracted from a rectangular format, reshaped into an edge list or adjacency matrix, and then passed to the analytic tool).
+Thus, such a workflow reconstructs relational structure at the analysis stage rather than preserving it from the moment of data collection.
+Graph database management systems, by contrast, store, query, and retrieve data in graph form natively, so that relational structure is not an analytical construction but a representational commitment.
+To our knowledge, this distinction has received no systematic treatment as a psychological method.
+
+This article provides a step-by-step tutorial for implementing labeled property graphs (LPGs) in psychological research.
+We illustrate the approach with the Speed-Dating replication dataset [@Selterman2015; @Selterman2023], a publicly available resource whose dyadic, longitudinal, and multimodal structure provides an ideal scenario for demonstrating how LPGs preserve relational topology, handle structural missingness without numerical encoding, and support queries that rectangular formats cannot express without costly joins or data duplication.
+The tutorial covers the full workflow: designing a graph schema, importing data into Neo4j, querying the graph with Cypher, connecting Neo4j to R via the neo2R package, and conducting statistical analysis and visualization using `tidygraph` and `ggraph`.
+All materials — including annotated Cypher and R code, data, and a reproducible RMarkdown file — are available in a public repository.
+
+The remainder of this article is organized as follows.
+Section 2 introduces the conceptual foundations of graph databases, contrasting their representational logic with that of relational databases and defining the core elements — nodes, edges, labels, and properties — that make them particularly well-suited for psychological data.
+Section 3 motivates our tutorial through the Speed-Dating replication dataset [@Selterman2023].
+This tutorial shows how this dataset and its dyadic, longitudinal, and multimodal structure exposes the limitations of rectangular formats.
+Section 4 presents the step-by-step tutorial itself, covering the full workflow from graph schema design and data import in `Neo4j` through querying with `Cypher` and statistical analysis and visualization in R via the neo2R, tidygraph, and ggraph packages.
+Section 5 discusses the broader methodological implications of graph databases for psychological research, with particular attention to structural missingness, scalability, and ontological transparency.
+Section 6 concludes with a discussion of limitations and directions for future work.
+All code, data, and a fully reproducible RMarkdown file are available via the Open Science Framework at [OSF link].
 
 # Graph Databases and Labeled Property Graphs {#sec2}
 
+Graph databases are data management systems that implement the basic operations of **C**reate, **R**ead, **U**pdate, and **D**elete (CRUD) on a graph data model, in which entities are represented as nodes and relationships are represented as edges [@Robinson2015].
+A fundamental element of this paradigm is the labeled property graph (LPG), in which both nodes and edges can carry labels and properties, allowing attributes of entities and relationships to be stored directly within the graph structure.
+Unlike relational databases (i.e., where relationships are encoded indirectly through foreign keys and join operations) graph databases treat relationships as first-class components of the data model.
+As a result, relational structure becomes an explicit feature of data representation, rather than a construct introduced retrospectively at the analytical stage of research.
 
-Graph databases are data management systems that implement the basic operations of **C**reate, **R**ead, **U**pdate, and **D**elete (CRUD) on a graph data model, in which entities are
-represented as nodes and relationships are represented as edges [@Robinson2015]. A fundamental element of this paradigm is the labeled property graph (LPG), in which both nodes and edges can carry labels and properties, allowing attributes of entities and relationships to be stored directly within the graph structure. Unlike relational databases (i.e., where relationships are encoded indirectly through foreign keys and join operations) graph databases treat relationships as first-class components of the data model. As a result, relational structure becomes an explicit feature of data representation, rather than a construct introduced retrospectively at the analytical stage of research.
-
-The graph database paradigm maps naturally onto relational phenomena for psychological researchers. Participants, events, instruments, or observational units can be represented as nodes, whereas dyadic interactions, temporal transitions, or participation in shared activities can be represented as edges. Figure [1](#fig:F2) illustrates this representation using the [Speed‑Dating dataset](https://osf.io/hcfmi/files/h62a3) [@Selterman2023], in which participants and dating events are modeled as nodes connected by relational ties derived from observed interactions.
-
+The graph database paradigm maps naturally onto relational phenomena for psychological researchers.
+Participants, events, instruments, or observational units can be represented as nodes, whereas dyadic interactions, temporal transitions, or participation in shared activities can be represented as edges.
+Figure [1](#fig:F2) illustrates this representation using the [Speed‑Dating dataset](https://osf.io/hcfmi/files/h62a3) [@Selterman2023], in which participants and dating events are modeled as nodes connected by relational ties derived from observed interactions.
 
 ```{r F2, echo=FALSE, fig.cap="A labeled property graph of the speed-dating dataset by Selterman et al. (2023)", fig.align="center", out.height="180px", out.width="350px", fig.pos="H"}
 knitr::include_graphics("F2.png")
 ```
 
-The labeled property graph illustrated in Figure [1](#fig:F2) helps to recreate the context of the study published by @Eastwick2008 and replicated by @Selterman2023. Here, this design enables researchers to traverse, query, and model highly interconnected data structures with exceptional efficiency and originality compared with what a researcher could do from the traditional relational database paradigm.  Figure [1](#fig:F2) shows the data at three distinct levels: (1) stable participant characteristics (e.g., age, ethnicity, sex), (2) interaction‑level impressions recorded during each brief date (e.g., attraction, perceived similarity, desire to say “yes”), and (3) longitudinal follow‑up responses across subsequent weeks for pairs who continued interacting. These layers of data are represented as interconnected components of a single, coherent graph structure. On this basis, the following sections describe how psychological entities and relationships can be instantiated explicitly within an LPG.
+The labeled property graph illustrated in Figure [1](#fig:F2) helps to recreate the context of the study published by @Eastwick2008 and replicated by @Selterman2023.
+Here, this design enables researchers to traverse, query, and model highly interconnected data structures with exceptional efficiency and originality compared with what a researcher could do from the traditional relational database paradigm.
+Figure [1](#fig:F2) shows the data at three distinct levels: (1) stable participant characteristics (e.g., age, ethnicity, sex), (2) interaction‑level impressions recorded during each brief date (e.g., attraction, perceived similarity, desire to say “yes”), and (3) longitudinal follow‑up responses across subsequent weeks for pairs who continued interacting.
+These layers of data are represented as interconnected components of a single, coherent graph structure.
+On this basis, the following sections describe how psychological entities and relationships can be instantiated explicitly within an LPG.
 
 ## Entities as Nodes
 
 `Participant` nodes represent individuals in the study and store stable demographic properties such as age, ethnicity, and sex (from the codebook variables DemAge, DemEthn, and sex_M1_F2).
-The `DateEvent` node encompasses a series of dyadic interactions and store the full set of impression‑formation ratings provided by participants during speed‑dating (e.g., IRLikedPartner, IRSexAttract, IRCommon, IRSayYes, yessing, mutmatch). These correspond directly to the interaction‑record variables in the dataset. The `FollowUp` node represents week‑level longitudinal responses, including relationship status, romantic interest, sexual desire, and commitment indicators (e.g., FUStatus, FURomInterest, FUSexDesire, FUCommitted), captured only for participants who matched and continued interacting.
+The `DateEvent` node encompasses a series of dyadic interactions and store the full set of impression‑formation ratings provided by participants during speed‑dating (e.g., IRLikedPartner, IRSexAttract, IRCommon, IRSayYes, yessing, mutmatch).
+These correspond directly to the interaction‑record variables in the dataset.
+The `FollowUp` node represents week‑level longitudinal responses, including relationship status, romantic interest, sexual desire, and commitment indicators (e.g., FUStatus, FURomInterest, FUSexDesire, FUCommitted), captured only for participants who matched and continued interacting.
 
 ## Relationships as Edges
 
-Edges define how these nodes are linked and encode psychological structure directly. The `HAD_DATE` edge connect participants to the `DateEvent` in which they took part, indicating the rater’s perspective on that interaction. The edge labeled as `WITH` connects the `DateEvent` back to the other participant, allowing the system to explicitly represent dyadic structure. The edge labeled as `FOLLOWED_UP` links `Participants` to their `FollowUp` node, representing relational trajectories across weeks. Optionally, a `MUTUAL_MATCH_WITH` edge can be created between two `Participants` when the `mutmatch` property equals 1, providing a direct representation of reciprocal liking (i.e., a relationship that is invisible in rectangular data but naturally expressed in graph form).
+Edges define how these nodes are linked and encode psychological structure directly.
+The `HAD_DATE` edge connect participants to the `DateEvent` in which they took part, indicating the rater’s perspective on that interaction.
+The edge labeled as `WITH` connects the `DateEvent` back to the other participant, allowing the system to explicitly represent dyadic structure.
+The edge labeled as `FOLLOWED_UP` links `Participants` to their `FollowUp` node, representing relational trajectories across weeks.
+Optionally, a `MUTUAL_MATCH_WITH` edge can be created between two `Participants` when the `mutmatch` property equals 1, providing a direct representation of reciprocal liking (i.e., a relationship that is invisible in rectangular data but naturally expressed in graph form).
 
 ## Why Graph Databases Matter for Psychological Research
 
-The structure of Figure [1](#fig:F2) offers several methodological advantages. Psychological data retain their natural relational structure. Dyadic interactions are modeled as shared events rather than duplicated rows, preserving the topology of social and romantic processes as they occur in the real world. Temporal processes become navigable. The `FollowUp` node can be traversed sequentially, enabling queries such as ``How early do committed feelings emerge among mutually matched pairs?''
-or "Does initial sexual attraction predict later romantic interest?''
+The structure of Figure [1](#fig:F2) offers several methodological advantages.
+Psychological data retain their natural relational structure.
+Dyadic interactions are modeled as shared events rather than duplicated rows, preserving the topology of social and romantic processes as they occur in the real world.
+Temporal processes become navigable.
+The `FollowUp` node can be traversed sequentially, enabling queries such as \`\`How early do committed feelings emerge among mutually matched pairs?'
+' or "Does initial sexual attraction predict later romantic interest?''
 
 In addition, missingness is handled structurally, not numerically.
-Participants who did not match simply lack `FollowUp`; no NA encoding is required. The model is inherently extensible.
-Additional constructs, such as personality traits or behavioral logs, can be attached as new nodes or properties without reconfiguring the existing database schema. In sum, LPGs allow behavioral scientists to represent complex, multi-level psychological phenomena in a way that relational tables cannot.
+Participants who did not match simply lack `FollowUp`; no NA encoding is required.
+The model is inherently extensible.
+Additional constructs, such as personality traits or behavioral logs, can be attached as new nodes or properties without reconfiguring the existing database schema.
+In sum, LPGs allow behavioral scientists to represent complex, multi-level psychological phenomena in a way that relational tables cannot.
 The Speed‑Dating schema illustrated in Figure [1](#fig:F2) makes clear how impression formation, dyadic reciprocity, and longitudinal relationship development can be captured and analyzed within a single unified model.
 
-# Why graph databases as psychological method
+# Graph Databases: Epistemic Considerations
 
-Any graph database model leverages the so-called "labeled property graph." As a computational tool it paves the way for incorporating complex systems thinking in any discipline [@Krakauer2019], and as a psychological method it opens the door for interdisciplinary collaboration.
-In psychology and behavioral sciences, complex systems thinking is not novel at all [@Luce1999; @Guastello2009].
-However, labeled property graph models and their elements have been largely overlooked.
-This gap coincides with recent reviews that promote other methodologies as potential solutions to increase intra and interdisciplinary interactions across subfields of behavior analysis in both basic and applied settings [@Elcoro2023].
+In this section, we focus not on implementation, but on the epistemic considerations of adopting graph databases in psychological research.
+Graph databases and their labeled property graph paradigm provide an infrastructure that enables the systematic incorporation of complex systems thinking into psychological inquiry.
+In psychology and the behavioral sciences, complex systems thinking is not novel [@Luce1999; @Guastello2009], although more recent work has emphasized its interdisciplinary potential [@Krakauer2019].
+This emphasis aligns with recent reviews that propose methodological innovations as a means of strengthening intra- and interdisciplinary integration across basic and applied domains of behavior analysis [@Elcoro2023].
 
-As a psychological method, labeled property graph models share some similarities with the "nomological nets" coined by @cronbach1955.
-However, labeled property graph models (also known as knowledge graphs) represent a more general purpose toolkit that transcends the seminal conception of nomological nets (see Table [1]()).
+As a psychological method, the graph database paradigm shares some similarities with the *nomological nets* originally proposed by [@cronbach1955].
+Both emphasize relational structure and the systematic articulation of theoretical commitments.
+However, labeled property graph models constitute a more general-purpose representational framework that transcends the scope of classical nomological nets (see Table 1).
 
-| Feature | Knowledge graphs | Nomological nets |
+| Feature | Labeled Property Graphs | Nomological nets |
 |------------------------|------------------------|------------------------|
 | Primary field | Computer science / AI / Data engineering | Psychology / Philosophy of Science |
-| Primary goal | Data integration, search, automated reasoning. | Establishing construct validity (i.e., proving a theory). |
-| Nature of nodes | Concrete entities (e.g., "Lee J. Cronbach", "University of Illinois"). | Theoretical constructs (e.g., "introversion", "intelligence"). |
-| Nature of edges | Predicate or properties (e.g., "works_at", "collaborate_with"). | Theoretical laws or empirical correlations. |
-| Verification | Based on data consistency and retrieval accuracy | Based on statistical evidence (correlations and p-values) |
-| Scale | Can contain billions of facts (e.g., Google knowledge graph) | Usually small, focused on a specific theoretical model |
+| Primary goal | Data integration, search, automated reasoning | Establishing construct validity (i.e., theory testing) |
+| Nature of nodes | Concrete entities (e.g., "Lee J. Cronbach", "University of Illinois") | Theoretical constructs (e.g., "introversion", "intelligence") |
+| Nature of edges | Predicates or properties (e.g., "works_at", "collaborates_with") | Theoretical laws or empirical correlations |
+| Verification | Data consistency and retrieval accuracy | Statistical evidence (e.g., correlations, p-values) |
+| Scale | Potentially billions of facts | Typically small, theory-specific |
 
 : Knowledge graphs and nomological nets
 
-A methodolgical implication embedded in graph databases is their performance when handling network data structures [@Robinson2015].
-In relational databases, join-intensive queries slow down as datasets grow, whereas graph databases maintain relatively stable performance —even with millions of nodes and edges.
-From a traditional perspective, the idea of working with huge datasets might seem implausible for most psychological researchers.
-Nonetheless, big data research is no longer outside professional considerations and that explains why big data has been recently reviewed as a psychological method [@vezzoli2023].
-For example, previous works in network science has shown how to address complex behavioral phenomena such as the analysis of urban traffic at an individual level by tracking the movements of hundreds of thousands of drivers every two hours [@Gonzalez2008].
-In cases like this, graph databases excel because queries operate on localized portions of the graph rather than scanning the entire dataset.
-If edges store information such as commuting distances, queries can be designed to retrieve specific conditions (e.g., individuals who commute less than 10 miles versus persons who commute more than 20 miles). Consequently, execution time depends only on the size of the subgraph traversed, not the overall graph size.
+What distinguishes graph databases from analytic tools is that they constrain and enable psychological inquiry at the level of *representation*.
+Whereas analytic methods operate on data that have already been structured, graph databases determine how behavioral phenomena are encoded from the outset, thereby delimiting which relations, processes, and queries are epistemically viable.
 
-Another implication of graph databases is their flexibility.
-Behavioral scientists aim to connect data in ways that reflect their knowledge and expertise.
-This is why graph databases serve as the underlying infrastructure for constructing "knowledge graphs" [@Barrasa2023].
-With these knowledge graphs, researchers allow the database to evolve alongside their understanding of the behavioral phenomenon rather than being rigidly defined upfront, when knowledge is most limited.
-This is particularly important when a behavioral phenomenon lacks theoretical background or lacks replication [@burgos2025].
-Graph databases fulfill this need by providing a flexible model that adapts to changing requirements and evidence.
-Because graphs are inherently additive, new nodes, relationships, labels, and subgraphs can be introduced.
-The modifications introduced to the original graph do not imply a threat to existing queries or application functionality.
-This flexibility minimizes the need for exhaustive upfront modeling and lowers the frequency of costly migrations (particularly for companies that hire behavior data scientists in charge of analyzing customers observed behavior), thereby reducing maintenance overhead in both academic and business settings.
+This representational commitment has direct methodological consequences, particularly for research involving complex, relational, and large-scale psychological data.
+One such consequence concerns scalability.
+Because graph databases organize information around localized connections among nodes and edges, they maintain relatively stable query performance even in datasets comprising millions of entities and relationships.
+From a traditional perspective within psychology, working at this scale may appear implausible.
+However, large-scale behavioral data are now firmly within methodological consideration, as reflected in recent treatments of big data as a psychological method [@vezzoli2023].
+Prior work in network science illustrates this point clearly.
+For example, studies of urban mobility have examined individual-level behavioral trajectories by tracking the movements of hundreds of thousands of drivers at fine temporal resolutions [@Gonzalez2008].
+In such contexts, graph databases are particularly well suited because queries operate on localized subgraphs rather than requiring exhaustive scans of entire datasets.
+Performance, therefore, is not merely a technical concern but a condition for the epistemic viability of certain classes of psychological questions.
 
-A third implication of graph databases is the agility that they offer.
-Modern graph databases enable smooth development and easy system maintenance.
-Their schema-free design, combined with testable APIs and query languages, allows controlled evolution of applications.
-While the absence of rigid schemas means traditional governance mechanisms are missing, this is not a drawback.
-On the contrary, it encourages more transparent and actionable data governance.
-Typically, governance is enforced programmatically through tests that validate data models, queries, and business rules.
-This approach aligns well with agile and test-driven development practices, making graph database applications adaptable to changing business needs.
-In psychology, these aspects can be vital for the so-called "automated data collection techniques." For example, mobile applications, such as ecological momentary assessment tools, prompt users to report emotions or behaviors throughout the day, while motion sensors and radio frequency identification tags can monitor movement and location in homes or classrooms [@Bak2021].
+A second epistemically consequential feature of graph databases is their flexibility.
+Behavioral scientists routinely connect data in ways that evolve alongside theoretical commitments, empirical discoveries, and domain expertise.
+For this reason, graph databases often serve as the underlying infrastructure for constructing *knowledge graphs* [@Barrasa2023].
+Unlike rigid schemas defined in advance, knowledge graphs allow data models to evolve in tandem with scientific understanding—an especially important feature in domains characterized by limited theory, active replication efforts, or rapid evidence accumulation [@burgos2025].
+Because graph structures are inherently additive, new nodes, relationships, labels, and subgraphs can be introduced without invalidating existing representations.
+From a methodological perspective, such modifications should be understood not as ad hoc adjustments, but as legitimate indicators of scientific progress under conditions of incomplete knowledge.
 
-It is worth mentioning that relational databases acknowledge relationships, but only during modeling, where they serve as join mechanisms between tables.
-In graph databases, we often need to clarify the meaning of relationships and even qualify their strength.
-These are aspects that relational database management systems do not address explicitly [@Robinson2015].
-From this viewpoint, graph databases demand both ontological and epistemological considerations like the ones recently described in the literature of theoretical and philosophical psychology [@burgos2025].
-Roughly speaking, ontological considerations relate to traditional questions of pure ontology like what is it to be?
-what does exist?
-What is the nature of what exist?
-In contrast, epistemological considerations pertains matters of evidence, explanation, certainty and truth [@burgos2025].
-As datasets grow more complex and less uniform (provided new evidence is available), relational data management systems like Microsoft Access, PostgreSQL, or SQLite become burdened with large join tables, sparsely populated rows, and extensive null-checking logic.
-Greater interconnectedness in relational databases leads to more joins, which degrade performance and complicate adaptation to evolving requirements.
-Although @soto2025 strongly advocates for relational databases in behavioral research, he also notes several challenges to their adoption in practice. From the perspective advanced here, these challenges point to the benefits of alternative data representation paradigms such as graph databases.
+These representational choices bring ontological and epistemological considerations to the foreground.
+Ontologically, graph databases require researchers to specify explicitly which entities exist within the model, how they relate to one another, and which transformations of those entities are permissible.
+Epistemologically, they invite reflection on what counts as evidence, which queries are meaningful, and how explanations are warranted given the structure of the graph.
+In this sense, graph databases make explicit assumptions that often remain implicit in rectangular data workflows, echoing recent calls in theoretical and philosophical psychology to treat ontology and epistemology as integral components of methodological design [@burgos2025].
 
-As a wrap-up, labeled property graphs are not merely a technical alternative to relational schemas; they represent a methodological advance that aligns with psychology’s need for flexible, scalable, and conceptually transparent data models.
+These considerations are particularly salient in contemporary psychological research that relies on automated data collection techniques.
+Mobile applications, such as ecological momentary assessment tools, prompt participants to report emotions or behaviors repeatedly throughout the day, while motion sensors and radio-frequency identification tags continuously record movement and location in naturalistic environments [@Bak2021].
+In such technology-mediated inquiries, datasets tend to grow rapidly while becoming increasingly heterogeneous.
+Although @soto2025 strongly advocates for relational databases in behavioral research, he also identifies several practical challenges to their adoption, including infrastructural requirements and specialized technical expertise.
+From the perspective advanced here, these challenges highlight the benefits of alternative data representation paradigms—such as graph databases—which align representational structure more closely with the relational nature of psychological phenomena.
+
+In sum, labeled property graphs are not merely a technical alternative to relational schemas; they represent a methodological advance that aligns with psychology’s need for flexible, scalable, and conceptually transparent data models.
 
 # Applying graph database in behavioral research
 
-To illustrate the application of graph databases for behavioral scientists, I revisit the Speed‑Dating dataset [@Selterman2023] which provides a replication study from the seminal article by @Eastwick2008. The general description of this replication study is available in an [OSF repository](https://osf.io/ng6cc/overview). This repo provides access to the ``speed.dating.2.zip'' file which contains the raw data in an SPSS data format (.sav). This file can be easily read in SPSS, PSPP, Jasp, Jamovi, or RStudio.
-Given the wide variety of graph database management systems in the market (e.g., Neo4j, Microsoft Azure Cosmos, Aerospike, Amazon Web Services Neptune, NebulaGraph, Memgraph, TigerGraph, Giraph), the rest of this work relies on Neo4j [@Barrasa2023].
+This section provides a step-by-step tutorial demonstrating how to (a) design a graph schema for psychological data, (b) import data into a labeled property graph, (c) query relational and longitudinal structures that are difficult to express in rectangular formats, and (d) interface the graph with R for statistical analysis and visualization.
 
-Neo4j ranks as a leading freemium software for graph database management systems and has been used in several industry sectors including retail, finance, pharmaceutics, hospitality, and electronic commerce, among others.
-Neo4j offers free and enterprise editions, which can be installed on local or server environments following official documentation.
-As the official documentation provides helpful material for newcomers, downloading and installation details are not necessary here, and the reader can consult specific details elsewhere [@vanBruggen2014].
+## STEP 1: Prerrequisites and materials
 
-## Prerrequisites and materials
+This tutorial examines a dataset on men and women exhibited preferences for mates [@Selterman2015; @Selterman2023] which is a replication work from the original study published by @Eastwick2008. This dataset is available in an [Open Science Framework repository](https://osf.io/ng6cc/overview).
+This repo provides access to several files. In the files preview menu, the `speed.dating.2.zip` can be downloaded from the Final Report option. The zip file contains the raw data in an SPSS data format (.sav). This file can be easily read in SPSS, PSPP, Jasp, Jamovi, or RStudio. We decided to use RStudio to open the original dataset.
 
-the Speed‑Dating dataset [@Selterman2023] which was a replication study from the original article by @Eastwick2008.
+Given the wide variety of graph database management systems in the market (e.g., Neo4j, Microsoft Azure Cosmos, Aerospike, Amazon Web Services Neptune, NebulaGraph, Memgraph, TigerGraph, Giraph), the rest of this work relies on RStudio and Neo4j [@Barrasa2023]. While RStudio is well-known in psychology, Neo4j might require a brief presentation. Neo4j ranks as a leading freemium software for graph database management systems and has been used in several industry sectors including retail, finance, pharmaceutics, hospitality, and electronic commerce, among others. Neo4j offers free and enterprise editions, which can be installed on local or server environments following official documentation.
+As the official documentation provides helpful material for newcomers, downloading and installation details for Mac, Windows, and Linux users are not necessary here, so the reader can consult specific details elsewhere [@vanBruggen2014].
 
-## STEP 1: Instance creation and data import
+## STEP 2: Instance creation and data import
 
+As Neo4j does not support SPSS datasets, we open the .sav file in RStudio with the standard `read_sav` syntax provided by the `haven` R library [@Wickham2025] and exported it as a standard coma separated value file (.csv) with the `write.csv` syntax provided by the `utils` R library [@RCore2025].
+```{r, echo=TRUE}
+library(haven)
+speed_dating <- read_sav("/home/jcc/Documents/GitHub/NOSQLINBS/Revisited_Data/To Post April 8 2015/speed.dating.3lev.small.july25.2014.sav")
+library(utils)
+speed_dating <- write.csv(speed_dating, file = "speed_dating.csv")
+```
 
 
 ## STEP 2: Understanding the context
 
-
 ## STEP 3: Sketching a graph database model
-
 
 \backmatter

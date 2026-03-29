@@ -67,6 +67,47 @@
 
 
 
+% Pandoc syntax highlighting
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 
 % tightlist command for lists without linebreak
 \providecommand{\tightlist}{%
@@ -194,11 +235,11 @@ received no systematic treatment as a psychological method.
 This article provides a step-by-step tutorial for implementing labeled
 property graphs (LPGs) in psychological research. We illustrate the
 approach with the Speed-Dating replication dataset
-\citep{Selterman2023}, a publicly available resource whose dyadic,
-longitudinal, and multimodal structure provides an ideal scenario for
-demonstrating how LPGs preserve relational topology, handle structural
-missingness without numerical encoding, and support queries that
-rectangular formats cannot express without costly joins or data
+\citep{Selterman2015, Selterman2023}, a publicly available resource
+whose dyadic, longitudinal, and multimodal structure provides an ideal
+scenario for demonstrating how LPGs preserve relational topology, handle
+structural missingness without numerical encoding, and support queries
+that rectangular formats cannot express without costly joins or data
 duplication. The tutorial covers the full workflow: designing a graph
 schema, importing data into Neo4j, querying the graph with Cypher,
 connecting Neo4j to R via the neo2R package, and conducting statistical
@@ -321,7 +362,7 @@ rather than duplicated rows, preserving the topology of social and
 romantic processes as they occur in the real world. Temporal processes
 become navigable. The \texttt{FollowUp} node can be traversed
 sequentially, enabling queries such as ``How early do committed feelings
-emerge among mutually matched pairs?'\,' or ``Does initial sexual
+emerge among mutually matched pairs?' ' or ``Does initial sexual
 attraction predict later romantic interest?'\,'
 
 In addition, missingness is handled structurally, not numerically.
@@ -336,27 +377,29 @@ tables cannot. The Speed‑Dating schema illustrated in Figure
 reciprocity, and longitudinal relationship development can be captured
 and analyzed within a single unified model.
 
-\section{Why graph databases as psychological
-method}\label{why-graph-databases-as-psychological-method}
+\section{Graph Databases: Epistemic
+Considerations}\label{graph-databases-epistemic-considerations}
 
-Any graph database model leverages the so-called ``labeled property
-graph.'' As a computational tool it paves the way for incorporating
-complex systems thinking in any discipline \citep{Krakauer2019}, and as
-a psychological method it opens the door for interdisciplinary
-collaboration. In psychology and behavioral sciences, complex systems
-thinking is not novel at all \citep{Luce1999, Guastello2009}. However,
-labeled property graph models and their elements have been largely
-overlooked. This gap coincides with recent reviews that promote other
-methodologies as potential solutions to increase intra and
-interdisciplinary interactions across subfields of behavior analysis in
-both basic and applied settings \citep{Elcoro2023}.
+In this section, we focus not on implementation, but on the epistemic
+considerations of adopting graph databases in psychological research.
+Graph databases and their labeled property graph paradigm provide an
+infrastructure that enables the systematic incorporation of complex
+systems thinking into psychological inquiry. In psychology and the
+behavioral sciences, complex systems thinking is not novel
+\citep{Luce1999, Guastello2009}, although more recent work has
+emphasized its interdisciplinary potential \citep{Krakauer2019}. This
+emphasis aligns with recent reviews that propose methodological
+innovations as a means of strengthening intra- and interdisciplinary
+integration across basic and applied domains of behavior analysis
+\citep{Elcoro2023}.
 
-As a psychological method, labeled property graph models share some
-similarities with the ``nomological nets'' coined by
-\citet{cronbach1955}. However, labeled property graph models (also known
-as knowledge graphs) represent a more general purpose toolkit that
-transcends the seminal conception of nomological nets (see Table
-\href{}{1}).
+As a psychological method, the graph database paradigm shares some
+similarities with the \emph{nomological nets} originally proposed by
+\citep{cronbach1955}. Both emphasize relational structure and the
+systematic articulation of theoretical commitments. However, labeled
+property graph models constitute a more general-purpose representational
+framework that transcends the scope of classical nomological nets (see
+Table~1).
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
@@ -367,7 +410,7 @@ transcends the seminal conception of nomological nets (see Table
 \begin{minipage}[b]{\linewidth}\raggedright
 Feature
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Knowledge graphs
+Labeled Property Graphs
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 Nomological nets
 \end{minipage} \\
@@ -377,7 +420,7 @@ Nomological nets
 \begin{minipage}[b]{\linewidth}\raggedright
 Feature
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Knowledge graphs
+Labeled Property Graphs
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 Nomological nets
 \end{minipage} \\
@@ -387,141 +430,152 @@ Nomological nets
 \endlastfoot
 Primary field & Computer science / AI / Data engineering & Psychology /
 Philosophy of Science \\
-Primary goal & Data integration, search, automated reasoning. &
-Establishing construct validity (i.e., proving a theory). \\
-Nature of nodes & Concrete entities (e.g., ``Lee J. Cronbach'',
-``University of Illinois''). & Theoretical constructs (e.g.,
-``introversion'', ``intelligence''). \\
-Nature of edges & Predicate or properties (e.g., ``works\_at'',
-``collaborate\_with''). & Theoretical laws or empirical correlations. \\
-Verification & Based on data consistency and retrieval accuracy & Based
-on statistical evidence (correlations and p-values) \\
-Scale & Can contain billions of facts (e.g., Google knowledge graph) &
-Usually small, focused on a specific theoretical model \\
+Primary goal & Data integration, search, automated reasoning &
+Establishing construct validity (i.e., theory testing) \\
+Nature of nodes & Concrete entities (e.g., ``Lee~J.~Cronbach'',
+``University of Illinois'') & Theoretical constructs (e.g.,
+``introversion'', ``intelligence'') \\
+Nature of edges & Predicates or properties (e.g., ``works\_at'',
+``collaborates\_with'') & Theoretical laws or empirical correlations \\
+Verification & Data consistency and retrieval accuracy & Statistical
+evidence (e.g., correlations, p-values) \\
+Scale & Potentially billions of facts & Typically small,
+theory-specific \\
 \end{longtable}
 
-A methodolgical implication embedded in graph databases is their
-performance when handling network data structures \citep{Robinson2015}.
-In relational databases, join-intensive queries slow down as datasets
-grow, whereas graph databases maintain relatively stable performance
----even with millions of nodes and edges. From a traditional
-perspective, the idea of working with huge datasets might seem
-implausible for most psychological researchers. Nonetheless, big data
-research is no longer outside professional considerations and that
-explains why big data has been recently reviewed as a psychological
-method \citep{vezzoli2023}. For example, previous works in network
-science has shown how to address complex behavioral phenomena such as
-the analysis of urban traffic at an individual level by tracking the
-movements of hundreds of thousands of drivers every two hours
-\citep{Gonzalez2008}. In cases like this, graph databases excel because
-queries operate on localized portions of the graph rather than scanning
-the entire dataset. If edges store information such as commuting
-distances, queries can be designed to retrieve specific conditions
-(e.g., individuals who commute less than 10 miles versus persons who
-commute more than 20 miles). Consequently, execution time depends only
-on the size of the subgraph traversed, not the overall graph size.
+What distinguishes graph databases from analytic tools is that they
+constrain and enable psychological inquiry at the level of
+\emph{representation}. Whereas analytic methods operate on data that
+have already been structured, graph databases determine how behavioral
+phenomena are encoded from the outset, thereby delimiting which
+relations, processes, and queries are epistemically viable.
 
-Another implication of graph databases is their flexibility. Behavioral
-scientists aim to connect data in ways that reflect their knowledge and
-expertise. This is why graph databases serve as the underlying
-infrastructure for constructing ``knowledge graphs''
-\citep{Barrasa2023}. With these knowledge graphs, researchers allow the
-database to evolve alongside their understanding of the behavioral
-phenomenon rather than being rigidly defined upfront, when knowledge is
-most limited. This is particularly important when a behavioral
-phenomenon lacks theoretical background or lacks replication
-\citep{burgos2025}. Graph databases fulfill this need by providing a
-flexible model that adapts to changing requirements and evidence.
-Because graphs are inherently additive, new nodes, relationships,
-labels, and subgraphs can be introduced. The modifications introduced to
-the original graph do not imply a threat to existing queries or
-application functionality. This flexibility minimizes the need for
-exhaustive upfront modeling and lowers the frequency of costly
-migrations (particularly for companies that hire behavior data
-scientists in charge of analyzing customers observed behavior), thereby
-reducing maintenance overhead in both academic and business settings.
+This representational commitment has direct methodological consequences,
+particularly for research involving complex, relational, and large-scale
+psychological data. One such consequence concerns scalability. Because
+graph databases organize information around localized connections among
+nodes and edges, they maintain relatively stable query performance even
+in datasets comprising millions of entities and relationships. From a
+traditional perspective within psychology, working at this scale may
+appear implausible. However, large-scale behavioral data are now firmly
+within methodological consideration, as reflected in recent treatments
+of big data as a psychological method \citep{vezzoli2023}. Prior work in
+network science illustrates this point clearly. For example, studies of
+urban mobility have examined individual-level behavioral trajectories by
+tracking the movements of hundreds of thousands of drivers at fine
+temporal resolutions \citep{Gonzalez2008}. In such contexts, graph
+databases are particularly well suited because queries operate on
+localized subgraphs rather than requiring exhaustive scans of entire
+datasets. Performance, therefore, is not merely a technical concern but
+a condition for the epistemic viability of certain classes of
+psychological questions.
 
-A third implication of graph databases is the agility that they offer.
-Modern graph databases enable smooth development and easy system
-maintenance. Their schema-free design, combined with testable APIs and
-query languages, allows controlled evolution of applications. While the
-absence of rigid schemas means traditional governance mechanisms are
-missing, this is not a drawback. On the contrary, it encourages more
-transparent and actionable data governance. Typically, governance is
-enforced programmatically through tests that validate data models,
-queries, and business rules. This approach aligns well with agile and
-test-driven development practices, making graph database applications
-adaptable to changing business needs. In psychology, these aspects can
-be vital for the so-called ``automated data collection techniques.'' For
-example, mobile applications, such as ecological momentary assessment
-tools, prompt users to report emotions or behaviors throughout the day,
-while motion sensors and radio frequency identification tags can monitor
-movement and location in homes or classrooms \citep{Bak2021}.
+A second epistemically consequential feature of graph databases is their
+flexibility. Behavioral scientists routinely connect data in ways that
+evolve alongside theoretical commitments, empirical discoveries, and
+domain expertise. For this reason, graph databases often serve as the
+underlying infrastructure for constructing \emph{knowledge graphs}
+\citep{Barrasa2023}. Unlike rigid schemas defined in advance, knowledge
+graphs allow data models to evolve in tandem with scientific
+understanding---an especially important feature in domains characterized
+by limited theory, active replication efforts, or rapid evidence
+accumulation \citep{burgos2025}. Because graph structures are inherently
+additive, new nodes, relationships, labels, and subgraphs can be
+introduced without invalidating existing representations. From a
+methodological perspective, such modifications should be understood not
+as ad hoc adjustments, but as legitimate indicators of scientific
+progress under conditions of incomplete knowledge.
 
-It is worth mentioning that relational databases acknowledge
-relationships, but only during modeling, where they serve as join
-mechanisms between tables. In graph databases, we often need to clarify
-the meaning of relationships and even qualify their strength. These are
-aspects that relational database management systems do not address
-explicitly \citep{Robinson2015}. From this viewpoint, graph databases
-demand both ontological and epistemological considerations like the ones
-recently described in the literature of theoretical and philosophical
-psychology \citep{burgos2025}. Roughly speaking, ontological
-considerations relate to traditional questions of pure ontology like
-what is it to be? what does exist? What is the nature of what exist? In
-contrast, epistemological considerations pertains matters of evidence,
-explanation, certainty and truth \citep{burgos2025}. As datasets grow
-more complex and less uniform (provided new evidence is available),
-relational data management systems like Microsoft Access, PostgreSQL, or
-SQLite become burdened with large join tables, sparsely populated rows,
-and extensive null-checking logic. Greater interconnectedness in
-relational databases leads to more joins, which degrade performance and
-complicate adaptation to evolving requirements. Although
-\citet{soto2025} strongly advocates for relational databases in
-behavioral research, he also notes several challenges to their adoption
-in practice. From the perspective advanced here, these challenges point
-to the benefits of alternative data representation paradigms such as
-graph databases.
+These representational choices bring ontological and epistemological
+considerations to the foreground. Ontologically, graph databases require
+researchers to specify explicitly which entities exist within the model,
+how they relate to one another, and which transformations of those
+entities are permissible. Epistemologically, they invite reflection on
+what counts as evidence, which queries are meaningful, and how
+explanations are warranted given the structure of the graph. In this
+sense, graph databases make explicit assumptions that often remain
+implicit in rectangular data workflows, echoing recent calls in
+theoretical and philosophical psychology to treat ontology and
+epistemology as integral components of methodological design
+\citep{burgos2025}.
 
-As a wrap-up, labeled property graphs are not merely a technical
-alternative to relational schemas; they represent a methodological
-advance that aligns with psychology's need for flexible, scalable, and
-conceptually transparent data models.
+These considerations are particularly salient in contemporary
+psychological research that relies on automated data collection
+techniques. Mobile applications, such as ecological momentary assessment
+tools, prompt participants to report emotions or behaviors repeatedly
+throughout the day, while motion sensors and radio-frequency
+identification tags continuously record movement and location in
+naturalistic environments \citep{Bak2021}. In such technology-mediated
+inquiries, datasets tend to grow rapidly while becoming increasingly
+heterogeneous. Although \citet{soto2025} strongly advocates for
+relational databases in behavioral research, he also identifies several
+practical challenges to their adoption, including infrastructural
+requirements and specialized technical expertise. From the perspective
+advanced here, these challenges highlight the benefits of alternative
+data representation paradigms---such as graph databases---which align
+representational structure more closely with the relational nature of
+psychological phenomena.
+
+In sum, labeled property graphs are not merely a technical alternative
+to relational schemas; they represent a methodological advance that
+aligns with psychology's need for flexible, scalable, and conceptually
+transparent data models.
 
 \section{Applying graph database in behavioral
 research}\label{applying-graph-database-in-behavioral-research}
 
-To illustrate the application of graph databases for behavioral
-scientists, I revisit the Speed‑Dating dataset \citep{Selterman2023}
-which provides a replication study from the seminal article by
-\citet{Eastwick2008}. The general description of this replication study
-is available in an \href{https://osf.io/ng6cc/overview}{OSF repository}.
-This repo provides access to the ``speed.dating.2.zip'\,' file which
-contains the raw data in an SPSS data format (.sav). This file can be
-easily read in SPSS, PSPP, Jasp, Jamovi, or RStudio. Given the wide
-variety of graph database management systems in the market (e.g., Neo4j,
-Microsoft Azure Cosmos, Aerospike, Amazon Web Services Neptune,
-NebulaGraph, Memgraph, TigerGraph, Giraph), the rest of this work relies
-on Neo4j \citep{Barrasa2023}.
+This section provides a step-by-step tutorial demonstrating how to (a)
+design a graph schema for psychological data, (b) import data into a
+labeled property graph, (c) query relational and longitudinal structures
+that are difficult to express in rectangular formats, and (d) interface
+the graph with R for statistical analysis and visualization.
 
-Neo4j ranks as a leading freemium software for graph database management
-systems and has been used in several industry sectors including retail,
-finance, pharmaceutics, hospitality, and electronic commerce, among
-others. Neo4j offers free and enterprise editions, which can be
-installed on local or server environments following official
-documentation. As the official documentation provides helpful material
-for newcomers, downloading and installation details are not necessary
-here, and the reader can consult specific details elsewhere
-\citep{vanBruggen2014}.
+\subsection{STEP 1: Prerrequisites and
+materials}\label{step-1-prerrequisites-and-materials}
 
-\subsection{Prerrequisites and
-materials}\label{prerrequisites-and-materials}
+This tutorial examines a dataset on men and women exhibited preferences
+for mates \citep{Selterman2015, Selterman2023} which is a replication
+work from the original study published by \citet{Eastwick2008}. This
+dataset is available in an \href{https://osf.io/ng6cc/overview}{Open
+Science Framework repository}. This repo provides access to several
+files. In the files preview menu, the \texttt{speed.dating.2.zip} can be
+downloaded from the Final Report option. The zip file contains the raw
+data in an SPSS data format (.sav). This file can be easily read in
+SPSS, PSPP, Jasp, Jamovi, or RStudio. We decided to use RStudio to open
+the original dataset.
 
-the Speed‑Dating dataset \citep{Selterman2023} which was a replication
-study from the original article by \citet{Eastwick2008}.
+Given the wide variety of graph database management systems in the
+market (e.g., Neo4j, Microsoft Azure Cosmos, Aerospike, Amazon Web
+Services Neptune, NebulaGraph, Memgraph, TigerGraph, Giraph), the rest
+of this work relies on RStudio and Neo4j \citep{Barrasa2023}. While
+RStudio is well-known in psychology, Neo4j might require a brief
+presentation. Neo4j ranks as a leading freemium software for graph
+database management systems and has been used in several industry
+sectors including retail, finance, pharmaceutics, hospitality, and
+electronic commerce, among others. Neo4j offers free and enterprise
+editions, which can be installed on local or server environments
+following official documentation. As the official documentation provides
+helpful material for newcomers, downloading and installation details for
+Mac, Windows, and Linux users are not necessary here, so the reader can
+consult specific details elsewhere \citep{vanBruggen2014}.
 
-\subsection{STEP 1: Instance creation and data
-import}\label{step-1-instance-creation-and-data-import}
+\subsection{STEP 2: Instance creation and data
+import}\label{step-2-instance-creation-and-data-import}
+
+As Neo4j does not support SPSS datasets, we open the .sav file in
+RStudio with the standard \texttt{read\_sav} syntax provided by the
+\texttt{haven} R library \citep{Wickham2025} and exported it as a
+standard coma separated value file (.csv) with the \texttt{write.csv}
+syntax provided by the \texttt{utils} R library \citep{RCore2025}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(haven)}
+\NormalTok{speed\_dating }\OtherTok{\textless{}{-}} \FunctionTok{read\_sav}\NormalTok{(}\StringTok{"/home/jcc/Documents/GitHub/NOSQLINBS/Revisited\_Data/To Post April 8 2015/speed.dating.3lev.small.july25.2014.sav"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(utils)}
+\NormalTok{speed\_dating }\OtherTok{\textless{}{-}} \FunctionTok{write.csv}\NormalTok{(speed\_dating, }\AttributeTok{file =} \StringTok{"speed\_dating.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \subsection{STEP 2: Understanding the
 context}\label{step-2-understanding-the-context}
