@@ -153,12 +153,12 @@ attention in psychological research.
 Relational databases dominate psychological research for good reasons.
 They store data in tables where columns represent variables, rows
 represent cases, and relationships between entities are managed through
-the so-called ``Structured Query Language'' (SQL). This paradigm works
-well when data are rectangular and relationships are simple
-\citep{soto2025}. However, as psychological phenomena grow more complex
-(i.e., spanning multiple levels of analysis, unfolding over time, and
-involving entities that relate to each other in qualitatively distinct
-ways) the tabular constraints of relational databases become a
+the so-called SQL or ``Structured Query Language'' \citep{soto2025}.
+This paradigm works well when data are tidy and relationships are simple
+\citep{Wickham2023}. However, as psychological phenomena grow more
+complex (i.e., spanning multiple levels of analysis, unfolding over
+time, and involving entities that relate to each other in qualitatively
+distinct ways) the tabular constraints of relational databases become a
 methodological liability rather than an asset.
 
 An alternative paradigm, broadly referred to as ``Not Only SQL''
@@ -191,34 +191,32 @@ that relational structure is not an analytical construction but a
 representational commitment. To our knowledge, this distinction has
 received no systematic treatment as a psychological method.
 
-This article provides a step-by-step tutorial for implementing labeled
-property graphs (LPGs) in psychological research. We illustrate the
-approach with the Speed-Dating replication dataset
-\citep{Selterman2015, Selterman2023}, a publicly available resource
-whose dyadic, longitudinal, and multimodal structure provides an ideal
-scenario for demonstrating how LPGs preserve relational topology, handle
-structural missingness without numerical encoding, and support queries
-that rectangular formats cannot express without costly joins or data
-duplication. The tutorial covers the full workflow: designing a graph
-schema, importing data into Neo4j, querying the graph with Cypher,
-connecting Neo4j to R via the neo2R package, and conducting statistical
-analysis and visualization using \texttt{tidygraph} and \texttt{ggraph}.
-All materials --- including annotated Cypher and R code, data, and a
-reproducible RMarkdown file --- are available in a public repository.
+This article provides a step-by-step tutorial for implementing graph
+databases in psychological research. We illustrate the approach with the
+Speed-Dating replication dataset \citep{Selterman2015, Selterman2023}, a
+publicly available resource whose dyadic, longitudinal, and multimodal
+structure provides an ideal scenario for demonstrating how graph
+databases preserve relational topology, handle structural missingness
+without numerical encoding, and support queries that rectangular formats
+cannot express without costly joins or data duplication. The tutorial
+covers the full workflow: designing a graph schema, importing data into
+Neo4j, querying the graph with Cypher, connecting Neo4j to R via the
+neo2R package, and conducting statistical analysis and visualization
+using \texttt{tidygraph} and \texttt{ggraph}. All materials ---
+including annotated Cypher and R code, data, and a reproducible
+RMarkdown file --- are available in a public repository.
 
 The remainder of this article is organized as follows. Section 2
 introduces the conceptual foundations of graph databases, contrasting
 their representational logic with that of relational databases and
 defining the core elements --- nodes, edges, labels, and properties ---
 that make them particularly well-suited for psychological data. Section
-3 motivates our tutorial through the Speed-Dating replication dataset
+3 introduces important epistemic considerations of graph databases in
+psychological research. Section 4 presents the step-by-step tutorial
+itself through the Speed-Dating replication dataset
 \citep{Selterman2023}. This tutorial shows how this dataset and its
 dyadic, longitudinal, and multimodal structure exposes the limitations
-of rectangular formats. Section 4 presents the step-by-step tutorial
-itself, covering the full workflow from graph schema design and data
-import in \texttt{Neo4j} through querying with \texttt{Cypher} and
-statistical analysis and visualization in R via the neo2R, tidygraph,
-and ggraph packages. Section 5 discusses the broader methodological
+of rectangular formats. Section 5 discusses the broader methodological
 implications of graph databases for psychological research, with
 particular attention to structural missingness, scalability, and
 ontological transparency. Section 6 concludes with a discussion of
@@ -243,12 +241,17 @@ structure becomes an explicit feature of data representation, rather
 than a construct introduced retrospectively at the analytical stage of
 research.
 
-The graph database paradigm maps naturally onto relational phenomena for
-psychological researchers. Participants, events, instruments, or
-observational units can be represented as nodes, whereas dyadic
-interactions, temporal transitions, or participation in shared
-activities can be represented as edges. Figure \hyperref[fig:F2]{1}
-illustrates this representation using the
+In psychology and behavioral sciences, the graph database paradigm fits
+naturally onto relational phenomena such as the exhibited differences
+between men and women when dating and looking for a romantic partner. We
+decide to revisit this phenomenon through the
+\href{https://osf.io/hcfmi/files/h62a3}{Speed‑Dating dataset}
+\citep{Selterman2023}
+
+Participants, events, instruments, or observational units can be
+represented as nodes, whereas dyadic interactions, temporal transitions,
+or participation in shared activities can be represented as edges.
+Figure \hyperref[fig:F2]{1} illustrates this representation using the
 \href{https://osf.io/hcfmi/files/h62a3}{Speed‑Dating dataset}
 \citep{Selterman2023}, in which participants and dating events are
 modeled as nodes connected by relational ties derived from observed
