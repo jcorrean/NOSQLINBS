@@ -121,16 +121,15 @@ The graph database paradigm fits naturally onto relational phenomena such as the
 knitr::include_graphics("F2.png")
 ```
 
-The labeled property graph illustrated in Figure [1](#fig:F2) helps to recreate the context of the study published by @Eastwick2008 and replicated by @Selterman2023.
-Here, this design enables researchers to traverse, query, and model highly interconnected data structures with exceptional efficiency and originality compared with what a researcher could do from the traditional relational database paradigm.
-Figure [1](#fig:F2) shows the data at three distinct levels: (1) stable participant characteristics (e.g., age, ethnicity, sex), (2) interaction‑level impressions recorded during each brief date (e.g., attraction, perceived similarity, desire to say “yes”), and (3) longitudinal follow‑up responses across subsequent weeks for pairs who continued interacting.
-These layers of data are represented as interconnected components of a single, coherent graph structure.
-On this basis, the following sections describe how psychological entities and relationships can be instantiated explicitly within an LPG.
-
 ## Entities as Nodes
 
-`Participant` nodes represent individuals in the study and store stable demographic properties such as age, ethnicity, and sex (from the codebook variables DemAge, DemEthn, and sex_M1_F2).
-The `DateEvent` node encompasses a series of dyadic interactions and store the full set of impression‑formation ratings provided by participants during speed‑dating (e.g., IRLikedPartner, IRSexAttract, IRCommon, IRSayYes, yessing, mutmatch).
+Figure [1](#fig:F2) shows how participants interacted in the speed-dating design. Nodes (in light blue) have their own identification (in bold letters) and properties (in regular letters). Nodes connect through labeled directed links (i.e., `HAD_DATE`, `WITH`, `FOLLOWED_UP`, and `REPORTED_BY`). A subtle distinction is visible between the four properties associated with the `Participant` node to the left of the `DateRating` node and the five properties associated with the `Participant` node to the right. As the speed-dating design implied that men and women rated each other, the role of "rater" (Part_num) and "ratee" (MatchID_clean) should be explicitly differentiated. For example, in the dataset, the first row shows that participant 1 (male) matched with participant 116 (female). Participant 1 evaluated Participant 116 with a score of 9 in IRLikedParter, while row 361 shows participant 116 evaluated participant 1 with a score of 6 in IRLikedParner. 
+
+
+
+
+The `DateRating` node encompasses a series of dyadic interactions and store the full set of impression‑formation ratings provided by both participants (Part_num, and MatchID_clean) during speed‑dating (e.g., IRLikedPartner, IRSexAttract, IRCommon, IRSayYes, Yessing, Mutmatch).
+
 These correspond directly to the interaction‑record variables in the dataset.
 The `FollowUp` node represents week‑level longitudinal responses, including relationship status, romantic interest, sexual desire, and commitment indicators (e.g., FUStatus, FURomInterest, FUSexDesire, FUCommitted), captured only for participants who matched and continued interacting.
 
