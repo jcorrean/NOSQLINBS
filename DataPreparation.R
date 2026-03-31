@@ -4,7 +4,7 @@
 library(haven)
 
 # Read the SPSS file
-speed_dating <- read_sav("speed.dating.3lev.small.july25.2014.sav")
+speed_dating <- read_sav("Untitled/speed.dating.3lev.small.july25.2014.sav")
 
 # Convert labelled columns to plain numeric vectors
 speed_dating <- as.data.frame(lapply(speed_dating, function(x) {
