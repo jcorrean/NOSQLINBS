@@ -104,18 +104,37 @@ Thus, such a workflow reconstructs relational structure at the analysis stage ra
 Graph database management systems, by contrast, store, query, and retrieve data in graph form natively, so that relational structure is not an analytical construction but a representational commitment.
 To our knowledge, this distinction has received no systematic treatment as a psychological method.
 
-This article provides a step-by-step tutorial for implementing graph databases in psychological research. In particular, our tutorial revisits the Speed-Dating replication dataset [@Selterman2015; @Selterman2023], whose dyadic, longitudinal, and multimodal structure provides an ideal scenario for demonstrating how graph databases preserve relational interactions, handle structural missingness without numerical encoding, and support queries that rectangular formats cannot express without costly joins or data duplication. 
+This article provides a step-by-step tutorial for implementing graph databases in psychological research.
+In particular, our tutorial revisits the Speed-Dating replication dataset [@Selterman2015; @Selterman2023], whose dyadic, longitudinal, and multimodal structure provides an ideal scenario for demonstrating how graph databases preserve relational interactions, handle structural missingness without numerical encoding, and support queries that rectangular formats cannot express without costly joins or data duplication.
 
 The remainder of this article is organized as follows.
 Section 2 introduces the conceptual foundations of graph databases, contrasting their representational logic with that of relational databases and defining the core elements — nodes, edges, labels, and properties — that make them particularly well-suited for psychological data.
-Section 3 introduces important epistemic considerations of graph databases in psychological research. Section 4 presents the step-by-step tutorial itself through the Speed-Dating replication dataset [@Selterman2023]. This dataset shows how its dyadic, longitudinal, and multimodal structure exposes the limitations of rectangular formats. Section 5 discusses the broader methodological implications of graph databases for psychological research, with particular attention to structural missingness, scalability, and ontological transparency. Section 6 concludes with a discussion of limitations and directions for future work. All code, data, and a fully reproducible RMarkdown file are available via the Open Science Framework at [OSF link].
+Section 3 introduces important epistemic considerations of graph databases in psychological research.
+Section 4 presents the step-by-step tutorial itself through the Speed-Dating replication dataset [@Selterman2023].
+This dataset shows how its dyadic, longitudinal, and multimodal structure exposes the limitations of rectangular formats.
+Section 5 discusses the broader methodological implications of graph databases for psychological research, with particular attention to structural missingness, scalability, and ontological transparency.
+Section 6 concludes with a discussion of limitations and directions for future work.
+All code, data, and a fully reproducible RMarkdown file are available via the Open Science Framework at [OSF link].
 
 # Graph Databases and Labeled Property Graphs {#sec2}
 
-Graph databases are data management systems that implement the basic operations of **C**reate, **R**ead, **U**pdate, and **D**elete (CRUD) on a graph data model, in which entities are represented as nodes and relationships are represented as edges [@Robinson2015]. A fundamental element of this paradigm is the labeled property graph (LPG), in which both nodes and edges can carry labels and properties, allowing attributes of entities and relationships to be stored directly within the graph structure.
-Unlike relational databases (i.e., where relationships are encoded indirectly through foreign keys and join operations) graph databases treat relationships as first-class components of the data model. As a result, relational structure becomes an explicit feature of data representation, rather than a construct introduced retrospectively at the analytical stage of research.
+Graph databases are data management systems that implement the basic operations of **C**reate, **R**ead, **U**pdate, and **D**elete (CRUD) on a graph data model, in which entities are represented as nodes and relationships are represented as edges [@Robinson2015].
+A fundamental element of this paradigm is the labeled property graph (LPG), in which both nodes and edges can carry labels and properties, allowing attributes of entities and relationships to be stored directly within the graph structure.
+Unlike relational databases (i.e., where relationships are encoded indirectly through foreign keys and join operations) graph databases treat relationships as first-class components of the data model.
+As a result, relational structure becomes an explicit feature of data representation, rather than a construct introduced retrospectively at the analytical stage of research.
+To make these abstract representational principles concrete, we now illustrate them using a well-known relational dataset in psychology.
 
-The graph database paradigm fits naturally onto relational phenomena such as the exhibited differences between men and women when dating and looking for a romantic partner [@Selterman2015]. We decide to revisit this phenomenon through the [Speed‑Dating dataset](https://osf.io/hcfmi/files/h62a3) [@Selterman2023]. This dataset has the records of participants who went on brief, 4-minute “dates” with potential romantic partners. After attending the speed-dating event, participants were given the opportunity to select people they “matched” with and contact each other as they see fit. @Selterman2023 also assessed participants’ degree of attraction and relationship initiation with follow up questions that were dependent on whether or not participants had subsequent interactions with mutual matches (e.g., “What is the current status of your relationship with [name]?” (a) dating seriously, (b) dating casually, etc.). These “pivot” questions were administered only if the participant and match “hung out” again, engaged in romantic behavior including dates and/or labeled the match as a romantic partner (or having romantic potential), engaged in sexual activity, etc. The sample consisted of 307 people (49.8% female), and each person had average of 9.28 (SD = 2.14) speed dates. Only 141 (45.9%) participants completed the age and ethnicity demographic variables. These participants were an average of 18.99 years old (SD = 2.86). The sample primarily identified as white (62.4%), Hispanic (9.9%), African American (10.6%), Asian/Pacific Islander (11.3%), or “other” (5.7%). Figure [1](#fig:F2) shows a labeled property graph for the [Speed‑Dating dataset](https://osf.io/hcfmi/files/h62a3) [@Selterman2023].
+The graph database paradigm fits naturally onto relational phenomena such as the exhibited differences between men and women when dating and looking for a romantic partner [@Selterman2015].
+We decide to revisit this phenomenon through the [Speed‑Dating dataset](https://osf.io/hcfmi/files/h62a3) [@Selterman2023].
+This dataset has the records of participants who went on brief, 4-minute “dates” with potential romantic partners.
+After attending the speed-dating event, participants were given the opportunity to select people they “matched” with and contact each other as they see fit.
+@Selterman2023 also assessed participants’ degree of attraction and relationship initiation with follow up questions that were dependent on whether or not participants had subsequent interactions with mutual matches (e.g., “What is the current status of your relationship with [name]?” (a) dating seriously, (b) dating casually, etc.).
+These “pivot” questions were administered only if the participant and match “hung out” again, engaged in romantic behavior including dates and/or labeled the match as a romantic partner (or having romantic potential), engaged in sexual activity, etc.
+The sample consisted of 307 people (49.8% female), and each person had average of 9.28 (SD = 2.14) speed dates.
+Only 141 (45.9%) participants completed the age and ethnicity demographic variables.
+These participants were an average of 18.99 years old (SD = 2.86).
+The sample primarily identified as white (62.4%), Hispanic (9.9%), African American (10.6%), Asian/Pacific Islander (11.3%), or “other” (5.7%).
+Figure [1](#fig:F2) shows a labeled property graph for the [Speed‑Dating dataset](https://osf.io/hcfmi/files/h62a3) [@Selterman2023].
 
 ```{r F2, echo=FALSE, fig.cap="A labeled property graph of the speed-dating dataset by Selterman et al. (2023)", fig.align="center", out.height="180px", out.width="350px", fig.pos="H"}
 knitr::include_graphics("F2.png")
@@ -123,23 +142,25 @@ knitr::include_graphics("F2.png")
 
 ## Entities as Nodes
 
-Figure [1](#fig:F2) shows how participants interacted in the speed-dating design. Nodes (in light blue) have their own identification (in bold letters) and properties (in regular letters). Nodes connect through labeled directed links (i.e., `HAD_DATE`, `WITH`, `FOLLOWED_UP`, and `REPORTED_BY`). A subtle distinction is visible between the four properties associated with the `Participant` node to the left of the `DateRating` node and the five properties associated with the `Participant` node to the right. As the speed-dating design implied that men and women rated each other, the role of "rater" (Part_num) and "ratee" (MatchID_clean) should be explicitly differentiated. For example, in the dataset, the first row shows that participant 1 (male) matched with participant 116 (female). Participant 1 evaluated Participant 116 with a score of 9 in IRLikedParter, while row 361 shows participant 116 evaluated participant 1 with a score of 6 in IRLikedParner. 
+Figure [1](#fig:F2) shows how participants interacted in the speed-dating design.
+Nodes (in light blue) have their own identification (in bold letters) and properties (in regular letters).
+Nodes connect through labeled directed links (i.e., `HAD_DATE`, `WITH`, `FOLLOWED_UP`, and `REPORTED_BY`).
+A subtle distinction is visible between the four properties associated with the `Participant` node to the left of the `DateRating` node and the five properties associated with the `Participant` node to the right.
+As the speed-dating design implied that men and women rated each other, the role of "rater" (Part_num) and "ratee" (MatchID_clean) should be explicitly differentiated.
+Such a distinction is evident in the dataset: the first row shows that participant 1 (male) matched with participant 116 (female).
+Participant 1 evaluated Participant 116 with a score of 9 in IRLikedParter, while row 361 shows participant 116 evaluated participant 1 with a score of 6 in IRLikedParner.
 
-
-
-
-The `DateRating` node encompasses a series of dyadic interactions and store the full set of impression‑formation ratings provided by both participants (Part_num, and MatchID_clean) during speed‑dating (e.g., IRLikedPartner, IRSexAttract, IRCommon, IRSayYes, Yessing, Mutmatch).
-
-These correspond directly to the interaction‑record variables in the dataset.
+The `DateRating` node encompasses a series of dyadic interactions and store the full set of impression‑formation ratings provided by both participants (Part_num, and MatchID_clean) during the speed‑dating (e.g., IRLikedPartner, IRSexAttract, IRCommon, IRSayYes, Yessing, Mutmatch).
 The `FollowUp` node represents week‑level longitudinal responses, including relationship status, romantic interest, sexual desire, and commitment indicators (e.g., FUStatus, FURomInterest, FUSexDesire, FUCommitted), captured only for participants who matched and continued interacting.
 
 ## Relationships as Edges
 
 Edges define how these nodes are linked and encode psychological structure directly.
-The `HAD_DATE` edge connect participants to the `DateEvent` in which they took part, indicating the rater’s perspective on that interaction.
-The edge labeled as `WITH` connects the `DateEvent` back to the other participant, allowing the system to explicitly represent dyadic structure.
+The `HAD_DATE` edge connect participants to the `DateRating` in which they took part, indicating the rater’s perspective on that interaction.
+The edge labeled as `WITH` connects the `DateRating` back to the other participant, allowing the system to explicitly represent dyadic structure.
 The edge labeled as `FOLLOWED_UP` links `Participants` to their `FollowUp` node, representing relational trajectories across weeks.
-Optionally, a `MUTUAL_MATCH_WITH` edge can be created between two `Participants` when the `mutmatch` property equals 1, providing a direct representation of reciprocal liking (i.e., a relationship that is invisible in rectangular data but naturally expressed in graph form).
+Finally, the `Participant`node to the right of the `DateRating` node receives the connection `REPORTED_BY` from the `FollowUp`node.
+This connection mirrors the fact that both participants (Part_num, and MatchID_clean) had to report their subjective assessments on the romantic parter they matched with during follow-up sessions.
 
 ## Why Graph Databases Matter for Psychological Research
 
@@ -166,7 +187,7 @@ This emphasis aligns with recent reviews that propose methodological innovations
 
 As a psychological method, the graph database paradigm shares some similarities with the *nomological nets* originally proposed by [@cronbach1955].
 Both emphasize relational structure and the systematic articulation of theoretical commitments.
-However, labeled property graph models constitute a more general-purpose representational framework that transcends the scope of classical nomological nets (see Table 1).
+However, labeled property graph models constitute a more general-purpose representational framework that transcends the scope of classical nomological nets (see Table 1).
 
 | Feature | Labeled Property Graphs | Nomological nets |
 |------------------------|------------------------|------------------------|
@@ -214,39 +235,124 @@ In sum, labeled property graphs are not merely a technical alternative to relati
 
 # Applying graph database in behavioral research
 
-This section provides a step-by-step tutorial demonstrating how to (a) design a graph schema for psychological data, (b) import data into a labeled property graph, (c) query relational and longitudinal structures that are difficult to express in rectangular formats, and (d) interface the graph with R for statistical analysis and visualization.
+This section provides a step-by-step tutorial demonstrating how to (a) design a graph schema for psychological data, (b) prepare the raw dataset for import, (c) import the data into a labeled property graph using Cypher, and (d) verify that the resulting graph matches the intended schema.
+Readers with no prior experience with Neo4j or graph databases should be able to follow each step in sequence using only the materials described below.
 
 ## STEP 1: Prerrequisites and materials
 
-This tutorial examines a dataset on men and women exhibited preferences for mates [@Selterman2015; @Selterman2023] which is a replication work from the original study published by @Eastwick2008. This dataset is available in an [Open Science Framework repository](https://osf.io/ng6cc/overview).
-This repo provides access to several files. In the files preview menu, the `speed.dating.2.zip` can be downloaded from the Final Report option. The zip file contains the raw data in an SPSS data format (.sav). This file can be easily read in SPSS, PSPP, Jasp, Jamovi, or RStudio. We decided to use RStudio to open the original dataset.
+This tutorial uses the Speed-Dating replication dataset [@Selterman2023], available in the [Open Science Framework repository](https://osf.io/ng6cc/overview).
+From the Files preview menu, download speed.dating.2.zip from the Final Report option.
+The zip archive contains the raw data in SPSS format (.sav).
+This file can be opened in SPSS, PSPP, JASP, jamovi, or RStudio.
+The tutorial uses RStudio for all pre-processing steps.
 
-Given the wide variety of graph database management systems in the market (e.g., Neo4j, Microsoft Azure Cosmos, Aerospike, Amazon Web Services Neptune, NebulaGraph, Memgraph, TigerGraph, Giraph), the rest of this work relies on RStudio and Neo4j [@Barrasa2023]. While RStudio is well-known in psychology, Neo4j might require a brief presentation. Neo4j ranks as a leading freemium software for graph database management systems and has been used in several industry sectors including retail, finance, pharmaceutics, hospitality, and electronic commerce, among others. Neo4j offers free and enterprise editions, which can be installed on local or server environments following official documentation.
-As the official documentation provides helpful material for newcomers, downloading and installation details for Mac, Windows, and Linux users are not necessary here, so the reader can consult specific details elsewhere [@vanBruggen2014]. As Neo4j does not support SPSS datasets, we suggest to open the .sav file in RStudio with the standard `read_sav` syntax provided by the `haven` R library [@Wickham2025] and exported it as a standard coma separated value file (.csv) with the `write.csv` syntax provided by the `utils` R library [@RCore2025]. We named this csv file as `speed_dating.csv` and use it as input in the second step.
+Two software environments are required throughout the tutorial.
+RStudio is used to convert the raw dataset from SPSS format to a CSV file suitable for Neo4j.
+Neo4j Desktop is used to create the graph database instance, import the CSV, and run Cypher queries [@Barrasa2023].
+Neo4j Desktop can be downloaded free of charge from its [official website](https://neo4j.com/download/).
+The reader may consult @vanBruggen2014 for installation details across Mac, Windows, and Linux environments.
+Two R packages are required: `haven` [@Wickham2025] for reading the SPSS file, and `utils` [@RCore2025], which is included in every R installation by default and provides the write.csv() function.
+No additional R packages are needed for the tutorial.
 
 ## STEP 2: Instance creation
 
-In this step, we suggest to open Neo4j as a standard software locally installed in the computer and clic in the "Create Instance" button in the upper right corner. Name the instance as "SpeedDating" and provide an easy-to-recall password for further sessions. Then, clic on the "Start instance" button as illustrated in Figure [3](#fig:F3). 
-
-```{r F3, echo=FALSE, fig.cap="The resulting SpeedDating instance created in Neo4j", fig.align="center", out.height="150px", out.width="400px", fig.pos="H"}
-knitr::include_graphics("F3.png")
-```
-
-The word "RUNNING" in green letters should be visible right below the name "SpeedDating" as illustrated in Figure [4](#fig:F4). This mark shows to the user that new graph database is running and ready to be populated with datasets. In our case, however, the graph database will be filled with just one dataset.
+Open Neo4j Desktop and click the Create Instance button in the upper right corner.
+Name the instance SpeedDating and set a password that is easy to recall across sessions.
+Once created, click Start instance.
+The label RUNNING in green letters should appear below the instance name, confirming that the database is active and ready to receive data.
+Before importing any data, the CSV file must be placed in a specific folder that Neo4j can access.
+With the SpeedDating instance running, click the folder icon in Neo4j Desktop to reveal the instance directory.
+Navigate to the import/ subfolder inside that directory.
+This is the only folder from which Neo4j can load CSV files using the LOAD CSV command.
+All import operations in this tutorial assume that the CSV file is located at this path (Figure [2](#fig:F4)).
 
 ```{r F4, echo=FALSE, fig.cap="The SpeedDating instance running in Neo4j", fig.align="center", out.height="150px", out.width="400px", fig.pos="H"}
 knitr::include_graphics("F4.png")
 ```
 
-## STEP 2: Data import and understanding the data
+## STEP 3: Designing the Graph Schema
 
-To initialize the data import, the user should copy the `speed_dating.csv` and paste it inside the import/ folder of the initialized instance. The import folder can be easily located in Neo4j by clicking on the folder icon that is illustrated in Figure [5](#fig:F5). 
+Before writing any code, it is useful to decide how the data will be represented as a graph.
+This decision is what the graph database literature calls schema design, and it is the most consequential methodological step in the tutorial.
+A poor schema design produces a graph that is technically valid but analytically misleading; a good schema design makes the psychological structure of the data immediately visible.
+
+The speed-dating dataset has a three-level structure.
+At the highest level are individual participants.
+At the intermediate level are the dyadic interactions that took place during the speed-dating event, each representing the subjective impressions that one participant formed of another.
+At the lowest level are the longitudinal follow-up assessments, collected weekly over ten weeks for pairs who continued interacting after the event.
+This three-level structure maps directly onto three node types.
+A key design decision concerns the intermediate level.
+An obvious but incorrect approach would be to model a speed-dating interaction as a single shared node connecting two participants symmetrically.
+The data do not support this interpretation.
+Each participant rated every partner independently, and those ratings are asymmetric: participant 1 rated participant 116 with a score of 9 on IRLikedPartner, while participant 116 rated participant 1 with a score of 6 on the same item.
+These are two distinct perceptual events, not one shared event.
+The intermediate node is therefore called DateRating rather than DateEvent, and each DateRating node represents the impressions formed by one specific rater about one specific partner.
+
+Figure [1](#fig:F2) illustrates the resulting labeled property graph.
+It contains three node types and four directed relationships.
+Table 2 summarizes each element of the schema.
+
+| Element | Type | Description |
+|-----------------|-----------------|---------------------------------------|
+| Participant | Node | One node per individual. Carries Part_num (rater side) or MatchID_clean (partner side), DemAge, DemEthn, and sex_M1_F2. |
+| DateRating | Node | One node per rater-partner pair. Carries Part_num, MatchID_clean, IRLikedPartner, IRSexAttract, IRCommon, IRSayYes, Yessing, and Mutmatch. Uniquely identified by the composite key Part_num + MatchID_clean. |
+| FollowUp | Node | One node per rater-partner-week triplet, created only when at least one follow-up variable is non-missing. Carries Follow_clean, FUStatus, FURomInterest, FUSexDesire, and FUCommitted. |
+| HAD_DATE | Edge | Directed edge from the rater Participant to their DateRating. Encodes who formed the impressions. |
+| WITH | Edge | Directed edge from DateRating to the partner Participant. Encodes who was evaluated. |
+| FOLLOWED_UP | Edge | Directed edge from DateRating to FollowUp. Links an impression to the longitudinal assessments that followed it. |
+| REPORTED_BY | Edge | Directed edge from FollowUp to the partner Participant (dashed in Figure 1). Makes explicit that follow-up reports are subjective assessments directed at a specific partner. |
+
+: Schema elements of the Speed-Dating labeled property graph.
+
+Two properties deserve special attention because they do not appear as columns in the original CSV file.
+The composite identifier of each `DateRating` node is constructed by concatenating Part_num and MatchID_clean into a single string of the form "Part_num_MatchID_clean" (e.g., "1_116" for participant 1 rating participant 116).
+This composite key is necessary because neither column alone uniquely identifies a dyadic perception: the same MatchID_clean value appears in the rows of many different raters.
+Similarly, the `FollowUp` node is identified by the combination of the composite rater-partner key and Follow_clean, which records the week number (1 through 10).
+Both composite identifiers are constructed during the import step and do not require any modification of the original CSV file.
+
+## STEP 4: Data preparation in R
+
+The original dataset is distributed as an SPSS file (.sav).
+Neo4j does
+not read SPSS files directly, so the first task is to convert it to CSV format using RStudio.
+The following R script reads the .sav file, replaces all missing values with empty strings (which is the format that Neo4j's LOAD CSV command expects), and writes the result to disk as speed_dating.csv.
+
+
+```{r data-preparation, echo = TRUE, message=FALSE, warning=FALSE}
+# Install the haven package if not already installed
+# install.packages("haven")
+
+library(haven)
+
+# Read the SPSS file
+speed_dating <- read_sav("speed.dating.3lev.small.july25.2014.sav")
+
+# Convert labelled columns to plain numeric vectors
+speed_dating <- as.data.frame(lapply(speed_dating, function(x) {
+  if (inherits(x, "haven_labelled")) as.numeric(x) else x
+}))
+
+# Write to CSV without row numbers
+# na = "" ensures missing values appear as empty cells,
+# which is the format Neo4j expects for LOAD CSV
+write.csv(
+  speed_dating,
+  "speed_dating.csv",
+  row.names = FALSE,
+  na = ""
+)
+```
+
+
+To initialize the data import, the user should copy the `speed_dating.csv` and paste it inside the import/ folder of the initialized instance.
+The import folder can be easily located in Neo4j by clicking on the folder icon that is illustrated in Figure [5](#fig:F5).
 
 ```{r F5, echo=FALSE, fig.cap="The SpeedDating instance running in Neo4j", fig.align="center", out.height="150px", out.width="400px", fig.pos="H"}
 knitr::include_graphics("F5.png")
 ```
 
-, luego pega los bloques en Neo4j Browser en orden. Los bloques de verificación al final te confirmarán los conteos esperados.
+, luego pega los bloques en Neo4j Browser en orden.
+Los bloques de verificación al final te confirmarán los conteos esperados.
 
 ## STEP 3: Sketching a graph database model
 
