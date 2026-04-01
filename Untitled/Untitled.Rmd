@@ -293,7 +293,7 @@ It contains three node types and four directed relationships.
 Table 2 summarizes each element of the schema.
 
 | Element | Type | Description |
-|-----------------|-----------------|---------------------------------------|
+|------------------|------------------|-------------------------------------|
 | Participant | Node | One node per individual. Carries Part_num (rater side) or MatchID_clean (partner side), DemAge, DemEthn, and sex_M1_F2. |
 | DateRating | Node | One node per rater-partner pair. Carries Part_num, MatchID_clean, IRLikedPartner, IRSexAttract, IRCommon, IRSayYes, Yessing, and Mutmatch. Uniquely identified by the composite key Part_num + MatchID_clean. |
 | FollowUp | Node | One node per rater-partner-week triplet, created only when at least one follow-up variable is non-missing. Carries Follow_clean, FUStatus, FURomInterest, FUSexDesire, and FUCommitted. |
@@ -313,10 +313,8 @@ Both composite identifiers are constructed during the import step and do not req
 ## STEP 4: Data preparation in R
 
 The original dataset is distributed as an SPSS file (.sav).
-Neo4j does
-not read SPSS files directly, so the first task is to convert it to CSV format using RStudio.
+Neo4j does not read SPSS files directly, so the first task is to convert it to CSV format using RStudio.
 The following R script reads the .sav file, replaces all missing values with empty strings (which is the format that Neo4j's LOAD CSV command expects), and writes the result to disk as speed_dating.csv.
-
 
 ```{r data-preparation, echo = TRUE, message=FALSE, warning=FALSE}
 # Install the haven package if not already installed
@@ -343,17 +341,67 @@ write.csv(
 )
 ```
 
+Two details in this script are critical for a successful import.
+First, row.names = `FALSE` prevents R from adding an unnamed index column at the start of the file.
+Neo4j rejects CSV files that contain empty column headers, so omitting the row index is mandatory.
+Second, `na = ""` replaces R's default `NA` token with an empty string.
+The Cypher import script uses trim(row.column) \<\> "" to detect missing values, and this check only works correctly when missing cells are genuinely empty rather than containing the literal text `NA`.
+Note that once the script has run, copy speed_dating.csv into the import/ folder of the SpeedDating Neo4j instance before proceeding to Step 5.
+The location of this folder was described in Step 2.
 
-To initialize the data import, the user should copy the `speed_dating.csv` and paste it inside the import/ folder of the initialized instance.
-The import folder can be easily located in Neo4j by clicking on the folder icon that is illustrated in Figure [5](#fig:F5).
+## STEP 5: Data Import into Neo4j
 
-```{r F5, echo=FALSE, fig.cap="The SpeedDating instance running in Neo4j", fig.align="center", out.height="150px", out.width="400px", fig.pos="H"}
-knitr::include_graphics("F5.png")
+With the CSV file in the import/ folder, open Neo4j Browser by clicking the Connect button in Neo4j Desktop and then selecting Open.
+The Cypher import script below must be executed in six sequential blocks. Each block is a self-contained unit; paste and run one block at a time rather than submitting the entire script at once.
+If an error occurs in any block, it can be corrected and re-run without affecting the blocks that have already completed successfully.
+
+- Block 1 — Constraints and indexes.
+This block defines the uniqueness constraints that prevent duplicate nodes from being created during import.
+Constraints must exist before any nodes are loaded.
+Execute this block first.
+
+``` cypher
+:param {
+  file_path_root: 'file:///',
+  file_0: 'speed_dating.csv'
+};
+
+CREATE CONSTRAINT `participant_id_unique` IF NOT EXISTS
+  FOR (p:Participant) REQUIRE p.Part_num IS UNIQUE;
+
+CREATE CONSTRAINT `date_rating_id_unique` IF NOT EXISTS
+  FOR (d:DateRating) REQUIRE d.date_rating_id IS UNIQUE;
+
+CREATE INDEX `followup_lookup` IF NOT EXISTS
+  FOR (f:FollowUp) ON (f.follow_id);
 ```
 
-, luego pega los bloques en Neo4j Browser en orden.
-Los bloques de verificación al final te confirmarán los conteos esperados.
+- Block 2 — Participant nodes. One node is created for each unique value of Part_num. Because DemAge and DemEthn are missing for approximately 55% of participants, the ON MATCH SET clause fills in those properties only when a non-empty value is encountered, avoiding overwriting a previously recorded value with a missing one.
+``` cypher
+LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
+WITH row WHERE NOT toInteger(trim(row.Part_num)) IS NULL
+CALL (row) {
+  MERGE (p:Participant {Part_num: toInteger(trim(row.Part_num))})
+  ON CREATE SET
+    p.sex_M1_F2  = toFloat(trim(row.sex_M1_F2)),
+    p.DemAge     = CASE WHEN trim(row.DemAge)  <> '' THEN toFloat(trim(row.DemAge))    ELSE null END,
+    p.DemEthn    = CASE WHEN trim(row.DemEthn) <> '' THEN toInteger(trim(row.DemEthn)) ELSE null END
+  ON MATCH SET
+    p.DemAge     = CASE WHEN p.DemAge IS NULL     AND trim(row.DemAge)  <> ''
+                        THEN toFloat(trim(row.DemAge))    ELSE p.DemAge  END,
+    p.DemEthn    = CASE WHEN p.DemEthn IS NULL    AND trim(row.DemEthn) <> ''
+                        THEN toInteger(trim(row.DemEthn)) ELSE p.DemEthn END
+} IN TRANSACTIONS OF 10000 ROWS;
 
-## STEP 3: Sketching a graph database model
+// Partners who appear only as MatchID_clean (no own Part_num row)
+LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
+WITH row WHERE NOT toInteger(trim(row.MatchID_clean)) IS NULL
+CALL (row) {
+  MERGE (p:Participant {Part_num: toInteger(trim(row.MatchID_clean))})
+} IN TRANSACTIONS OF 10000 ROWS;
+```
+
+Note that MatchID_clean is the Part_num of the partner. Both columns draw from the same population of participants, so all participants are stored under the single property Part_num regardless of the role they played in a given interaction.
+
 
 \backmatter
