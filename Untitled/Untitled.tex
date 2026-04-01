@@ -90,7 +90,7 @@
 \begin{document}
 
 
-\title[]{Graph Databases as a Psychological Method}
+\title[]{Graph Databases as a Psychological Method: A Tutorial}
 
 %%=============================================================%%
 %% Prefix	-> \pfx{Dr}
@@ -117,18 +117,17 @@ City}, \country{Mexico}, \postcode{01219}}}
   \affil[2]{\orgdiv{Escuela de Educación}, \orgname{Politécnico
 Grancolombiano}, \orgaddress{\city{Bogotá}, \country{Colombia}, \postcode{110231}}}
 
-\abstract{This article provides a tutorial on labeled property graphs as
-a graph database paradigm well suited for psychological research. We
-show how this paradigm addresses the tabular constraints that fragment,
-duplicate, or obscure the relational structure of human behavior, and
-how it supports the representation, management, and analysis of complex
-behavioral data. Using the Speed-Dating replication dataset as a running
-example, we demonstrate that graph databases offer three methodological
-advantages particularly relevant to psychological research: (a) schema
-flexibility that accommodates evolving theoretical models, (b) query
-performance that exploits local relational structure rather than global
-table joins, and (c) ontological transparency that makes assumptions
-about entities and relationships explicit and testable.}
+\abstract{This tutorial presents labeled property graphs as a
+psychological method. We show how this paradigm addresses tabular
+constraints that fragment, duplicate, or obscure relational behavioral
+structure. Using the Speed-Dating replication dataset as a running
+example, we demonstrate how graph databases preserve relational
+structure, accommodate asymmetric dyadic roles, and support querying of
+longitudinal and conditional processes. We discuss methodological
+implications of graph-based representations for psychological research,
+including structural approaches to missingness, scalability as an
+epistemic constraint, and ontological transparency. Together, these
+features position graph databases as a psychological method.}
 
 \keywords{Graph database, Network modeling, complex behavior}
 
@@ -590,9 +589,9 @@ graph. It contains three node types and four directed relationships.
 Table 2 summarizes each element of the schema.
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2568}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2568}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4865}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2603}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2603}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4795}}@{}}
 \caption{Schema elements of the Speed-Dating labeled property
 graph.}\tabularnewline
 \toprule\noalign{}
@@ -1229,6 +1228,8 @@ graph database schema evolution is not an ad-hoc adjustment to the data
 structure but a representation of genuine scientific progress --- a
 point that connects to broader arguments about the role of ontological
 commitments in psychological methodology \citep{burgos2025}.
+
+\section{Conclusions and limitations}\label{conclusions-and-limitations}
 
 \backmatter
 
