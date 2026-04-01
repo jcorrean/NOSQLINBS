@@ -784,31 +784,24 @@ have already completed successfully.
   overwriting a previously recorded value with a missing one.
 \end{itemize}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{LOAD CSV WITH HEADERS FROM ($file\_path\_root + $file\_0) AS row}
-\NormalTok{WITH row WHERE NOT toInteger(trim(row.Part\_num)) IS NULL}
-\NormalTok{CALL (row) \{}
-\NormalTok{  MERGE (p:Participant \{Part\_num: toInteger(trim(row.Part\_num))\})}
-\NormalTok{  ON CREATE SET}
-\NormalTok{    p.sex\_M1\_F2  = toFloat(trim(row.sex\_M1\_F2)),}
-\NormalTok{    p.DemAge     = CASE WHEN trim(row.DemAge)  \textless{}\textgreater{} \textquotesingle{}\textquotesingle{} THEN toFloat(trim(row.DemAge))    ELSE null END,}
-\NormalTok{    p.DemEthn    = CASE WHEN trim(row.DemEthn) \textless{}\textgreater{} \textquotesingle{}\textquotesingle{} THEN toInteger(trim(row.DemEthn)) ELSE null END}
-\NormalTok{  ON MATCH SET}
-\NormalTok{    p.DemAge     = CASE WHEN p.DemAge IS NULL     AND trim(row.DemAge)  \textless{}\textgreater{} \textquotesingle{}\textquotesingle{}}
-\NormalTok{                        THEN toFloat(trim(row.DemAge))    ELSE p.DemAge  END,}
-\NormalTok{    p.DemEthn    = CASE WHEN p.DemEthn IS NULL    AND trim(row.DemEthn) \textless{}\textgreater{} \textquotesingle{}\textquotesingle{}}
-\NormalTok{                        THEN toInteger(trim(row.DemEthn)) ELSE p.DemEthn END}
-\NormalTok{\} IN TRANSACTIONS OF 10000 ROWS;}
-
-\NormalTok{// Partners who appear only as MatchID\_clean (no own Part\_num row)}
-\NormalTok{LOAD CSV WITH HEADERS FROM ($file\_path\_root + $file\_0) AS row}
-\NormalTok{WITH row WHERE NOT toInteger(trim(row.MatchID\_clean)) IS NULL}
-\NormalTok{CALL (row) \{}
-\NormalTok{  MERGE (p:Participant \{Part\_num: toInteger(trim(row.MatchID\_clean))\})}
-\NormalTok{\} IN TRANSACTIONS OF 10000 ROWS;}
-\end{Highlighting}
-\end{Shaded}
+\begin{verbatim}
+LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
+WITH row WHERE NOT toInteger(trim(row.Part_num)) IS NULL
+CALL (row) {
+  MERGE (p:Participant {Part_num: toInteger(trim(row.Part_num))})
+  ON CREATE SET
+    p.sex_M1_F2 = toFloat(trim(row.sex_M1_F2)),
+    p.DemAge    = CASE WHEN trim(row.DemAge) <> ''
+                       THEN toFloat(trim(row.DemAge)) ELSE null END,
+    p.DemEthn   = CASE WHEN trim(row.DemEthn) <> ''
+                       THEN toInteger(trim(row.DemEthn)) ELSE null END
+  ON MATCH SET
+    p.DemAge    = CASE WHEN p.DemAge  IS NULL AND trim(row.DemAge)  <> ''
+                       THEN toFloat(trim(row.DemAge)) ELSE p.DemAge END,
+    p.DemEthn   = CASE WHEN p.DemEthn IS NULL AND trim(row.DemEthn) <> ''
+                       THEN toInteger(trim(row.DemEthn)) ELSE p.DemEthn END
+} IN TRANSACTIONS OF 10000 ROWS;
+\end{verbatim}
 
 Note that MatchID\_clean is the Part\_num of the partner. Both columns
 draw from the same population of participants, so all participants are

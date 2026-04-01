@@ -377,29 +377,26 @@ CREATE INDEX `followup_lookup` IF NOT EXISTS
 ```
 
 - Block 2 — Participant nodes. One node is created for each unique value of Part_num. Because DemAge and DemEthn are missing for approximately 55% of participants, the ON MATCH SET clause fills in those properties only when a non-empty value is encountered, avoiding overwriting a previously recorded value with a missing one.
-``` cypher
+
+\begin{verbatim}
 LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
 WITH row WHERE NOT toInteger(trim(row.Part_num)) IS NULL
 CALL (row) {
   MERGE (p:Participant {Part_num: toInteger(trim(row.Part_num))})
   ON CREATE SET
-    p.sex_M1_F2  = toFloat(trim(row.sex_M1_F2)),
-    p.DemAge     = CASE WHEN trim(row.DemAge)  <> '' THEN toFloat(trim(row.DemAge))    ELSE null END,
-    p.DemEthn    = CASE WHEN trim(row.DemEthn) <> '' THEN toInteger(trim(row.DemEthn)) ELSE null END
+    p.sex_M1_F2 = toFloat(trim(row.sex_M1_F2)),
+    p.DemAge    = CASE WHEN trim(row.DemAge) <> ''
+                       THEN toFloat(trim(row.DemAge)) ELSE null END,
+    p.DemEthn   = CASE WHEN trim(row.DemEthn) <> ''
+                       THEN toInteger(trim(row.DemEthn)) ELSE null END
   ON MATCH SET
-    p.DemAge     = CASE WHEN p.DemAge IS NULL     AND trim(row.DemAge)  <> ''
-                        THEN toFloat(trim(row.DemAge))    ELSE p.DemAge  END,
-    p.DemEthn    = CASE WHEN p.DemEthn IS NULL    AND trim(row.DemEthn) <> ''
-                        THEN toInteger(trim(row.DemEthn)) ELSE p.DemEthn END
+    p.DemAge    = CASE WHEN p.DemAge  IS NULL AND trim(row.DemAge)  <> ''
+                       THEN toFloat(trim(row.DemAge)) ELSE p.DemAge END,
+    p.DemEthn   = CASE WHEN p.DemEthn IS NULL AND trim(row.DemEthn) <> ''
+                       THEN toInteger(trim(row.DemEthn)) ELSE p.DemEthn END
 } IN TRANSACTIONS OF 10000 ROWS;
+\end{verbatim}
 
-// Partners who appear only as MatchID_clean (no own Part_num row)
-LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
-WITH row WHERE NOT toInteger(trim(row.MatchID_clean)) IS NULL
-CALL (row) {
-  MERGE (p:Participant {Part_num: toInteger(trim(row.MatchID_clean))})
-} IN TRANSACTIONS OF 10000 ROWS;
-```
 
 Note that MatchID_clean is the Part_num of the partner. Both columns draw from the same population of participants, so all participants are stored under the single property Part_num regardless of the role they played in a given interaction.
 
