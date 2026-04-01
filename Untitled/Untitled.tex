@@ -798,6 +798,158 @@ CALL (row) {
                              THEN toInteger(trim(row.mutmatch))     ELSE null END
 } IN TRANSACTIONS OF 10000 ROWS;
 \end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Block 4 --- The FollowUp node. This node represents the
+  rater-partner-week triplet, but only for rows where at least one
+  follow-up variable contains a non-missing value. This prevents the
+  graph from being inflated by approximately 26,700 structurally empty
+  nodes that correspond to pairs who did not interact after the
+  speed-dating event. The absence of a FollowUp node is itself
+  informative as it indicates that no follow-up interaction occurred,
+  without requiring any numerical encoding such as NA.
+\end{itemize}
+
+\begin{verbatim}
+LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
+WITH row
+WHERE (
+  trim(row.FURomInterest) <> '' OR trim(row.FUSexDesire)  <> '' OR
+  trim(row.FUCommitted)   <> '' OR trim(row.FUStatus)     <> '' OR
+  trim(row.FUEager)       <> ''
+)
+CALL (row) {
+  MERGE (f:FollowUp {
+    follow_id: toString(toInteger(trim(row.Part_num)))
+             + '_'
+             + toString(toInteger(trim(row.MatchID_clean)))
+             + '_'
+             + toString(toInteger(trim(row.Follow_clean)))
+  })
+  ON CREATE SET
+    f.Part_num      = toInteger(trim(row.Part_num)),
+    f.MatchID_clean = toInteger(trim(row.MatchID_clean)),
+    f.Follow_clean  = toInteger(trim(row.Follow_clean)),
+    f.FUStatus       = CASE WHEN trim(row.FUStatus)      <> ''
+                            THEN toFloat(trim(row.FUStatus))      ELSE null END,
+    f.FURomInterest  = CASE WHEN trim(row.FURomInterest) <> ''
+                            THEN toFloat(trim(row.FURomInterest)) ELSE null END,
+    f.FUSexDesire    = CASE WHEN trim(row.FUSexDesire)   <> ''
+                            THEN toFloat(trim(row.FUSexDesire))   ELSE null END,
+    f.FUCommitted    = CASE WHEN trim(row.FUCommitted)   <> ''
+                            THEN toFloat(trim(row.FUCommitted))   ELSE null END,
+    f.FUEager        = CASE WHEN trim(row.FUEager)       <> ''
+                            THEN toFloat(trim(row.FUEager))       ELSE null END
+} IN TRANSACTIONS OF 10000 ROWS;
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Block 5 --- Relationships. This block creates the four directed
+  relationships shown in Figure \hyperref[fig:F2]{1}. Each MATCH
+  statement locates previously created nodes using the same identifiers
+  defined in Blocks 2 through 4; MERGE then creates the relationship
+  only if it does not already exist.
+\end{itemize}
+
+\begin{verbatim}
+// HAD_DATE: Participant (rater) --> DateRating
+LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
+WITH row WHERE toInteger(trim(row.Follow_clean)) = 1
+CALL (row) {
+  MATCH (p:Participant {Part_num: toInteger(trim(row.Part_num))})
+  MATCH (d:DateRating  {date_rating_id:
+    toString(toInteger(trim(row.Part_num))) + '_' +
+    toString(toInteger(trim(row.MatchID_clean)))})
+  MERGE (p)-[:HAD_DATE]->(d)
+} IN TRANSACTIONS OF 10000 ROWS;
+
+// WITH: DateRating --> Participant (partner)
+LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
+WITH row WHERE toInteger(trim(row.Follow_clean)) = 1
+CALL (row) {
+  MATCH (d:DateRating {date_rating_id:
+    toString(toInteger(trim(row.Part_num))) + '_' +
+    toString(toInteger(trim(row.MatchID_clean)))})
+  MATCH (partner:Participant {Part_num: toInteger(trim(row.MatchID_clean))})
+  MERGE (d)-[:WITH]->(partner)
+} IN TRANSACTIONS OF 10000 ROWS;
+
+// FOLLOWED_UP: DateRating --> FollowUp
+LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
+WITH row
+WHERE (
+  trim(row.FURomInterest) <> '' OR trim(row.FUSexDesire)  <> '' OR
+  trim(row.FUCommitted)   <> '' OR trim(row.FUStatus)     <> '' OR
+  trim(row.FUEager)       <> ''
+)
+CALL (row) {
+  MATCH (d:DateRating {date_rating_id:
+    toString(toInteger(trim(row.Part_num))) + '_' +
+    toString(toInteger(trim(row.MatchID_clean)))})
+  MATCH (f:FollowUp {follow_id:
+    toString(toInteger(trim(row.Part_num))) + '_' +
+    toString(toInteger(trim(row.MatchID_clean))) + '_' +
+    toString(toInteger(trim(row.Follow_clean)))})
+  MERGE (d)-[:FOLLOWED_UP {week: toInteger(trim(row.Follow_clean))}]->(f)
+} IN TRANSACTIONS OF 10000 ROWS;
+
+// REPORTED_BY: FollowUp --> Participant (partner)
+LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
+WITH row
+WHERE (
+  trim(row.FURomInterest) <> '' OR trim(row.FUSexDesire)  <> '' OR
+  trim(row.FUCommitted)   <> '' OR trim(row.FUStatus)     <> '' OR
+  trim(row.FUEager)       <> ''
+)
+CALL (row) {
+  MATCH (f:FollowUp      {follow_id:
+    toString(toInteger(trim(row.Part_num))) + '_' +
+    toString(toInteger(trim(row.MatchID_clean))) + '_' +
+    toString(toInteger(trim(row.Follow_clean)))})
+  MATCH (partner:Participant {Part_num: toInteger(trim(row.MatchID_clean))})
+  MERGE (f)-[:REPORTED_BY]->(partner)
+} IN TRANSACTIONS OF 10000 ROWS;
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Block 6. Verification. After all five blocks have run without errors,
+  the following queries confirm that the graph matches the intended
+  schema. Each query should be run separately in Neo4j Browser. The
+  expected output for each query is shown in Table 3.
+\end{itemize}
+
+\begin{verbatim}
+// Query 1: Node counts by label
+MATCH (n)
+RETURN labels(n)[0] AS label, count(n) AS total
+ORDER BY label;
+
+// Query 2: Relationship counts by type
+MATCH ()-[r]->()
+RETURN type(r) AS relationship, count(r) AS total
+ORDER BY relationship;
+
+// Query 3: Confirm asymmetric ratings for the example pair in Section 2.1
+// Participant 1 rated Participant 116 → expect IRLikedPartner = 9
+MATCH (p:Participant {Part_num: 1})-[:HAD_DATE]->(d:DateRating)-[:WITH]
+      ->(partner:Participant {Part_num: 116})
+RETURN p.Part_num AS rater, partner.Part_num AS partner,
+       d.IRLikedPartner AS score;
+
+// Query 4: Visualize a mutual-match dyad with its follow-up trajectory
+MATCH (p:Participant)-[:HAD_DATE]->(d:DateRating {Mutmatch: 1})
+      -[:FOLLOWED_UP]->(f:FollowUp)
+MATCH (d)-[:WITH]->(partner:Participant)
+RETURN p, d, f, partner
+LIMIT 40;
+\end{verbatim}
+
 \backmatter
 
 \bibliography{bibliography.bib}
