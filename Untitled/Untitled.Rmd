@@ -316,20 +316,16 @@ The original dataset is distributed as an SPSS file (.sav).
 Neo4j does not read SPSS files directly, so the first task is to convert it to CSV format using RStudio.
 The following R script reads the .sav file, replaces all missing values with empty strings (which is the format that Neo4j's LOAD CSV command expects), and writes the result to disk as speed_dating.csv.
 
-```{r data-preparation, echo = TRUE, message=FALSE, warning=FALSE}
+\begin{verbatim}
 # Install the haven package if not already installed
 # install.packages("haven")
-
 library(haven)
-
 # Read the SPSS file
 speed_dating <- read_sav("speed.dating.3lev.small.july25.2014.sav")
-
 # Convert labelled columns to plain numeric vectors
 speed_dating <- as.data.frame(lapply(speed_dating, function(x) {
   if (inherits(x, "haven_labelled")) as.numeric(x) else x
 }))
-
 # Write to CSV without row numbers
 # na = "" ensures missing values appear as empty cells,
 # which is the format Neo4j expects for LOAD CSV
@@ -339,7 +335,7 @@ write.csv(
   row.names = FALSE,
   na = ""
 )
-```
+\end{verbatim}
 
 Two details in this script are critical for a successful import.
 First, row.names = `FALSE` prevents R from adding an unnamed index column at the start of the file.
@@ -360,7 +356,7 @@ This block defines the uniqueness constraints that prevent duplicate nodes from 
 Constraints must exist before any nodes are loaded.
 Execute this block first.
 
-``` cypher
+\begin{verbatim}
 :param {
   file_path_root: 'file:///',
   file_0: 'speed_dating.csv'
@@ -374,7 +370,7 @@ CREATE CONSTRAINT `date_rating_id_unique` IF NOT EXISTS
 
 CREATE INDEX `followup_lookup` IF NOT EXISTS
   FOR (f:FollowUp) ON (f.follow_id);
-```
+\end{verbatim}
 
 - Block 2 — Participant nodes. One node is created for each unique value of Part_num. Because DemAge and DemEthn are missing for approximately 55% of participants, the ON MATCH SET clause fills in those properties only when a non-empty value is encountered, avoiding overwriting a previously recorded value with a missing one.
 
