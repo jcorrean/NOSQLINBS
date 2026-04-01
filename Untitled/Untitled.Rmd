@@ -172,6 +172,9 @@ The `FollowUp` node can be traversed sequentially, enabling queries such as \`\`
 ' or "Does initial sexual attraction predict later romantic interest?''
 
 In addition, missingness is handled structurally, not numerically.
+Beyond missing values within rows, graph databases also recover entities that are entirely absent from the rectangular file.
+In the Speed-Dating dataset, 87 participants appear exclusively as targets of others' ratings (MatchID_clean) but have no rows of their own as raters (Part_num).
+A relational table cannot represent these individuals without an additional join table; the graph instantiates them as nodes automatically, preserving the full social structure of the speed-dating event.
 Participants who did not match simply lack `FollowUp`; no NA encoding is required.
 The model is inherently extensible.
 Additional constructs, such as personality traits or behavioral logs, can be attached as new nodes or properties without reconfiguring the existing database schema.
@@ -293,7 +296,7 @@ It contains three node types and four directed relationships.
 Table 2 summarizes each element of the schema.
 
 | Element | Type | Description |
-|------------------|------------------|-------------------------------------|
+|------------------|------------------|------------------------------------|
 | Participant | Node | One node per individual. Carries Part_num (rater side) or MatchID_clean (partner side), DemAge, DemEthn, and sex_M1_F2. |
 | DateRating | Node | One node per rater-partner pair. Carries Part_num, MatchID_clean, IRLikedPartner, IRSexAttract, IRCommon, IRSayYes, Yessing, and Mutmatch. Uniquely identified by the composite key Part_num + MatchID_clean. |
 | FollowUp | Node | One node per rater-partner-week triplet, created only when at least one follow-up variable is non-missing. Carries Follow_clean, FUStatus, FURomInterest, FUSexDesire, and FUCommitted. |
@@ -309,6 +312,12 @@ The composite identifier of each `DateRating` node is constructed by concatenati
 This composite key is necessary because neither column alone uniquely identifies a dyadic perception: the same MatchID_clean value appears in the rows of many different raters.
 Similarly, the `FollowUp` node is identified by the combination of the composite rater-partner key and Follow_clean, which records the week number (1 through 10).
 Both composite identifiers are constructed during the import step and do not require any modification of the original CSV file.
+This design decision has an empirically verifiable consequence.
+In the Speed-Dating dataset, Part_num contains 309 unique values while MatchID_clean contains 378.
+Of these, 291 values appear in both columns, meaning that 87 individuals were rated by others during the speed-dating event but have no rows of their own in the rectangular file — they exist only as targets of someone else's perception.
+In a relational table, these 87 participants are structurally invisible unless a separate lookup table is created.
+In the graph, they emerge automatically as Participant nodes during import, producing the 396 nodes confirmed in Step 6.
+Their presence in the graph without a corresponding presence in the rectangular file illustrates what we mean by schema flexibility: the graph preserves entities that the tabular format omits by design.
 
 ## STEP 4: Data preparation in R
 
@@ -348,13 +357,11 @@ The location of this folder was described in Step 2.
 ## STEP 5: Data Import into Neo4j
 
 With the CSV file in the import/ folder, open Neo4j Browser by clicking the Connect button in Neo4j Desktop and then selecting Open.
-The Cypher import script below must be executed in six sequential blocks. Each block is a self-contained unit; paste and run one block at a time rather than submitting the entire script at once.
+The Cypher import script below must be executed in six sequential blocks.
+Each block is a self-contained unit; paste and run one block at a time rather than submitting the entire script at once.
 If an error occurs in any block, it can be corrected and re-run without affecting the blocks that have already completed successfully.
 
-- Block 1 — Constraints and indexes.
-This block defines the uniqueness constraints that prevent duplicate nodes from being created during import.
-Constraints must exist before any nodes are loaded.
-Execute this block first.
+-   Block 1 — Constraints and indexes. This block defines the uniqueness constraints that prevent duplicate nodes from being created during import. Constraints must exist before any nodes are loaded. Execute this block first.
 
 \begin{verbatim}
 :param {
@@ -372,7 +379,7 @@ CREATE INDEX `followup_lookup` IF NOT EXISTS
   FOR (f:FollowUp) ON (f.follow_id);
 \end{verbatim}
 
-- Block 2 — Participant nodes. One node is created for each unique value of Part_num. Because DemAge and DemEthn are missing for approximately 55% of participants, the ON MATCH SET clause fills in those properties only when a non-empty value is encountered, avoiding overwriting a previously recorded value with a missing one.
+-   Block 2 — Participant nodes. One node is created for each unique value of Part_num. Because DemAge and DemEthn are missing for approximately 55% of participants, the ON MATCH SET clause fills in those properties only when a non-empty value is encountered, avoiding overwriting a previously recorded value with a missing one.
 
 \begin{verbatim}
 LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
@@ -393,10 +400,10 @@ CALL (row) {
 } IN TRANSACTIONS OF 10000 ROWS;
 \end{verbatim}
 
+Note that MatchID_clean is the Part_num of the partner.
+Both columns draw from the same population of participants, so all participants are stored under the single property Part_num regardless of the role they played in a given interaction.
 
-Note that MatchID_clean is the Part_num of the partner. Both columns draw from the same population of participants, so all participants are stored under the single property Part_num regardless of the role they played in a given interaction.
-
-- Block 3 — The DateRating node. This node represents each unique rater-partner pair. Because the IR variables were measured once at the speed-dating event but are repeated across all ten follow-up rows in the CSV, the WHERE clause restricts loading to Follow_clean = 1, which contains the original event-level ratings. The composite identifier date_rating_id concatenates Part_num and MatchID_clean and is used in subsequent blocks to match these nodes without ambiguity.
+-   Block 3 — The DateRating node. This node represents each unique rater-partner pair. Because the IR variables were measured once at the speed-dating event but are repeated across all ten follow-up rows in the CSV, the WHERE clause restricts loading to Follow_clean = 1, which contains the original event-level ratings. The composite identifier date_rating_id concatenates Part_num and MatchID_clean and is used in subsequent blocks to match these nodes without ambiguity.
 
 \begin{verbatim}
 LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
@@ -425,7 +432,7 @@ CALL (row) {
 } IN TRANSACTIONS OF 10000 ROWS;
 \end{verbatim}
 
-- Block 4 — The FollowUp node. This node represents the rater-partner-week triplet, but only for rows where at least one follow-up variable contains a non-missing value. This prevents the graph from being inflated by approximately 26,700 structurally empty nodes that correspond to pairs who did not interact after the speed-dating event. The absence of a FollowUp node is itself informative as it indicates that no follow-up interaction occurred, without requiring any numerical encoding such as NA.
+-   Block 4 — The FollowUp node. This node represents the rater-partner-week triplet, but only for rows where at least one follow-up variable contains a non-missing value. This prevents the graph from being inflated by approximately 26,700 structurally empty nodes that correspond to pairs who did not interact after the speed-dating event. The absence of a FollowUp node is itself informative as it indicates that no follow-up interaction occurred, without requiring any numerical encoding such as NA.
 
 \begin{verbatim}
 LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
@@ -460,7 +467,7 @@ CALL (row) {
 } IN TRANSACTIONS OF 10000 ROWS;
 \end{verbatim}
 
-- Block 5 — Relationships. This block creates the four directed relationships shown in Figure [1](#fig:F2). Each MATCH statement locates previously created nodes using the same identifiers defined in Blocks 2 through 4; MERGE then creates the relationship only if it does not already exist.
+-   Block 5 — Relationships. This block creates the four directed relationships shown in Figure [1](#fig:F2). Each MATCH statement locates previously created nodes using the same identifiers defined in Blocks 2 through 4; MERGE then creates the relationship only if it does not already exist.
 
 \begin{verbatim}
 // HAD_DATE: Participant (rater) --> DateRating
@@ -522,7 +529,7 @@ CALL (row) {
 } IN TRANSACTIONS OF 10000 ROWS;
 \end{verbatim}
 
-- Block 6.  Verification. After all five blocks have run without errors, the following queries confirm that the graph matches the intended schema. Each query should be run separately in Neo4j Browser. The expected output for each query is shown in Table 3.
+-   Block 6. Verification. After all five blocks have run without errors, the following queries confirm that the graph matches the intended schema. Each query should be run separately in Neo4j Browser. The expected output for each query is shown in Table 3.
 
 \begin{verbatim}
 // Query 1: Node counts by label
@@ -542,13 +549,19 @@ MATCH (p:Participant {Part_num: 1})-[:HAD_DATE]->(d:DateRating)-[:WITH]
 RETURN p.Part_num AS rater, partner.Part_num AS partner,
        d.IRLikedPartner AS score;
 
-// Query 4: Visualize a mutual-match dyad with its follow-up trajectory
-MATCH (p:Participant)-[:HAD_DATE]->(d:DateRating {Mutmatch: 1})
-      -[:FOLLOWED_UP]->(f:FollowUp)
-MATCH (d)-[:WITH]->(partner:Participant)
-RETURN p, d, f, partner
+// Query 4: Visualize mutual-match dyads with its follow-up trajectory
+MATCH (p:Participant)-[r1:HAD_DATE]->(d:DateRating {Mutmatch: 1})
+      -[r2:FOLLOWED_UP]->(f:FollowUp)
+MATCH (d)-[r3:WITH]->(partner:Participant)
+RETURN p, r1, d, r2, f, r3, partner
 LIMIT 40;
 \end{verbatim}
+
+The result of the last query in block 6 should yield a subgraph like the one illustrated in Figure [3](#fig:F5).
+
+```{r F5, echo=FALSE, fig.cap="Resulting subgraph showing a sample of dyads with mutual match and follow-ups", fig.align="center", out.height="180px", out.width="350px", fig.pos="H"}
+knitr::include_graphics("F6.png")
+```
 
 
 \backmatter

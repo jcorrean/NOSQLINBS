@@ -334,8 +334,15 @@ emerge among mutually matched pairs?' ' or ``Does initial sexual
 attraction predict later romantic interest?'\,'
 
 In addition, missingness is handled structurally, not numerically.
-Participants who did not match simply lack \texttt{FollowUp}; no NA
-encoding is required. The model is inherently extensible. Additional
+Beyond missing values within rows, graph databases also recover entities
+that are entirely absent from the rectangular file. In the Speed-Dating
+dataset, 87 participants appear exclusively as targets of others'
+ratings (MatchID\_clean) but have no rows of their own as raters
+(Part\_num). A relational table cannot represent these individuals
+without an additional join table; the graph instantiates them as nodes
+automatically, preserving the full social structure of the speed-dating
+event. Participants who did not match simply lack \texttt{FollowUp}; no
+NA encoding is required. The model is inherently extensible. Additional
 constructs, such as personality traits or behavioral logs, can be
 attached as new nodes or properties without reconfiguring the existing
 database schema. In sum, LPGs allow behavioral scientists to represent
@@ -583,9 +590,9 @@ graph. It contains three node types and four directed relationships.
 Table 2 summarizes each element of the schema.
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2466}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2466}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.5068}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.5000}}@{}}
 \caption{Schema elements of the Speed-Dating labeled property
 graph.}\tabularnewline
 \toprule\noalign{}
@@ -643,7 +650,19 @@ value appears in the rows of many different raters. Similarly, the
 rater-partner key and Follow\_clean, which records the week number (1
 through 10). Both composite identifiers are constructed during the
 import step and do not require any modification of the original CSV
-file.
+file. This design decision has an empirically verifiable consequence. In
+the Speed-Dating dataset, Part\_num contains 309 unique values while
+MatchID\_clean contains 378. Of these, 291 values appear in both
+columns, meaning that 87 individuals were rated by others during the
+speed-dating event but have no rows of their own in the rectangular file
+--- they exist only as targets of someone else's perception. In a
+relational table, these 87 participants are structurally invisible
+unless a separate lookup table is created. In the graph, they emerge
+automatically as Participant nodes during import, producing the 396
+nodes confirmed in Step 6. Their presence in the graph without a
+corresponding presence in the rectangular file illustrates what we mean
+by schema flexibility: the graph preserves entities that the tabular
+format omits by design.
 
 \subsection{STEP 4: Data preparation in
 R}\label{step-4-data-preparation-in-r}
@@ -942,13 +961,25 @@ MATCH (p:Participant {Part_num: 1})-[:HAD_DATE]->(d:DateRating)-[:WITH]
 RETURN p.Part_num AS rater, partner.Part_num AS partner,
        d.IRLikedPartner AS score;
 
-// Query 4: Visualize a mutual-match dyad with its follow-up trajectory
-MATCH (p:Participant)-[:HAD_DATE]->(d:DateRating {Mutmatch: 1})
-      -[:FOLLOWED_UP]->(f:FollowUp)
-MATCH (d)-[:WITH]->(partner:Participant)
-RETURN p, d, f, partner
+// Query 4: Visualize mutual-match dyads with its follow-up trajectory
+MATCH (p:Participant)-[r1:HAD_DATE]->(d:DateRating {Mutmatch: 1})
+      -[r2:FOLLOWED_UP]->(f:FollowUp)
+MATCH (d)-[r3:WITH]->(partner:Participant)
+RETURN p, r1, d, r2, f, r3, partner
 LIMIT 40;
 \end{verbatim}
+
+The result of the last query in block 6 should yield a subgraph like the
+one illustrated in Figure \hyperref[fig:F5]{3}.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=350px,height=180px,]{F6} 
+
+}
+
+\caption{Resulting subgraph showing a sample of dyads with mutual match and follow-ups}\label{fig:F5}
+\end{figure}
 
 \backmatter
 
