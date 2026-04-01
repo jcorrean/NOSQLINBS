@@ -241,7 +241,7 @@ In sum, labeled property graphs are not merely a technical alternative to relati
 This section provides a step-by-step tutorial demonstrating how to (a) design a graph schema for psychological data, (b) prepare the raw dataset for import, (c) import the data into a labeled property graph using Cypher, and (d) verify that the resulting graph matches the intended schema.
 Readers with no prior experience with Neo4j or graph databases should be able to follow each step in sequence using only the materials described below.
 
-## STEP 1: Prerrequisites and materials
+## STEP 1: Pre-requisites and materials
 
 This tutorial uses the Speed-Dating replication dataset [@Selterman2023], available in the [Open Science Framework repository](https://osf.io/ng6cc/overview).
 From the Files preview menu, download speed.dating.2.zip from the Final Report option.
@@ -296,7 +296,7 @@ It contains three node types and four directed relationships.
 Table 2 summarizes each element of the schema.
 
 | Element | Type | Description |
-|------------------|------------------|------------------------------------|
+|-------------------|-------------------|------------------------------------|
 | Participant | Node | One node per individual. Carries Part_num (rater side) or MatchID_clean (partner side), DemAge, DemEthn, and sex_M1_F2. |
 | DateRating | Node | One node per rater-partner pair. Carries Part_num, MatchID_clean, IRLikedPartner, IRSexAttract, IRCommon, IRSayYes, Yessing, and Mutmatch. Uniquely identified by the composite key Part_num + MatchID_clean. |
 | FollowUp | Node | One node per rater-partner-week triplet, created only when at least one follow-up variable is non-missing. Carries Follow_clean, FUStatus, FURomInterest, FUSexDesire, and FUCommitted. |
@@ -562,6 +562,53 @@ The result of the last query in block 6 should yield a subgraph like the one ill
 ```{r F5, echo=FALSE, fig.cap="Resulting subgraph showing a sample of dyads with mutual match and follow-ups", fig.align="center", out.height="180px", out.width="350px", fig.pos="H"}
 knitr::include_graphics("F6.png")
 ```
+
+# Methodological Implications for Psychological Research
+
+The Speed-Dating tutorial presented in Section 4 illustrates three methodological advantages of labeled property graphs that extend beyond the specific dataset used here.
+This section develops each advantage as a general principle, situates it within the broader context of psychological research methods, and identifies its implications for future work.
+
+## Ontological Transparency and the Visibility of Perceptual Asymmetry
+
+A persistent challenge in dyadic research is that the asymmetric and subjective nature of interpersonal perception is difficult to preserve in rectangular data formats.
+In a tabular structure, the fact that participant 1's rating of participant 116 and participant 116's rating of participant 1 are two distinct perceptual events —not two measurements of a shared reality— is not encoded in the
+data structure itself.
+It must be reconstructed at the analysis stage through careful variable naming, documentation, and researcher memory.
+The labeled property graph makes this asymmetry structurally
+explicit: each DateRating node is directed from a specific rater to a specific partner via HAD_DATE
+and WITH edges, and the directions of those edges are not interchangeable.
+
+This structural commitment has a direct empirical consequence that is verifiable within the graph.
+Among the 84 mutual-match dyads in the Speed-Dating dataset for which both perspectives were recoverable, 70.2% showed non-zero asymmetry in IRLikedPartner —even among pairs who had explicitly chosen each other.
+The mean absolute difference in liking ratings within mutual-match dyads was
+1.19 points on a 9-point scale (SD = 1.29), and 27.4% of dyads showed a difference of two or more points.
+These figures are not incidental: they constitute empirical evidence that the construct the graph represents as a directed relationship (subjective liking) behaves as
+a directed relationship in the data.
+
+The Cypher query that recovers this asymmetry traverses the same two-hop path that the schema encodes:
+
+\begin{verbatim}
+// Query A: Perceptual asymmetry in mutual-match dyads
+MATCH (a:Participant)-[:HAD_DATE]->(d1:DateRating {Mutmatch: 1})-[:WITH]->(b:Participant),
+      (b)-[:HAD_DATE]->(d2:DateRating {Mutmatch: 1})-[:WITH]->(a)
+WHERE a.Part_num < b.Part_num
+  AND d1.IRLikedPartner IS NOT NULL
+  AND d2.IRLikedPartner IS NOT NULL
+RETURN a.Part_num                                      AS rater_a,
+       b.Part_num                                      AS rater_b,
+       d1.IRLikedPartner                               AS a_liked_b,
+       d2.IRLikedPartner                               AS b_liked_a,
+       abs(d1.IRLikedPartner - d2.IRLikedPartner)      AS asymmetry
+ORDER BY asymmetry DESC;
+\end{verbatim}
+
+In a rectangular format, the same computation requires a self-join on the original table, filtering by mutmatch = 1 on both sides and using two different aliases for the same variable. The graph query traverses existing structure; the SQL query reconstructs structure that was never represented. This distinction, modest in computational terms, is consequential in epistemological ones: the graph makes the researcher encounter the asymmetry as a feature of the data model, not as a derived statistic.
+
+## Structural Missingness and the Preservation of Absent Entities
+
+Rectangular data formats handle missing observations in two ways: by inserting placeholder values (typically NA or 0) or by omitting rows entirely. Both approaches conflate structurally distinct situations. A participant who attended the speed-dating event but did not match with anyone is structurally different from a participant who matched but did not respond to follow-up surveys, which is in turn structurally different from a participant who responded to some follow-up surveys but not others. In the CSV file used by Selterman et al. (2015), all three situations produce the same NA encoding in the FURomInterest column.
+The graph handles these situations by representing absence as a structural feature rather than a numerical encoding. A participant without a mutual match simply lacks any outgoing FOLLOWED_UP edges from their DateRating nodes. A participant who dropped out after week 3 has FollowUp nodes for weeks 1 through 3 and no nodes for weeks 4 through 10. The absence of a node is not an NA; it is the absence of an entity that did not exist in the study.
+This distinction becomes analytically meaningful when modeling longitudinal attrition. In the Speed-Dating dataset, 1,152 FollowUp nodes were created from 28,160 potential rater-partner-week combinations — a 95.9% structural absence rate. In a multilevel model estimated from the rectangular file, this attrition is handled implicitly by the full-information maximum likelihood estimator, which assumes that missingness is a function of observed variables. In the graph, the researcher is confronted directly with the topology of attrition: which dyads dropped out early, which persisted across all ten weeks, and whether dropout is clustered within particular sessions or participants. These questions are answerable with graph traversal queries before any statistical model is specified.
 
 
 \backmatter
