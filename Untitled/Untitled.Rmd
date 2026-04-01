@@ -606,9 +606,65 @@ In a rectangular format, the same computation requires a self-join on the origin
 
 ## Structural Missingness and the Preservation of Absent Entities
 
-Rectangular data formats handle missing observations in two ways: by inserting placeholder values (typically NA or 0) or by omitting rows entirely. Both approaches conflate structurally distinct situations. A participant who attended the speed-dating event but did not match with anyone is structurally different from a participant who matched but did not respond to follow-up surveys, which is in turn structurally different from a participant who responded to some follow-up surveys but not others. In the CSV file used by Selterman et al. (2015), all three situations produce the same NA encoding in the FURomInterest column.
-The graph handles these situations by representing absence as a structural feature rather than a numerical encoding. A participant without a mutual match simply lacks any outgoing FOLLOWED_UP edges from their DateRating nodes. A participant who dropped out after week 3 has FollowUp nodes for weeks 1 through 3 and no nodes for weeks 4 through 10. The absence of a node is not an NA; it is the absence of an entity that did not exist in the study.
-This distinction becomes analytically meaningful when modeling longitudinal attrition. In the Speed-Dating dataset, 1,152 FollowUp nodes were created from 28,160 potential rater-partner-week combinations — a 95.9% structural absence rate. In a multilevel model estimated from the rectangular file, this attrition is handled implicitly by the full-information maximum likelihood estimator, which assumes that missingness is a function of observed variables. In the graph, the researcher is confronted directly with the topology of attrition: which dyads dropped out early, which persisted across all ten weeks, and whether dropout is clustered within particular sessions or participants. These questions are answerable with graph traversal queries before any statistical model is specified.
+Rectangular data formats handle missing observations in two ways: by inserting placeholder values (typically NA or 0) or by omitting rows entirely. Both approaches conflate structurally distinct situations. A participant who attended the speed-dating event but did not match with anyone is structurally different from a participant who matched but did not respond to follow-up surveys, which is in turn structurally different from a participant who responded to some follow-up surveys but not others. In the CSV file used by @Selterman2023, all three situations produce the same NA encoding in the FURomInterest column.
 
+The graph handles these situations by representing absence as a structural feature rather than a numerical encoding. A participant without a mutual match simply lacks any outgoing `FOLLOWED_UP` edges from their `DateRating` nodes. A participant who dropped out after week 3 has `FollowUp` nodes for weeks 1 through 3 and no nodes for weeks 4 through 10. The absence of a node is not an NA; it is the absence of an entity that did not exist in the study. This distinction becomes analytically meaningful when modeling longitudinal attrition. In the Speed-Dating dataset, 1,152 `FollowUp` nodes were created from 28,160 potential rater-partner-week combinations — a 95.9% structural absence rate. In a multilevel model estimated from the rectangular file, this attrition is handled implicitly by the full-information maximum likelihood estimator, which assumes that missingness is a function of observed variables. In the graph, the researcher is confronted directly with the network structure of attrition: which dyads dropped out early, which persisted across all ten weeks, and whether dropout is clustered within particular sessions or participants. These questions are answerable with graph traversal queries before any statistical model is specified.
+
+## Endogenous Network Structure as a Source of Unmodeled Dependence
+
+The most consequential methodological implication of the graph representation concerns a limitation of the original analysis by @Selterman2015 that becomes structurally visible only when the data are modeled as a graph. The speed-dating design generates at least three sources of statistical dependence among observations: a rater effect (some participants rate all their partners more generously or more harshly than average), a partner popularity effect (some partners receive consistently higher ratings from multiple independent raters), and a dyadic reciprocity effect (mutual-match pairs show correlated ratings). @Selterman2015 modeled the rater effect explicitly through random intercepts at the participant level, reporting intraclass correlations between .14 and .49 for Level 2 variance in their two-level models. However, the partner popularity effect and the dyadic reciprocity effect were not modeled, and in the rectangular format, neither is immediately visible as a structural feature of the data.
+
+In the labeled property graph, all three sources of dependence are structurally explicit and visually evident after some cypher queries such as the one that produced Figure [3](#fig:F5). The rater effect corresponds to the out-degree of each Participant node via `HAD_DATE` edges. The partner popularity effect corresponds to the in-degree of each Participant node via `WITH` edges — the number of distinct raters who evaluated a given partner. The dyadic reciprocity effect corresponds to closed two-paths between mutual-match `DateRating` nodes. None of these requires auxiliary computation; all three are properties of the graph that can be queried directly. The following query makes the partner popularity structure explicit:
+
+\begin{verbatim}
+// Query B: Partner popularity — in-degree and mean received rating
+MATCH (d:DateRating)-[:WITH]->(partner:Participant)
+WITH  partner,
+      count(d)              AS n_raters,
+      avg(d.IRLikedPartner) AS mean_received_rating,
+      stdev(d.IRLikedPartner) AS sd_received_rating
+RETURN partner.Part_num    AS partner_id,
+       n_raters,
+       round(mean_received_rating, 2) AS mean_received_rating,
+       round(sd_received_rating,  2)  AS sd_received_rating
+ORDER BY mean_received_rating DESC
+LIMIT 20;
+\end{verbatim}
+
+Applying this query to the Speed-Dating dataset reveals substantial variability in partner popularity. Partners were evaluated by between 1 and 20 raters (M = 7.45, SD = 3.35), and the standard deviation of mean received ratings across partners was 1.18 points on the 9-point IRLikedPartner scale — approximately 41% of the total variance in that variable. This figure is comparable in magnitude to the Level 2 ICC reported by [@Selterman2015] for the rater effect, suggesting that the partner popularity effect is of similar size to the rater effect that was modeled. In a model that omits random effects for the partner, this variance is absorbed into the residual, potentially attenuating standard errors and inflating the apparent precision of fixed-effect estimates.
+The appropriate statistical model for this design is a crossed random effects model in which both the rater and the partner contribute independent sources of variance [@Kenny2006]. In R, this specification takes the form:
+
+\begin{verbatim}
+# Crossed random effects model
+# Level 1: weekly observations
+# Random effect 1: rater (participant)
+# Random effect 2: partner (MatchID_clean) — absent in Selterman et al.
+
+model_crossed <- lmer(
+  romantic_interest ~
+    initial_attraction_c +
+    week_c +
+    sex +
+    initial_attraction_c:week_c +
+    (1 | participant) +
+    (1 | partner),
+  data    = dating_graph,
+  REML    = TRUE,
+  control = lmerControl(optimizer = 'bobyqa')
+)
+\end{verbatim}
+
+Note that the partner random effect requires that MatchID_clean be exported from the graph alongside Part_num in Query B. Both identifiers are properties of the DateRating node and are available in the same traversal that retrieves IRLikedPartner and FURomInterest.
+
+It is important to be precise about what this observation implies for the conclusions of @Selterman2015. Their primary finding that the association between partner characteristics and romantic interest was not moderated by participant gender is unlikely to be reversed by the addition of partner random effects, because the gender moderation test operates at a level of the model that is largely orthogonal to the random effect structure. What the omission of partner random effects does affect is the precision of all fixed-effect estimates and the correct partitioning of variance across levels. These are not trivial concerns for a paper published in a replication context, where the accurate estimation of effect sizes is central to the inferential claims.
+
+The broader methodological point for the present tutorial is as follows. The graph does not solve the modeling challenges posed by speed-dating designs, but it makes them structurally impossible to overlook. A researcher who represents speed-dating data as a labeled property graph encounters the partner popularity structure as an explicit feature of the schema — the in-degree of each Participant node is a property that any graph query will surface. A researcher who works exclusively with the rectangular file can, and in at least one prominent replication did, proceed to multilevel modeling without ever confronting the partner popularity effect as a structural feature of the data. The epistemological contribution of the graph representation is not computational but representational: it shifts the burden of justification from the decision to model partner effects to the decision to omit them.
+
+## Schema Flexibility and Theoretical Evolution
+A recurring challenge in longitudinal psychological research is that theoretical models evolve during data collection, requiring modifications to the data structure that are costly in relational databases. Adding a new construct, revising the operationalization of an existing variable, or connecting data from a new source typically requires altering table schemas, updating foreign key constraints, and migrating existing data. These operations are not free of risk because they can introduce inconsistencies and might require careful documentation to remain reproducible for other researchers.
+
+In a labeled property graph, the schema is inherently additive. New node types, relationship types, and properties can be introduced without modifying the existing graph structure or invalidating existing queries. The Speed-Dating graph illustrates this property concretely. The current schema includes three node types and four relationship types. If a researcher wished to add session-level information — for example, distinguishing the Fall 2012 from the Spring 2013 cohort, or linking participants to the specific speed-dating event they attended — this would require adding a fourth node type (e.g., `Session`) and two new relationship types (`ATTENDED` and `PART_OF`) without altering any existing node or relationship. Existing queries about participants, date ratings, and follow-ups would continue to execute correctly on the modified graph.
+
+This flexibility is particularly relevant for psychological research because it aligns with how theoretical models actually develop: not by replacing prior representations, but by adding new constructs and connections to an existing framework. From a methodological perspective, graph database schema evolution is not an ad-hoc adjustment to the data structure but a representation of genuine scientific progress — a point that connects to broader arguments about the role of ontological commitments in psychological methodology [@burgos2025].
 
 \backmatter
