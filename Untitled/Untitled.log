@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.1)  23 MAR 2026 20:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.26)  2 APR 2026 00:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -46,7 +46,7 @@ LaTeX Info: Redefining \mit on input line 152.
 LaTeX Info: Redefining \textsubscript on input line 210.
 \columnhsize=\skip52
 (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
-Package: geometry 2020/01/02 v5.9 Page Geometry
+Package: geometry 2026/03/07 v6.0 Page Geometry
 (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks17
@@ -95,8 +95,8 @@ l.775 \@ifpackageloaded
 
  
 Here is how much of TeX's memory you used:
- 1109 strings out of 469514
- 15745 string characters out of 5467648
+ 1108 strings out of 469515
+ 15680 string characters out of 5468214
  433759 words of memory out of 5000000
  29821 multiletter control sequences out of 15000+600000
  627721 words of font info for 40 fonts, out of 8000000 for 9000
