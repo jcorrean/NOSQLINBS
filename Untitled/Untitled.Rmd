@@ -296,7 +296,7 @@ It contains three node types and four directed relationships.
 Table 2 summarizes each element of the schema.
 
 | Element | Type | Description |
-|-------------------|-------------------|-----------------------------------|
+|-------------------|-------------------|----------------------------------|
 | Participant | Node | One node per individual. Carries Part_num (rater side) or MatchID_clean (partner side), DemAge, DemEthn, and sex_M1_F2. |
 | DateRating | Node | One node per rater-partner pair. Carries Part_num, MatchID_clean, IRLikedPartner, IRSexAttract, IRCommon, IRSayYes, Yessing, and Mutmatch. Uniquely identified by the composite key Part_num + MatchID_clean. |
 | FollowUp | Node | One node per rater-partner-week triplet, created only when at least one follow-up variable is non-missing. Carries Follow_clean, FUStatus, FURomInterest, FUSexDesire, and FUCommitted. |
@@ -360,6 +360,7 @@ With the CSV file in the import/ folder, open Neo4j Browser by clicking the Conn
 The Cypher import script below must be executed in six sequential blocks.
 Each block is a self-contained unit; paste and run one block at a time rather than submitting the entire script at once.
 If an error occurs in any block, it can be corrected and re-run without affecting the blocks that have already completed successfully.
+We recommend to visit our GitHub repo to copy and paste the following Cypher queries as they preserved the indentation that is necessary for running them without errors into Neo4j.
 
 -   Block 1 — Constraints and indexes. This block defines the uniqueness constraints that prevent duplicate nodes from being created during import. Constraints must exist before any nodes are loaded. Execute this block first.
 
@@ -704,6 +705,5 @@ This flexibility is particularly relevant for psychological research because it 
 From a methodological perspective, graph database schema evolution is not an ad-hoc adjustment to the data structure but a representation of genuine scientific progress — a point that connects to broader arguments about the role of ontological commitments in psychological methodology [@burgos2025].
 
 # Conclusions and limitations
-
 
 \backmatter
