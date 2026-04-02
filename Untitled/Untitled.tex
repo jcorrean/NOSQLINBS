@@ -1232,7 +1232,139 @@ structure but a representation of genuine scientific progress --- a
 point that connects to broader arguments about the role of ontological
 commitments in psychological methodology \citep{burgos2025}.
 
-\section{Conclusions and limitations}\label{conclusions-and-limitations}
+\section{Conclusions and Limitations}\label{sec6}
+
+This tutorial has demonstrated that labeled property graphs constitute a
+methodological paradigm that differs from the rectangular data formats
+dominant in psychological research not merely in storage format, but in
+what relational structure is made visible, queryable, and epistemically
+available to the researcher. Using the Speed-Dating replication dataset
+\citep{Selterman2023} as a running example, we showed that the graph
+representation preserves perceptual asymmetry as a structural feature
+rather than a derived statistic, represents missingness as the absence
+of entities rather than the presence of placeholder values, makes
+endogenous network dependence structurally explicit in ways that
+rectangular formats conceal, and accommodates theoretical evolution
+without invalidating existing data structures. Each of these features
+was illustrated with Cypher queries and R code that are fully
+reproducible from the publicly available dataset.
+
+The most substantive finding of the tutorial is not about graph
+databases per se, but about what becomes visible when the Speed-Dating
+data are represented as a graph. The partner popularity effect --- the
+systematic tendency for some partners to receive consistently higher
+ratings from multiple independent raters --- accounts for approximately
+41\% of the total variance in \texttt{IRLikedPartner}, a magnitude
+comparable to the rater effect that \citet{Selterman2015} modeled
+through random intercepts at the participant level. In the rectangular
+format, this dependence structure is latent and requires auxiliary
+computation to detect. In the graph, it is an immediate consequence of
+the schema: the in-degree of each \texttt{Participant} node via
+\texttt{WITH} edges. This does not invalidate the primary conclusions of
+\citet{Selterman2015} --- their finding about the absence of gender
+moderation is likely robust to the addition of partner random effects
+--- but it illustrates the epistemological argument of the tutorial:
+graph databases shift the burden of justification from the decision to
+model a dependence structure to the decision to omit it. A researcher
+working exclusively with the rectangular file can proceed to multilevel
+modeling without confronting the partner popularity effect as a
+structural feature of the data; a researcher working with the graph
+cannot.
+
+\subsection{Limitations}\label{limitations}
+
+Our tutorial is not free of limitations and we anticipate two types of
+limitations (technical and methodological) that psychological
+researchers should consider for further works, not only in relation to
+the speed-dating study, but in other empirical works.
+
+\textbf{Technical limitations.} Cypher, the query language used
+throughout the tutorial, has a steeper learning curve than the R syntax
+familiar to most psychological researchers. Researchers with no prior
+exposure to graph databases will require time to develop fluency that
+the tutorial alone cannot substitute. The connection between Neo4j and
+R, while achievable through packages such as \texttt{neo4r}, adds an
+infrastructural step that rectangular workflows do not require, and for
+researchers whose analyses remain within a single software environment,
+this overhead may outweigh the representational advantages documented
+here. The query execution times reported in Section 5.4 --- between 15
+and 139 milliseconds --- were obtained on a dataset of 4,364 nodes and
+7,936 relationships, which is too small to constitute a meaningful
+performance benchmark. The scalability advantages of graph databases
+over relational formats become empirically demonstrable only at dataset
+sizes that substantially exceed those typical in psychological research,
+a regime that most behavioral researchers do not currently work in.
+
+\textbf{Methodological limitations.} The multilevel model specified in
+Section 5.3 was presented as a Cypher-to-R pipeline without reporting
+fitted coefficients. This was a deliberate choice: the goal of the
+tutorial was to demonstrate the analytic workflow and the modeling
+decisions that the graph makes visible, rather than to reproduce or
+extend the substantive findings of \citet{Selterman2015}. Researchers
+who wish to use the crossed random effects specification as a template
+for their own work should be aware that the Speed-Dating dataset, with
+167 follow-up observations distributed across 47 rater-partner pairs, is
+underpowered for detecting small fixed effects and does not support
+random slope specifications without overfitting. The dataset is also a
+convenience sample of undergraduate students recruited with course
+credit, which limits the generalizability of any substantive conclusions
+about romantic attraction to the broader dating population --- a
+limitation that \citet{Selterman2015} discuss at length. More broadly,
+the representational advantages of graph databases documented here are
+most pronounced for data with genuinely hierarchical, dyadic, or
+longitudinal relational structure. For datasets that are tidy in the
+sense of \citet{Wickham2023} (i.e., where one observation per row is the
+natural unit of analysis) the overhead of a graph database is unlikely
+to be justified by the benefits. In those cases, however, employing
+relational databases as illustrated by \citet{soto2025} might reflect a
+prudent choice.
+
+\subsection{Directions for Future
+Work}\label{directions-for-future-work}
+
+Three directions seem particularly promising for extending the
+methodological agenda of this tutorial.
+
+First, the integration between graph databases and R deserves systematic
+development. The \texttt{neo4r} package \citep{Fay2019} provides a
+functional bridge, but a more seamless workflow --- analogous to the
+integration between the \texttt{tidyverse} and SQL databases through
+\texttt{dbplyr} --- would substantially lower the barrier to adoption
+for psychological researchers and enable the kind of iterative
+graph-query-to-model workflow that the tutorial describes.
+
+Second, the Social Relations Model \citep{Kenny2006} and its extensions
+provide a natural statistical framework for the crossed random effects
+structure that the graph makes visible. The combination of graph
+database representations with dyadic data analysis methods has not
+received systematic methodological treatment, and the present tutorial
+suggests that the two frameworks are complementary: the graph identifies
+which dependence structures exist in the data, and dyadic analysis
+methods provide the statistical tools to estimate them.
+
+Third, knowledge graphs --- which extend labeled property graphs with
+formal ontologies and inference rules --- represent a more ambitious
+application of graph database principles to psychological theory
+\citep{Barrasa2023}. The nomological nets that \citet{cronbach1955}
+proposed as the foundation of construct validity bear a structural
+resemblance to knowledge graphs, and the formal relationship between
+these two paradigms has not been systematically examined. Developing
+that connection could position graph databases not only as a data
+management tool but as a framework for the formal representation of
+psychological theory itself.
+
+Graph databases will not replace rectangular formats in psychological
+research, nor should they. For the large class of studies in which
+observations are independent, variables are well-defined, and relational
+structure is simple, the tabular paradigm remains the most efficient and
+well-supported choice. The contribution of this tutorial is more
+specific: for the growing class of psychological phenomena that are
+inherently relational --- dyadic, longitudinal, multilevel, or
+network-structured --- the graph database paradigm offers
+representational commitments that make methodological assumptions
+explicit, structural dependencies visible, and relational queries
+expressible without the intermediate step of reconstructing structure
+that was never preserved.
 
 \backmatter
 
