@@ -39,7 +39,7 @@ affiliations:
   - number: 2
     corresponding: FALSE
     info:
-      orgdiv: Escuela de Educación
+      orgdiv: Escuela de Educación e Innovación
       orgname: Politécnico Grancolombiano
     address:
         city: Bogotá
@@ -143,14 +143,16 @@ knitr::include_graphics("F2.png")
 ## Entities as Nodes
 
 Figure [1](#fig:F2) shows how participants interacted in the speed-dating design.
-Nodes (in light blue) have their own identification (in bold letters) and properties (in regular letters).
+Colored nodes have their own identification (in bold letters) and properties (in regular letters).
+These properties are the names of the variables as they are in the original dataset.
 Nodes connect through labeled directed links (i.e., `HAD_DATE`, `WITH`, `FOLLOWED_UP`, and `REPORTED_BY`).
+The names of these links are not in the original dataset, but our decision to name them shows a representational commitment following the principles of graph databases.
 A subtle distinction is visible between the four properties associated with the `Participant` node to the left of the `DateRating` node and the five properties associated with the `Participant` node to the right.
 As the speed-dating design implied that men and women rated each other, the role of "rater" (Part_num) and "ratee" (MatchID_clean) should be explicitly differentiated.
 Such a distinction is evident in the dataset: the first row shows that participant 1 (male) matched with participant 116 (female).
-Participant 1 evaluated Participant 116 with a score of 9 in IRLikedParter, while row 361 shows participant 116 evaluated participant 1 with a score of 6 in IRLikedParner.
+Participant 1 evaluated Participant 116 with a score of 9 in IRLikedPartner, while row 361 shows participant 116 evaluated participant 1 with a score of 6 in IRLikedPartner.
 
-The `DateRating` node encompasses a series of dyadic interactions and store the full set of impression‑formation ratings provided by both participants (Part_num, and MatchID_clean) during the speed‑dating (e.g., IRLikedPartner, IRSexAttract, IRCommon, IRSayYes, Yessing, Mutmatch).
+The `DateRating` node represents a single perceptual event: the impressions formed by one specific rater about one specific partner during the speed‑dating interaction (e.g., IRLikedPartner, IRSexAttract, IRCommon, IRSayYes, Yessing, Mutmatch).
 The `FollowUp` node represents week‑level longitudinal responses, including relationship status, romantic interest, sexual desire, and commitment indicators (e.g., FUStatus, FURomInterest, FUSexDesire, FUCommitted), captured only for participants who matched and continued interacting.
 
 ## Relationships as Edges
@@ -188,7 +190,8 @@ Graph databases and their labeled property graph paradigm provide an infrastruct
 In psychology and the behavioral sciences, complex systems thinking is not novel [@Luce1999; @Guastello2009], although more recent work has emphasized its interdisciplinary potential [@Krakauer2019].
 This emphasis aligns with recent reviews that propose methodological innovations as a means of strengthening intra- and interdisciplinary integration across basic and applied domains of behavior analysis [@Elcoro2023].
 
-As a psychological method, the graph database paradigm shares some similarities with the *nomological nets* originally proposed by @cronbach1955. Both emphasize relational structure and the systematic articulation of theoretical commitments.
+As a psychological method, the graph database paradigm shares some similarities with the *nomological nets* originally proposed by @cronbach1955.
+Both emphasize relational structure and the systematic articulation of theoretical commitments.
 However, labeled property graph models constitute a more general-purpose representational framework that transcends the scope of classical nomological nets (see Table 1).
 
 | Feature | Labeled Property Graphs | Nomological nets |
@@ -558,11 +561,21 @@ RETURN p, r1, d, r2, f, r3, partner
 LIMIT 40;
 \end{verbatim}
 
-The result of the last query in block 6 should yield a subgraph like the one illustrated in Figure [3](#fig:F5).
+The result of the last query in block 6 should yield a subgraph like the one illustrated in Figure [3](#fig:F5), which makes explicit that some participants formed impressions of multiple partners.
+While this fact is substantively unsurprising, its methodological implications are less often confronted.
+Multiple impressions formed by the same rater, as well as impressions directed at the same partner, induce statistical dependence among observations that cannot be accommodated by models treating dyadic outcomes as conditionally independent without appropriate random effects.
+In dyadic data analysis, crossed random-effects models decompose rater and partner variance components [@Kenny2006], thereby addressing these primary sources of dependence.
+However, additional forms of structural dependence—such as similarity-based clustering or homophily—are not rendered visible by the data structure itself and must be explicitly specified by the analyst.
+The graph representation makes such dependence patterns structurally manifest prior to model fitting, shifting the burden of justification from whether dependence should be modeled to whether it can be safely omitted.
 
 ```{r F5, echo=FALSE, fig.cap="Resulting subgraph showing a sample of dyads with mutual match and follow-ups", fig.align="center", out.height="180px", out.width="350px", fig.pos="H"}
 knitr::include_graphics("F6.png")
 ```
+
+Of course, at the statistical analysis stage, researchers may employ network‑analytic models such as exponential random graph models to formally estimate and test specific dependence structures [@Lusher2013].
+However, such inferential choices presuppose that these structures have already been articulated and made available for scrutiny.
+The contribution of graph database representations lies precisely at this prior stage: they render sources of dependence visible as properties of the data structure itself, before any statistical model is selected.
+In this sense, graph database management does not replace statistical network models but constrains and informs them by making certain assumptions about dependence difficult to overlook.
 
 # Methodological Implications for Psychological Research
 
