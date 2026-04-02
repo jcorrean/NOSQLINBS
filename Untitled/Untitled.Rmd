@@ -115,6 +115,8 @@ This dataset shows how its dyadic, longitudinal, and multimodal structure expose
 Section 5 discusses the broader methodological implications of graph databases for psychological research, with particular attention to structural missingness, scalability, and ontological transparency.
 Section 6 concludes with a discussion of limitations and directions for future work.
 All code, data, and a fully reproducible RMarkdown file are available via the Open Science Framework at [OSF link].
+Although presented as a tutorial, the aim of this article is methodological.
+Our aim is to show how representational choices constrain and enable psychological inference.
 
 # Graph Databases and Labeled Property Graphs {#sec2}
 
@@ -168,7 +170,7 @@ This connection mirrors the fact that both participants (Part_num, and MatchID_c
 
 The structure of Figure [1](#fig:F2) offers several methodological advantages.
 Psychological data retain their natural relational structure.
-Dyadic interactions are modeled as shared events rather than duplicated rows, preserving the topology of social and romantic processes as they occur in the real world.
+Dyadic interactions are modeled as relationally linked perceptual events rather than duplicated rows, preserving the structure of social and romantic processes as they occur in the real world.
 Temporal processes become navigable.
 The `FollowUp` node can be traversed sequentially, enabling queries such as \`\`How early do committed feelings emerge among mutually matched pairs?'
 ' or "Does initial sexual attraction predict later romantic interest?''
@@ -579,7 +581,7 @@ In this sense, graph database management does not replace statistical network mo
 
 # Methodological Implications for Psychological Research
 
-The Speed-Dating tutorial presented in Section 4 illustrates three methodological advantages of labeled property graphs that extend beyond the specific dataset used here.
+The Speed-Dating tutorial presented in Section 4 illustrates four methodological advantages of labeled property graphs that extend beyond the specific dataset used here.
 This section develops each advantage as a general principle, situates it within the broader context of psychological research methods, and identifies its implications for future work.
 
 ## Ontological Transparency and the Visibility of Perceptual Asymmetry
@@ -598,7 +600,8 @@ The Cypher query that recovers this asymmetry traverses the same two-hop path th
 
 \begin{verbatim}
 // Query A: Perceptual asymmetry in mutual-match dyads
-MATCH (a:Participant)-[:HAD_DATE]->(d1:DateRating {Mutmatch: 1})-[:WITH]->(b:Participant),
+MATCH (a:Participant)-[:HAD_DATE]->(d1:DateRating {Mutmatch: 1})
+-[:WITH]->(b:Participant),
       (b)-[:HAD_DATE]->(d2:DateRating {Mutmatch: 1})-[:WITH]->(a)
 WHERE a.Part_num < b.Part_num
   AND d1.IRLikedPartner IS NOT NULL
