@@ -118,16 +118,28 @@ City}, \country{Mexico}, \postcode{01219}}}
 Grancolombiano}, \orgaddress{\city{Bogotá}, \country{Colombia}, \postcode{110231}}}
 
 \abstract{This tutorial presents labeled property graphs as a
-psychological method. We show how this paradigm addresses tabular
-constraints that fragment, duplicate, or obscure relational behavioral
-structure. Using the Speed-Dating replication dataset as a running
-example, we demonstrate how graph databases preserve relational
-structure, accommodate asymmetric dyadic roles, and support querying of
-longitudinal and conditional processes. We discuss methodological
-implications of graph-based representations for psychological research,
-including structural approaches to missingness, scalability as an
-epistemic constraint, and ontological transparency. Together, these
-features position graph databases as a psychological method.}
+psychological method. Using the Speed‑Dating replication dataset as a
+running example, we show how graph databases preserve dyadic asymmetry,
+represent longitudinal processes without numerical encodings of
+missingness, and retain entities that are structurally absent from
+rectangular files. Beyond these representational advantages, the graph
+perspective makes endogenous sources of statistical dependence
+structurally explicit. In particular, we demonstrate how partner
+popularity---the tendency for some individuals to receive systematically
+higher ratings from multiple independent raters---emerges as an
+in‑degree property of the graph and remains unmodeled in common
+multilevel analyses of speed‑dating data. By rendering rater effects,
+partner effects, and dyadic reciprocity directly queryable features of
+the data structure, labeled property graphs shift the burden of
+justification from modeling dependence to justifying its omission. We
+conclude by discussing four methodological implications of graph‑based
+representations for psychological research, including ontological
+transparency, structural approaches to missingness, scalability as an
+epistemic constraint, and schema flexibility under theoretical change.
+Together, these features position graph databases not merely as a
+storage technology but as a methodological framework that shapes what
+psychological questions can be posed, answered, and critically
+evaluated.}
 
 \keywords{Graph database, Network modeling, complex behavior}
 
@@ -369,7 +381,7 @@ integration across basic and applied domains of behavior analysis
 
 As a psychological method, the graph database paradigm shares some
 similarities with the \emph{nomological nets} originally proposed by
-\citep{cronbach1955}. Both emphasize relational structure and the
+\citet{cronbach1955}. Both emphasize relational structure and the
 systematic articulation of theoretical commitments. However, labeled
 property graph models constitute a more general-purpose representational
 framework that transcends the scope of classical nomological nets (see
@@ -473,27 +485,28 @@ theoretical and philosophical psychology to treat ontology and
 epistemology as integral components of methodological design
 \citep{burgos2025}.
 
-These considerations are particularly salient in contemporary
-psychological research that relies on automated data collection
-techniques. Mobile applications, such as ecological momentary assessment
-tools, prompt participants to report emotions or behaviors repeatedly
-throughout the day, while motion sensors and radio-frequency
-identification tags continuously record movement and location in
-naturalistic environments \citep{Bak2021}. In such technology-mediated
-inquiries, datasets tend to grow rapidly while becoming increasingly
-heterogeneous. Although \citet{soto2025} strongly advocates for
-relational databases in behavioral research, he also identifies several
-practical challenges to their adoption, including infrastructural
-requirements and specialized technical expertise. From the perspective
-advanced here, these challenges highlight the benefits of alternative
-data representation paradigms---such as graph databases---which align
-representational structure more closely with the relational nature of
-psychological phenomena.
+These considerations also have implications for psychological research
+that relies on automated data collection techniques. For example, mobile
+applications like ecological momentary assessment tools, prompt
+participants to report emotions or behaviors repeatedly throughout the
+day, while motion sensors and radio-frequency identification tags
+continuously record movement and location in naturalistic environments
+\citep{Bak2021}. In such technology-mediated inquiries, datasets tend to
+grow rapidly while becoming increasingly heterogeneous. These data could
+present non-trivial challenges for relational databases in psychology.
+Although \citet{soto2025} strongly advocates for relational databases in
+behavioral research, he also identifies several practical challenges to
+their adoption, including infrastructural requirements and specialized
+technical expertise. From the perspective advanced here, these
+challenges highlight the benefits of alternative data representation
+paradigms---such as graph databases---which align representational
+structure more closely with the relational nature of psychological
+phenomena.
 
 In sum, labeled property graphs are not merely a technical alternative
 to relational schemas; they represent a methodological advance that
-aligns with psychology's need for flexible, scalable, and conceptually
-transparent data models.
+aligns with a particular psychology where researchers encourage
+flexible, scalable, and conceptually transparent data models.
 
 \section{Applying graph database in behavioral
 research}\label{applying-graph-database-in-behavioral-research}
