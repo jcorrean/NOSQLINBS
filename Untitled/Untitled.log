@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.26)  2 APR 2026 00:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.2)  2 APR 2026 00:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **Untitled.tex
 (./Untitled.tex
 LaTeX2e <2025-11-01>
-L3 programming layer <2026-01-19>
+L3 programming layer <2026-03-20>
 (./sn-jnl.cls
 Document Class: sn-jnl 2019/11/18 v0.1: An authoring template for Springer Journal articles
 (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
@@ -32,7 +32,7 @@ File: size10.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
 \c@table=\count282
 \abovecaptionskip=\skip50
 \belowcaptionskip=\skip51
-\bibindent=\dimen148
+\bibindent=\dimen150
 )
 LaTeX Info: Redefining \rm on input line 144.
 LaTeX Info: Redefining \sf on input line 145.
@@ -58,14 +58,14 @@ Package: iftex 2024/12/12 v1.0g TeX engine tests
 \Gm@cnth=\count283
 \Gm@cntv=\count284
 \c@Gm@tempcnt=\count285
-\Gm@bindingoffset=\dimen149
-\Gm@wd@mp=\dimen150
-\Gm@odd@mp=\dimen151
-\Gm@even@mp=\dimen152
-\Gm@layoutwidth=\dimen153
-\Gm@layoutheight=\dimen154
-\Gm@layouthoffset=\dimen155
-\Gm@layoutvoffset=\dimen156
+\Gm@bindingoffset=\dimen151
+\Gm@wd@mp=\dimen152
+\Gm@odd@mp=\dimen153
+\Gm@even@mp=\dimen154
+\Gm@layoutwidth=\dimen155
+\Gm@layoutheight=\dimen156
+\Gm@layouthoffset=\dimen157
+\Gm@layoutvoffset=\dimen158
 \Gm@dimlist=\toks18
 )
 \artcatbox=\box53
@@ -77,29 +77,544 @@ Package: iftex 2024/12/12 v1.0g TeX engine tests
 \addcount=\count291
 \PacsCount=\count292
 \PacsTmpCnt=\count293
-\FMremarkdim=\dimen157
+\FMremarkdim=\dimen159
 \fmremarkbox=\box54
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/sttools/cuted.sty
+Package: cuted 2025/12/15 v2.10 Mixing onecolumn and twocolumn modes (ST)
+\At@ViperColsBreak=\toks19
+\preCutedStrip=\toks20
+\postCutedStrip=\toks21
+\cuted@@tempbox@a=\box55
+\cuted@@tempbox@c=\box56
+\cuted@@tempbox@var=\box57
+\hold@viper=\box58
+\@viper=\box59
+\cuted@@varbox@a=\box60
+\cuted@@varbox@c=\box61
+\cuted@@tempdim@spread=\dimen160
+\cuted@@tempdim@a=\dimen161
+\cuted@@tempdim@b=\dimen162
+\ht@hold@viper=\dimen163
+\ht@viper=\dimen164
+\var@@pagediscards@ht=\dimen165
+\stripsep=\skip53
+\viper@penalty=\count294
+\strip@page@discards=\dimen166
+)
+\firstpagehtcheck=\dimen167
+\labelwidthi=\dimen168
+\labelwidthii=\dimen169
+\labelwidthiii=\dimen170
+\labelwidthiv=\dimen171
+\figwidth=\dimen172
+\figheight=\dimen173
+\sidecapwidth=\dimen174
+\wrapcapline=\dimen175
+\totalwrapline=\dimen176
+\wraptotline=\dimen177
+\figurebox=\box62
+\wrapfigcapbox=\box63
+\figcapbox=\box64
+\capbox=\box65
+\headwidthskip=\skip54
+\tabcapbox=\box66
+\temptbox=\box67
+\tempdime=\dimen178
+\tabhtdime=\dimen179
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/rotating.sty
+Package: rotating 2025/01/14 v2.16e rotated objects in LaTeX
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 106.
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen180
+\Gin@req@width=\dimen181
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
+)
+\c@r@tfl@t=\count295
+\rotFPtop=\skip55
+\rotFPbot=\skip56
+\rot@float@box=\box68
+\rot@mess@toks=\toks22
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/threeparttable/threeparttable.sty
+Package: threeparttable 2003/06/13  v 3.0
+\@tempboxb=\box69
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/appendix/appendix.sty
+Package: appendix 2020/02/08 v1.2c extra appendix facilities
+\c@@pps=\count296
+\c@@ppsavesec=\count297
+\c@@ppsaveapp=\count298
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2026-01-29 v7.01p Hypertext links for LaTeX
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2026-01-29 v2.58 Cross-referencing by name of section
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+))
+\c@section@level=\count299
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count300
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
+)
+\@linkdim=\dimen182
+\Hy@linkcounter=\count301
+\Hy@pagecounter=\count302
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2026-01-29 v7.01p Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count303
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2026-01-29 v7.01p Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Hyper figures OFF on input line 4201.
+Package hyperref Info: Link nesting OFF on input line 4206.
+Package hyperref Info: Hyper index ON on input line 4209.
+Package hyperref Info: Plain pages OFF on input line 4216.
+Package hyperref Info: Backreferencing OFF on input line 4221.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4468.
+\c@Hy@tempcnt=\count304
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4807.
+\XeTeXLinkMargin=\dimen183
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+))
+\Fld@menulength=\count305
+\Field@Width=\dimen184
+\Fld@charsize=\dimen185
+Package hyperref Info: Hyper figures OFF on input line 6084.
+Package hyperref Info: Link nesting OFF on input line 6089.
+Package hyperref Info: Hyper index ON on input line 6092.
+Package hyperref Info: backreferencing OFF on input line 6099.
+Package hyperref Info: Link coloring OFF on input line 6104.
+Package hyperref Info: Link coloring with OCG OFF on input line 6109.
+Package hyperref Info: PDF/A mode OFF on input line 6114.
+\Hy@abspage=\count306
+\c@Item=\count307
+\c@Hfootnote=\count308
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2026-01-29 v7.01p Hyperref driver for pdfTeX
+\Fld@listcount=\count309
+\c@bookmark@seq@number=\count310
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 284.
+)
+\Hy@SectionHShift=\skip57
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 1483.
+Package hyperref Info: Option `breaklinks' set `true' on input line 1483.
+Package hyperref Info: Option `plainpages' set `false' on input line 1483.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 1483.
+Package hyperref Info: Option `bookmarksnumbered' set `false' on input line 1483.
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen186
+\WF@size=\dimen187
+\c@WF@wrappedlines=\count311
+\WF@box=\box70
+\WF@everypar=\toks23
+Package: wrapfig 2003/01/31  v 3.6
+)
+\wraplines=\count312
+\@authorfigbox=\box71
+\@authorfigboxdim=\skip58
+\biofigadjskip=\skip59
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/apacite/apacite.sty
+Package: apacite 2013/07/21 v6.03 APA citation
+\c@BibCnt=\count313
+\bibleftmargin=\skip60
+\bibindent=\skip61
+\bibparsep=\skip62
+\bibitemsep=\skip63
+\biblabelsep=\skip64
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip65
+\bibsep=\skip66
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count314
+)
+LaTeX Info: Redefining \BBA on input line 1705.
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
+\multirow@colwidth=\skip67
+\multirow@cntb=\count315
+\multirow@dima=\skip68
+\bigstrutjot=\dimen188
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2025/07/09 v2.17z AMS math features
+\@mathmargin=\skip69
+For additional information on amsmath, use the `?' option.
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2024/11/17 v2.01 AMS text
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks24
+\ex@=\dimen189
+)) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen190
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count316
+LaTeX Info: Redefining \frac on input line 233.
+\uproot@=\count317
+\leftroot@=\count318
+LaTeX Info: Redefining \overline on input line 398.
+LaTeX Info: Redefining \colon on input line 409.
+\classnum@=\count319
+\DOTSCASE@=\count320
+LaTeX Info: Redefining \ldots on input line 495.
+LaTeX Info: Redefining \dots on input line 498.
+LaTeX Info: Redefining \cdots on input line 619.
+\Mathstrutbox@=\box72
+\strutbox@=\box73
+LaTeX Info: Redefining \big on input line 721.
+LaTeX Info: Redefining \Big on input line 722.
+LaTeX Info: Redefining \bigg on input line 723.
+LaTeX Info: Redefining \Bigg on input line 724.
+\big@size=\dimen191
+LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
+\macc@depth=\count321
+LaTeX Info: Redefining \bmod on input line 904.
+LaTeX Info: Redefining \pmod on input line 909.
+LaTeX Info: Redefining \smash on input line 939.
+LaTeX Info: Redefining \relbar on input line 969.
+LaTeX Info: Redefining \Relbar on input line 970.
+\c@MaxMatrixCols=\count322
+\dotsspace@=\muskip18
+\c@parentequation=\count323
+\dspbrk@lvl=\count324
+\tag@help=\toks25
+\row@=\count325
+\column@=\count326
+\maxfields@=\count327
+\andhelp@=\toks26
+\eqnshift@=\dimen192
+\alignsep@=\dimen193
+\tagshift@=\dimen194
+\tagwidth@=\dimen195
+\totwidth@=\dimen196
+\lineht@=\dimen197
+\@envbody=\toks27
+\multlinegap=\skip70
+\multlinetaggap=\skip71
+\mathdisplay@stack=\toks28
+LaTeX Info: Redefining \[ on input line 2950.
+LaTeX Info: Redefining \] on input line 2951.
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks29
+\thm@bodyfont=\toks30
+\thm@headfont=\toks31
+\thm@notefont=\toks32
+\thm@headpunct=\toks33
+\thm@preskip=\skip72
+\thm@postskip=\skip73
+\thm@headsep=\skip74
+\dth@everypar=\toks34
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/jknapltx/mathrsfs.sty
+Package: mathrsfs 1996/01/01 Math RSFS package v1.0 (jk)
+\symrsfs=\mathgroup6
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 274.
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
+Package xcolor Info: Model `RGB' extended on input line 1365.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2024/04/24 v2.1b Standard LaTeX package
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/ncctools/manyfoot.sty
+Package: manyfoot 2019/08/03 v1.11 Many Footnote Levels Package (NCC)
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/ncctools/nccfoots.sty
+Package: nccfoots 2005/02/03 v1.2 NCC Footnotes Package (NCC)
+)
+\MFL@columnwidth=\dimen198
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen199
+\lightrulewidth=\dimen256
+\cmidrulewidth=\dimen257
+\belowrulesep=\dimen258
+\belowbottomsep=\dimen259
+\aboverulesep=\dimen260
+\abovetopsep=\dimen261
+\cmidrulesep=\dimen262
+\cmidrulekern=\dimen263
+\defaultaddspace=\dimen264
+\@cmidla=\count328
+\@cmidlb=\count329
+\@aboverulesep=\dimen265
+\@belowrulesep=\dimen266
+\@thisruleclass=\count330
+\@lastruleclass=\count331
+\@thisrulewidth=\dimen267
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/algorithms/algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating environment
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count332
+\float@exts=\toks35
+\float@box=\box74
+\@float@everytoks=\toks36
+\@floatcapt=\box75
+)
+\@float@every@algorithm=\toks37
+\c@algorithm=\count333
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count334
+\c@ALG@rem=\count335
+\c@ALG@nested=\count336
+\ALG@tlm=\skip75
+\ALG@thistlm=\skip76
+\c@ALG@Lnr=\count337
+\c@ALG@blocknr=\count338
+\c@ALG@storecount=\count339
+\c@ALG@tmpcounter=\count340
+\ALG@tmplength=\skip77
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count341
+\lst@gtempboxa=\box76
+\lst@token=\toks38
+\lst@length=\count342
+\lst@currlwidth=\dimen268
+\lst@column=\count343
+\lst@pos=\count344
+\lst@lostspace=\dimen269
+\lst@width=\dimen270
+\lst@newlines=\count345
+\lst@lineno=\count346
+\lst@maxwidth=\dimen271
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/listings/lstpatch.sty
+File: lstpatch.sty 2025/11/14 1.11b (Carsten Heinz)
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2025/11/14 1.11b (Carsten Heinz)
+\c@lstnumber=\count347
+\lst@skipnumbers=\count348
+\lst@framebox=\box77
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2025/11/14 1.11b listings configuration
+))
+Package: listings 2025/11/14 1.11b (Carsten Heinz)
+==> First Aid for listings.sty no longer applied!
+    Expected:
+        2024/09/23 1.10c (Carsten Heinz)
+    but found:
+        2025/11/14 1.11b (Carsten Heinz)
+    so I'm assuming it got fixed.
+\c@theorem=\count349
+\c@example=\count350
+\c@remark=\count351
+\c@definition=\count352
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2025-10-13 v4.24 Multi-page Table package (DPC)
+\LTleft=\skip78
+\LTright=\skip79
+\LTpre=\skip80
+\LTpost=\skip81
+\LTchunksize=\count353
+\LTcapwidth=\dimen272
+\LT@head=\box78
+\LT@firsthead=\box79
+\LT@foot=\box80
+\LT@lastfoot=\box81
+\LT@gbox=\box82
+\LT@cols=\count354
+\LT@rows=\count355
+\c@LT@tables=\count356
+\c@LT@chunks=\count357
+\LT@p@ftn=\toks39
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/array.sty
+Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
+\col@sep=\dimen273
+\ar@mcellbox=\box83
+\extrarowheight=\dimen274
+\NC@list=\toks40
+\extratabsurround=\skip82
+\backup@length=\skip83
+\ar@cellbox=\box84
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2025/03/01 v4.3b Infix arithmetic (KKT,FJ)
+\calc@Acount=\count358
+\calc@Bcount=\count359
+\calc@Adimen=\dimen275
+\calc@Bdimen=\dimen276
+\calc@Askip=\skip84
+\calc@Bskip=\skip85
+LaTeX Info: Redefining \setlength on input line 86.
+LaTeX Info: Redefining \addtolength on input line 87.
+\calc@Ccount=\count360
+\calc@Cskip=\skip86
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/mdwtools/footnote.sty
+Package: footnote 1997/01/28 1.13 Save footnotes around boxes
+\fn@notes=\box85
+\fn@width=\dimen277
+) (c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2026-02-18 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count361
+)
+No file Untitled.aux.
+\openout1 = `Untitled.aux'.
 
-! LaTeX Error: File `cuted.sty' not found.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 90.
+LaTeX Font Info:    ... okay on input line 90.
+\footinsA=\insert252
+\c@footnoteA=\count362
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: custom
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* bindingoffset: 17.07164pt
+* modes: twoside 
+* h-part:(L,W,R)=(83.37448pt, 372.0pt, 125.06175pt)
+* v-part:(T,H,B)=(73.97716pt, 552.69478pt, 218.37491pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=372.0pt
+* \textheight=552.69478pt
+* \oddsidemargin=28.17613pt
+* \evensidemargin=52.79176pt
+* \topmargin=-19.72638pt
+* \headheight=5.5pt
+* \headsep=15.93355pt
+* \topskip=10.0pt
+* \footskip=28.45274pt
+* \marginparwidth=34.1433pt
+* \marginparsep=14.22636pt
+* \columnsep=14.22636pt
+* \skip\footins=8.0pt plus 4.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemargintrue
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Type X to quit or <RETURN> to proceed,
-or enter new name. (Default extension: sty)
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+(c:/Users/pilar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+))
+Package hyperref Info: Link coloring ON on input line 90.
+\@outlinefile=\write3
+\openout3 = `Untitled.out'.
 
-Enter file name: 
+! I can't write on file `Untitled.pdf'.
+(Press Enter to retry, or Control-Z to exit; default file extension is `.pdf')
+Please type another file name for output
 ! Emergency stop.
-<read *> 
-         
-l.775 \@ifpackageloaded
-                       {cuted}{\gdef\@setmarks{}}{}%^^M
-*** (cannot \read from terminal in nonstop modes)
+<to be read again> 
+                   \edef 
+l.90 \begin{document}
+                     
+*** (job aborted, file error in nonstop mode)
 
  
 Here is how much of TeX's memory you used:
- 1108 strings out of 469515
- 15680 string characters out of 5468214
- 433759 words of memory out of 5000000
- 29821 multiletter control sequences out of 15000+600000
+ 14279 strings out of 469339
+ 218374 string characters out of 5464868
+ 645858 words of memory out of 5000000
+ 42926 multiletter control sequences out of 15000+600000
  627721 words of font info for 40 fonts, out of 8000000 for 9000
  24 hyphenation exceptions out of 8191
- 72i,0n,79p,184b,45s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,0n,93p,545b,266s stack positions out of 10000i,1000n,20000p,200000b,200000s
 !  ==> Fatal error occurred, no output PDF file produced!
