@@ -1188,15 +1188,50 @@ this variance is absorbed into the residual, potentially attenuating
 standard errors and inflating the apparent precision of fixed-effect
 estimates. The appropriate statistical model for this design is a
 crossed random effects model in which both the rater and the partner
-contribute independent sources of variance \citep{Kenny2006}. In R, this
-specification takes the form:
+contribute independent sources of variance \citep{Kenny2006}. Fitting
+this model requires first exporting the relevant variables from the
+graph with a traversal query that crosses the three hierarchical levels
+(participant, date rating, and follow-up) in a single pass.
 
 \begin{verbatim}
-# Crossed random effects model
-# Level 1: weekly observations
-# Random effect 1: rater (participant)
-# Random effect 2: partner (MatchID_clean) — absent in Selterman et al.
+// Export data for multilevel model
+MATCH (p:Participant)-[:HAD_DATE]->(d:DateRating)-[:FOLLOWED_UP]->(f:FollowUp)
+WHERE d.IRLikedPartner IS NOT NULL
+  AND f.FURomInterest  IS NOT NULL
+RETURN p.Part_num        AS participant,
+       d.MatchID_clean   AS partner,
+       p.sex_M1_F2       AS sex,
+       d.IRLikedPartner  AS initial_attraction,
+       d.Mutmatch        AS mutual_match,
+       f.Follow_clean    AS week,
+       f.FURomInterest   AS romantic_interest
+ORDER BY participant, partner, week;
+\end{verbatim}
 
+Once exported from Neo4j Browser as a CSV file (or retrieved directly
+using the \texttt{neo4r} package \citep{Fay2019}, the data require two
+preparatory steps before model fitting: constructing a pair-level
+identifier and grand-mean centering the time-varying predictors.
+
+\begin{verbatim}
+library(lme4)
+library(lmerTest)
+
+# Read exported data
+dating_graph <- read.csv("query_export.csv")
+
+# Pair identifier for the partner random effect
+dating_graph$pair_id <- paste(dating_graph$participant,
+                               dating_graph$partner, sep = "_")
+
+# Grand-mean center initial attraction and week
+dating_graph$initial_attraction_c <- scale(
+  dating_graph$initial_attraction, center = TRUE, scale = FALSE)
+dating_graph$week_c <- dating_graph$week - 1
+
+# Crossed random effects model
+# Random effect 1: rater (participant) — modeled by Selterman et al.
+# Random effect 2: partner — absent in Selterman et al.
 model_crossed <- lmer(
   romantic_interest ~
     initial_attraction_c +
@@ -1204,17 +1239,22 @@ model_crossed <- lmer(
     sex +
     initial_attraction_c:week_c +
     (1 | participant) +
-    (1 | partner),
+    (1 | pair_id),
   data    = dating_graph,
   REML    = TRUE,
-  control = lmerControl(optimizer = 'bobyqa')
+  control = lmerControl(optimizer = "bobyqa")
 )
+
+summary(model_crossed)
 \end{verbatim}
 
-Note that the partner random effect requires that MatchID\_clean be
-exported from the graph alongside Part\_num in Query B. Both identifiers
-are properties of the DateRating node and are available in the same
-traversal that retrieves IRLikedPartner and FURomInterest.
+Note that we also changed (1 \textbar{} partner) to (1 \textbar{}
+pair\_id) in the model. The reason is that partner is the MatchID\_clean
+of the partner, which in this dataset are numeric IDs that could clash
+with participant if lme4 treats them as belonging to the same ID space.
+Using pair\_id (i.e., the concatenation of rater and partner) ensures
+that the random effect of the partner is unambiguous and not confused
+with the effect of the rater.
 
 It is important to be precise about what this observation implies for
 the conclusions of \citet{Selterman2015}. Their primary finding that the
@@ -1235,8 +1275,8 @@ developed in Section 3. The nomological net operates at the level of
 constructs and their theoretical connections; its empirical
 operationalization presupposes the general linear model, which treats
 observations as conditionally independent given the construct. That
-presupposition is not an oversight --- it is appropriate for the class
-of phenomena that nomological nets were designed to represent. But
+presupposition is not an oversight, it is appropriate for the class of
+phenomena that nomological nets were designed to represent. But
 round-robin speed-dating designs do not belong to that class. In such
 designs, observations are not conditionally independent: the impression
 that participant \(i\) forms of participant \(j\) is systematically
@@ -1248,17 +1288,16 @@ When behavioral phenomena are structurally endogenous in this sense, the
 choice of data representation determines which dependence structures are
 epistemically available to the researcher prior to model specification.
 A rectangular format encodes partner popularity as latent variance
-distributed across residuals --- that is, it treats a structural
-property of the system as individual-level noise. A labeled property
-graph encodes it as the in-degree of a node type, a property that is
+distributed across residuals, that is, it treats a structural property
+of the system as individual-level noise. A labeled property graph
+encodes it as the in-degree of a node type, a property that is
 immediately visible, queryable, and available for deliberate modeling
 decisions before a single line of statistical code is written. This is
 not merely a difference in storage efficiency. It is a difference in
 what the researcher is \emph{required to confront} before analyzing the
-data. The rectangular format permits --- and in practice produces ---
-model specifications that treat structural dependence as error. The
-graph format makes that omission a deliberate choice rather than an
-oversight.
+data. The rectangular format permits, and in practice produces, model
+specifications that treat structural dependence as error. The graph
+format makes that omission a deliberate choice rather than an oversight.
 
 A researcher who works exclusively with the rectangular file can, and in
 at least one prominent replication did, proceed to multilevel modeling
@@ -1266,17 +1305,17 @@ without ever confronting the partner popularity effect as a structural
 feature of the data. A researcher who works with the graph cannot. This
 asymmetry of visibility has implications that generalize beyond the
 speed-dating context. In any psychological study where the unit of
-analysis is embedded in a relational structure --- whether a dyad, a
-clinical network, a team, or an ecological momentary assessment stream
---- there exists variance that is simultaneously systematic at the
+analysis is embedded in a relational structure, whether a dyad, a
+clinical network, a team, or an ecological momentary assessment stream,
+there exists variance that is simultaneously systematic at the
 structural level and invisible at the individual observation level.
 Rectangular formats distribute that variance across residuals by
 default, not by design. Graph databases make the decision to model or
 omit it an explicit methodological commitment, visible in the schema
-before any statistical model is selected. That shift --- from structural
+before any statistical model is selected. That shift, from structural
 dependence as implicit residual to structural dependence as explicit
-representational choice --- is the epistemological contribution of
-labeled property graphs as a psychological method.
+representational choice, is the epistemological contribution of labeled
+property graphs as a psychological method.
 
 \subsection{Schema Flexibility and Theoretical
 Evolution}\label{schema-flexibility-and-theoretical-evolution}
