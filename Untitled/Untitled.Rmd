@@ -14,7 +14,7 @@ classoptions:
   # - referee       # Optional: Use double line spacing 
   # - lineno        # Optional: Add line numbers
   # - iicol         # Optional: Double column layour
-title: "Graph Databases as a Psychological Method: A Tutorial"
+title: "Graph Databases as a Psychological Method"
 authors: 
   - firstname: Juan
     particle: C.
@@ -698,11 +698,53 @@ Their primary finding that the association between partner characteristics and r
 What the omission of partner random effects does affect is the precision of all fixed-effect estimates and the correct partitioning of variance across levels.
 These are not trivial concerns for a paper published in a replication context, where the accurate estimation of effect sizes is central to the inferential claims.
 
-The broader methodological point for the present tutorial is as follows.
-The graph does not solve the modeling challenges posed by speed-dating designs, but it makes them structurally impossible to overlook.
-A researcher who represents speed-dating data as a labeled property graph encounters the partner popularity structure as an explicit feature of the schema — the in-degree of each Participant node is a property that any graph query will surface.
-A researcher who works exclusively with the rectangular file can, and in at least one prominent replication did, proceed to multilevel modeling without ever confronting the partner popularity effect as a structural feature of the data.
-The epistemological contribution of the graph representation is not computational but representational: it shifts the burden of justification from the decision to model partner effects to the decision to omit them.
+The broader methodological point extends beyond any specific modeling
+decision, and connects back to the contrast with nomological nets
+developed in Section 3.
+The nomological net operates at the level of constructs and their
+theoretical connections; its empirical operationalization presupposes
+the general linear model, which treats observations as conditionally
+independent given the construct.
+That presupposition is not an oversight — it is appropriate for the
+class of phenomena that nomological nets were designed to represent.
+But round-robin speed-dating designs do not belong to that class.
+In such designs, observations are not conditionally independent: the
+impression that participant $i$ forms of participant $j$ is
+systematically related to the impressions that all other raters form
+of $j$, because $j$'s popularity is a structural property of the
+interaction system, not a property of any individual dyad.
+
+When behavioral phenomena are structurally endogenous in this sense,
+the choice of data representation determines which dependence
+structures are epistemically available to the researcher prior to
+model specification.
+A rectangular format encodes partner popularity as latent variance
+distributed across residuals — that is, it treats a structural
+property of the system as individual-level noise.
+A labeled property graph encodes it as the in-degree of a node type,
+a property that is immediately visible, queryable, and available for
+deliberate modeling decisions before a single line of statistical code
+is written.
+This is not merely a difference in storage efficiency.
+It is a difference in what the researcher is *required to confront*
+before analyzing the data.
+The rectangular format permits — and in practice produces — model
+specifications that treat structural dependence as error.
+The graph format makes that omission a deliberate choice rather than
+an oversight.
+
+A researcher who works exclusively with the rectangular file can, and
+in at least one prominent replication did, proceed to multilevel
+modeling without ever confronting the partner popularity effect as a
+structural feature of the data.
+A researcher who works with the graph cannot.
+This asymmetry of visibility has implications that generalize beyond the speed-dating context.
+In any psychological study where the unit of analysis is embedded in a relational structure — whether a dyad, a clinical network, a
+team, or an ecological momentary assessment stream — there exists
+variance that is simultaneously systematic at the structural level and invisible at the individual observation level.
+Rectangular formats distribute that variance across residuals by
+default, not by design. Graph databases make the decision to model or omit it an explicit methodological commitment, visible in the schema before any statistical model is selected. That shift — from structural dependence as implicit residual to structural dependence as explicit representational choice — is the epistemological contribution of labeled property graphs as a
+psychological method.
 
 ## Schema Flexibility and Theoretical Evolution
 
