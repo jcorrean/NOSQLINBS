@@ -592,9 +592,7 @@ It must be reconstructed at the analysis stage through careful variable naming, 
 The labeled property graph makes this asymmetry structurally explicit: each DateRating node is directed from a specific rater to a specific partner via HAD_DATE and WITH edges, and the directions of those edges are not interchangeable.
 
 This structural commitment has a direct empirical consequence that is verifiable within the graph.
-Among the 84 mutual-match dyads in the Speed-Dating dataset for which both perspectives were recoverable, 70.2% showed non-zero asymmetry in IRLikedPartner —even among pairs who had explicitly chosen each other.
-The mean absolute difference in liking ratings within mutual-match dyads was 1.19 points on a 9-point scale (SD = 1.29), and 27.4% of dyads showed a difference of two or more points.
-These figures are not incidental: they constitute empirical evidence that the construct the graph represents as a directed relationship (subjective liking) behaves as a directed relationship in the data.
+Among the 84 mutual-match dyads in the Speed-Dating dataset for which both perspectives were recoverable, 70.2% showed non-zero asymmetry in IRLikedPartner —even among pairs who had explicitly chosen each other. The mean absolute difference in liking ratings within mutual-match dyads was 1.19 points on a 9-point scale (SD = 1.29), and 27.4% of dyads showed a difference of two or more points. These figures are not incidental: they constitute empirical evidence that the construct the graph represents as a directed relationship (subjective liking) behaves as a directed relationship in the data.
 
 The Cypher query that recovers this asymmetry traverses the same two-hop path that the schema encodes:
 
@@ -615,25 +613,18 @@ ORDER BY asymmetry DESC;
 \end{verbatim}
 
 In a rectangular format, the same computation requires a self-join on the original table, filtering by mutmatch = 1 on both sides and using two different aliases for the same variable.
-The graph query traverses existing structure; the SQL query reconstructs structure that was never represented.
-This distinction, modest in computational terms, is consequential in epistemological ones: the graph makes the researcher encounter the asymmetry as a feature of the data model, not as a derived statistic.
+The graph query traverses existing structure; the SQL query reconstructs structure that was never represented. This distinction, modest in computational terms, is consequential in epistemological ones: the graph makes the researcher encounter the asymmetry as a feature of the data model, not as a derived statistic.
 
 ## Structural Missingness and the Preservation of Absent Entities
 
-Rectangular data formats handle missing observations in two ways: by inserting placeholder values (typically NA or 0) or by omitting rows entirely.
-Both approaches conflate structurally distinct situations.
-A participant who attended the speed-dating event but did not match with anyone is structurally different from a participant who matched but did not respond to follow-up surveys, which is in turn structurally different from a participant who responded to some follow-up surveys but not others.
-In the CSV file used by @Selterman2023, all three situations produce the same NA encoding in the FURomInterest column.
+Rectangular data formats handle missing observations in two ways: by inserting
+placeholder values (typically NA or 0) or by omitting rows entirely. Both approaches conflate
+structurally distinct situations. A participant who attended the speed-dating event but did not match with anyone is structurally different from a participant who matched but did not respond to follow-up surveys, which is in turn structurally different from a participant who responded to some follow-up surveys but not others. In the CSV file used by @Selterman2023, all three situations produce the same NA encoding in the FURomInterest column.
 
-The graph handles these situations by representing absence as a structural feature rather than a numerical encoding.
-A participant without a mutual match simply lacks any outgoing `FOLLOWED_UP` edges from their `DateRating` nodes.
-A participant who dropped out after week 3 has `FollowUp` nodes for weeks 1 through 3 and no nodes for weeks 4 through 10.
-The absence of a node is not an NA; it is the absence of an entity that did not exist in the study.
+The graph handles these situations by representing absence as a structural feature rather than a numerical encoding. A participant without a mutual match simply lacks any outgoing `FOLLOWED_UP` edges from their `DateRating` nodes. A participant who dropped out after week 3 has `FollowUp` nodes for weeks 1 through 3 and no nodes for weeks 4 through 10. The absence of a node is not an NA; it is the absence of an entity that did not exist in the study.
 This distinction becomes analytically meaningful when modeling longitudinal attrition.
 In the Speed-Dating dataset, 1,152 `FollowUp` nodes were created from 28,160 potential rater-partner-week combinations — a 95.9% structural absence rate.
-In a multilevel model estimated from the rectangular file, this attrition is handled implicitly by the full-information maximum likelihood estimator, which assumes that missingness is a function of observed variables.
-In the graph, the researcher is confronted directly with the network structure of attrition: which dyads dropped out early, which persisted across all ten weeks, and whether dropout is clustered within particular sessions or participants.
-These questions are answerable with graph traversal queries before any statistical model is specified.
+In a multilevel model estimated from the rectangular file, this attrition is handled implicitly by the full-information maximum likelihood estimator, which assumes that missingness is a function of observed variables. In the graph, the researcher is confronted directly with the network structure of attrition: which dyads dropped out early, which persisted across all ten weeks, and whether dropout is clustered within particular sessions or participants. These questions are answerable with graph traversal queries before any statistical model is specified.
 
 ## Endogenous Network Structure as a Source of Unmodeled Dependence
 
