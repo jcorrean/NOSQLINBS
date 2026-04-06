@@ -14,7 +14,7 @@ classoptions:
   # - referee       # Optional: Use double line spacing 
   # - lineno        # Optional: Add line numbers
   # - iicol         # Optional: Double column layour
-title: A Primer on Labeled Property Graphs
+title: "Graph Databases as a Psychological Method"
 authors: 
   - firstname: Juan
     particle: C.
@@ -39,7 +39,7 @@ affiliations:
   - number: 2
     corresponding: FALSE
     info:
-      orgdiv: Escuela de Educación
+      orgdiv: Escuela de Educación e Innovación
       orgname: Politécnico Grancolombiano
     address:
         city: Bogotá
@@ -51,7 +51,7 @@ keywords:
   - complex behavior
 # abstract: |
 abstract: |
-  Psychological data are inherently relational: they capture individuals embedded in dyads, groups, and institutions; behaviors unfolding across time; and constructs operating simultaneously at multiple levels of analysis. Yet the rectangular data formats that dominate psychological research impose tabular constraints that fragment, duplicate, or discard the relational structure that makes such data meaningful. This tutorial introduces labeled property graphs (LPGs) as a flexible and scalable database paradigm for modeling complex psychological data, and provides a step-by-step implementation guide using Neo4j and R. We illustrate the approach with the Speed-Dating replication dataset (Selterman et al., 2023), a publicly available resource whose dyadic, longitudinal, and multimodal structure makes it an ideal vehicle for demonstrating how LPGs preserve relational topology, handle structural missingness without numerical encoding, and support queries that rectangular formats cannot express without costly joins or data duplication. Compared to relational databases, LPGs offer three methodological advantages particularly relevant to psychological research: schema flexibility that accommodates evolving theoretical models, query performance that scales with local graph structure rather than total dataset size, and an ontological transparency that makes the researcher's assumptions about entities and relationships explicit and testable. All materials — including annotated code, data, and a reproducible workflow — are available via the Open Science Framework to facilitate adoption across subfields of psychology.
+  This tutorial presents labeled property graphs as a psychological method. Using the Speed‑Dating replication dataset as a running example, we show how graph databases preserve dyadic asymmetry, represent longitudinal processes without numerical encodings of missingness, and retain entities that are structurally absent from rectangular files. Beyond these representational advantages, the graph perspective makes endogenous sources of statistical dependence structurally explicit. In particular, we demonstrate how partner popularity—the tendency for some individuals to receive systematically higher ratings from multiple independent raters—emerges as an in‑degree property of the graph and remains unmodeled in common multilevel analyses of speed‑dating data. By rendering rater effects, partner effects, and dyadic reciprocity directly queryable features of the data structure, labeled property graphs shift the burden of justification from modeling dependence to justifying its omission. We conclude by discussing four methodological implications of graph‑based representations for psychological research, including ontological transparency, structural approaches to missingness, scalability as an epistemic constraint, and schema flexibility under theoretical change. Together, these features position graph databases not merely as a storage technology but as a methodological framework that shapes what psychological questions can be posed, answered, and critically evaluated.
 bibliography: bibliography.bib
 header-includes: |
   %% Per the spinger doc, new theorem styles can be included using built in style, 
@@ -82,149 +82,722 @@ knitr::opts_chunk$set(echo = FALSE,
 
 # Introduction {#sec1}
 
-Psychological data are relational by nature. For example, @guimera2005 leveraged this relational nature of psychological data to understand the mechanisms of team assembly and how these mechanisms determine collaboration structure and team performance. Other instances include the analyses of the causal interplay between psychopathological symptoms [@borsboom2013], the scientific cooperation to understand cyberbehavior [@serafin2019], the psychometric estimation of the correct number of dimensions in psychological and educational instruments [@golino2017], or the measurement of organizational climate [@menezes2021]. What these examples share, however, is that relational structure was an analytical construction rather than a database design — and it is precisely that distinction that this article addresses.
+The relational nature of psychological data is evident across multiple research domains.
+For example, @guimera2005 examined team assembly mechanisms to show how patterns of collaboration emerge from relational constraints and @borsboom2013 introduced network-based models to analyze the causal interplay among psychopathological symptoms.
+What these approaches share is that their relational structure is treated as an analytical construction, reconstructed from rectangular data formats, rather than as a database design principle.
+Treating psychological data as a graph database design represents a fundamentally different methodological paradigm that has received little explicit attention in psychological research.
 
-Relational databases have dominated psychological research for good reasons. They store data in tables where columns represent variables, rows represent cases, and relationships between entities are managed through the so-called "SQL" or Structured Query Language [@soto2025]. Relational databases represent a paradigm that works well when data are rectangular and relationships are simple. However, as psychological phenomena grow more complex (i.e., spanning multiple levels of analysis, unfolding over time, and involving entities that relate to each other in qualitatively distinct ways) the tabular constraints of relational databases become a methodological liability rather than an asset. An alternative paradigm, broadly called "Not Only SQL" (NoSQL), includes systems designed for non-tabular, highly connected data. Among these, graph databases are particularly well-suited for psychological research because they treat relationships as first-class elements rather than implicit byproducts of table joins [@Robinson2015]. In this article, we examine graph databases as a methodological paradigm where nodes and edges (rather than tables and joins) become the basic representational units for any behavior. One of the benefits that results from this database paradigm is that the behavior under scrutiny can be modeled as a complex system in a way that deviates from previous approaches [@Guastello2009]. Understanding why this database paradigm remains largely absent from psychological research requires first acknowledging what already exists.
+Relational databases dominate psychological research for good reasons.
+They store data in tables where columns represent variables, rows represent cases, and relationships between entities are managed through the so-called SQL or "Structured Query Language" [@soto2025].
+This paradigm works well when data are tidy and relationships are simple [@Wickham2023].
+However, as psychological phenomena grow more complex (i.e., spanning multiple levels of analysis, unfolding over time, and involving entities that relate to each other in qualitatively distinct ways) the tabular constraints of relational databases become a methodological liability rather than an asset.
 
-Computational libraries such as `sna`, `igraph`, `qgraph`, or `psychonetrics` have made network analysis accessible to researchers working entirely within `R` [@Luke2015], and their adoption in psychology is well-known [@Mair2018]. However, these libraries mainly address the statistical analysis of relational data, leaving the management of it under the hood. (i.e., the data must first be extracted from a rectangular format, reshaped into an edge list or adjacency matrix, and then passed to the analytic tool). Thus, such a workflow reconstructs relational structure at the analysis stage rather than preserving it from the moment of data collection. Graph database management systems, by contrast, store, query, and retrieve data in graph form natively, so that relational structure is not an analytical construction but a representational commitment. To our knowledge, this distinction has received no systematic treatment as a psychological method.
-  
-This article provides a step-by-step tutorial for implementing labeled property graphs (LPGs) in psychological research using `Neo4j` and `R`. We illustrate the approach with the Speed-Dating replication dataset [@Selterman2023], a publicly available resource whose dyadic, longitudinal, and multimodal structure makes it an ideal vehicle for demonstrating how LPGs preserve relational topology, handle structural missingness without numerical encoding, and support queries that rectangular formats cannot express without costly joins or data duplication. The tutorial covers the full workflow: designing a graph schema from psychological theory, importing data into Neo4j, querying the graph with Cypher, connecting Neo4j to R via the neo2R package, and conducting statistical analysis and visualization using tidygraph and ggraph. All materials — including annotated Cypher and R code, data, and a reproducible RMarkdown file — are available in a public repository.
-  
-The remainder of this article is organized as follows. Section 2 introduces the conceptual foundations of labeled property graphs, contrasting their representational logic with that of relational databases and defining the core elements — nodes, edges, labels, and properties — that make them particularly well-suited for psychological data. Section 3 motivates the tutorial through the Speed-Dating replication dataset (Selterman et al., 2023), showing concretely how its dyadic, longitudinal, and multimodal structure exposes the limitations of rectangular formats. Section 4 presents the step-by-step tutorial itself, covering the full workflow from graph schema design and data import in Neo4j through querying with Cypher and statistical analysis and visualization in R via the neo2R, tidygraph, and ggraph packages. Section 5 discusses the broader methodological implications of LPGs for psychological research, with particular attention to structural missingness, scalability, and ontological transparency. Section 6 concludes with a discussion of limitations and directions for future work. All code, data, and a fully reproducible RMarkdown file are available via the Open Science Framework at [OSF link].
-  
+An alternative paradigm, broadly referred to as "Not Only SQL" (NoSQL), includes systems designed for non-tabular, highly connected data.
+Among these, graph databases are particularly well suited for psychological research because they treat relationships as first-class elements rather than as implicit byproducts of table joins [@Robinson2015].
+This database paradigm allows behavior to be modeled as a complex system in a way that differs fundamentally from traditional approaches [@Guastello2009].
+In this article, we examine graph databases as a methodological paradigm in which nodes and edges (rather than tables and joins) constitute the basic representational units of behavior.
+Understanding why this database paradigm remains largely absent from psychological research requires first acknowledging what already exists.
 
+Computational libraries such as `sna`, `igraph`, `qgraph`, or `psychonetrics` have made network analysis accessible to researchers working entirely within `R` [@Luke2015], and their adoption in psychology is well-known [@Mair2018].
+However, these libraries mainly address the statistical analysis of relational data, leaving the management of it under the hood (i.e., the data must first be extracted from a rectangular format, reshaped into an edge list or adjacency matrix, and then passed to the analytic tool).
+Thus, such a workflow reconstructs relational structure at the analysis stage rather than preserving it from the moment of data collection.
+Graph database management systems, by contrast, store, query, and retrieve data in graph form natively, so that relational structure is not an analytical construction but a representational commitment.
+To our knowledge, this distinction has received no systematic treatment as a psychological method.
 
-# Graph-based databases: A gentle introduction {#sec2}
+This article provides a step-by-step tutorial for implementing graph databases in psychological research.
+In particular, our tutorial revisits the Speed-Dating replication dataset [@Selterman2015; @Selterman2023], whose dyadic, longitudinal, and multimodal structure provides an ideal scenario for demonstrating how graph databases preserve relational interactions, handle structural missingness without numerical encoding, and support queries that rectangular formats cannot express without costly joins or data duplication.
 
-Any graph-based database relies on network basic terminology. Thus, a brief recap is useful here. @Estrada2011 defines a network as a collection of points (called nodes) joined together in pairs by lines (called arcs or edges) like those depicted in Figure [1](#fig:F1). Despite this simplistic definition, networks provide a powerful framework to model any type of system from planets in a galaxy to neurons in the nervous system [@Vazza2020].
+The remainder of this article is organized as follows.
+Section 2 introduces the conceptual foundations of graph databases, contrasting their representational logic with that of relational databases and defining the core elements — nodes, edges, labels, and properties — that make them particularly well-suited for psychological data.
+Section 3 introduces important epistemic considerations of graph databases in psychological research.
+Section 4 presents the step-by-step tutorial itself through the Speed-Dating replication dataset [@Selterman2023].
+This dataset shows how its dyadic, longitudinal, and multimodal structure exposes the limitations of rectangular formats.
+Section 5 discusses the broader methodological implications of graph databases for psychological research, with particular attention to structural missingness, scalability, and ontological transparency.
+Section 6 concludes with a discussion of limitations and directions for future work.
+All code, data, and a fully reproducible RMarkdown file are available via the Open Science Framework at [OSF link].
+Although presented as a tutorial, the aim of this article is methodological.
+Our aim is to show how representational choices constrain and enable psychological inference.
 
-```{r F1, echo=FALSE, fig.cap="A visual representation of four types of networks: A) non-directed unweighted network, B) non-directed weighted network, C) directed unweighted network, and D) directed weighted network.", fig.align="center", out.width="380px", fig.pos="H"}
-knitr::include_graphics("F1.png")
-```
+# Graph Databases and Labeled Property Graphs {#sec2}
 
-In behavioral sciences, networks have been used to understand the mechanisms of team assembly and how these mechanisms determine collaboration structure and team performance [@guimera2005].
-Graphs offer fundamental concepts for understanding how entities (nodes) and their relationships (edges) form interconnected data structures.
-From a data management viewpoint, the analysis of these data structures requires tools that go beyond the rigid tabular constraints of relational databases.
-As the concepts of graphs are thoroughly covered in introductory texts [@Newman2010], these will not be revisited here.
-Instead, this article aims to illustrate how graph databases can enrich the methodological toolbox of psychological researchers and behavioral scientists, enabling analyses that embrace complexity, dynamic relationships, and multi-level contingencies [@Robinson2015].
+Graph databases are data management systems that implement the basic operations of **C**reate, **R**ead, **U**pdate, and **D**elete (CRUD) on a graph data model, in which entities are represented as nodes and relationships are represented as edges [@Robinson2015].
+A fundamental element of this paradigm is the labeled property graph (LPG), in which both nodes and edges can carry labels and properties, allowing attributes of entities and relationships to be stored directly within the graph structure.
+Unlike relational databases (i.e., where relationships are encoded indirectly through foreign keys and join operations) graph databases treat relationships as first-class components of the data model.
+As a result, relational structure becomes an explicit feature of data representation, rather than a construct introduced retrospectively at the analytical stage of research.
+To make these abstract representational principles concrete, we now illustrate them using a well-known relational dataset in psychology.
 
-@Robinson2015 define a graph database as a system that implements **C**reate, **R**ead, **U**pdate, and **D**elete (CRUD) operations on a graph data model, where entities are represented as nodes and relationships as edges like the one depicted in Figure [2](#fig:F2) derived from the Speed‑Dating dataset [@Selterman2023] which was a replication study from the original article by @Eastwick2008.
+The graph database paradigm fits naturally onto relational phenomena such as the exhibited differences between men and women when dating and looking for a romantic partner [@Selterman2015].
+We decide to revisit this phenomenon through the [Speed‑Dating dataset](https://osf.io/hcfmi/files/h62a3) [@Selterman2023].
+This dataset has the records of participants who went on brief, 4-minute “dates” with potential romantic partners.
+After attending the speed-dating event, participants were given the opportunity to select people they “matched” with and contact each other as they see fit.
+@Selterman2023 also assessed participants’ degree of attraction and relationship initiation with follow up questions that were dependent on whether or not participants had subsequent interactions with mutual matches (e.g., “What is the current status of your relationship with [name]?” (a) dating seriously, (b) dating casually, etc.).
+These “pivot” questions were administered only if the participant and match “hung out” again, engaged in romantic behavior including dates and/or labeled the match as a romantic partner (or having romantic potential), engaged in sexual activity, etc.
+The sample consisted of 307 people (49.8% female), and each person had average of 9.28 (SD = 2.14) speed dates.
+Only 141 (45.9%) participants completed the age and ethnicity demographic variables.
+These participants were an average of 18.99 years old (SD = 2.86).
+The sample primarily identified as white (62.4%), Hispanic (9.9%), African American (10.6%), Asian/Pacific Islander (11.3%), or “other” (5.7%).
+Figure [1](#fig:F2) shows a labeled property graph for the [Speed‑Dating dataset](https://osf.io/hcfmi/files/h62a3) [@Selterman2023].
 
-```{r F2, echo=FALSE, fig.cap="A visual representation of a graph database that combines persons, companies, and routes", fig.align="center", out.height="180px", out.width="350px", fig.pos="H"}
+```{r F2, echo=FALSE, fig.cap="A labeled property graph of the speed-dating dataset by Selterman et al. (2023)", fig.align="center", out.height="180px", out.width="350px", fig.pos="H"}
 knitr::include_graphics("F2.png")
 ```
 
-In contrast to relational databases (where relationships exist only implicitly through table joins) graph databases treat relationships as fundamental elements. In the context of the study conducted by @Eastwick2008, the graph-based design enables researchers to traverse, query, and model highly interconnected data structures with exceptional efficiency and originality. 
-
-Figure [2](#fig:F2) shows the data at three distinct levels: (1) stable participant characteristics (e.g., age, ethnicity, sex), (2) interaction‑level impressions recorded during each brief date (e.g., attraction, perceived similarity, desire to say “yes”), and (3) longitudinal follow‑up responses across subsequent weeks for pairs who continued interacting.
-These layers of data are represented as interconnected components of a single, coherent graph structure.
-
-Voy a introducir un cambio en esta parte.
-
 ## Entities as Nodes
 
-`Participant` nodes represent individuals in the study and store stable demographic properties such as age, ethnicity, and sex (from the codebook variables DemAge, DemEthn, and sex_M1_F2).
-`DateEvent` nodes represent each dyadic interaction and store the full set of impression‑formation ratings provided by participants during speed‑dating (e.g., IRLikedPartner, IRSexAttract, IRCommon, IRSayYes, yessing, mutmatch). These correspond directly to the interaction‑record variables in the dataset. `FollowUp` nodes represent week‑level longitudinal responses, including relationship status, romantic interest, sexual desire, and commitment indicators (e.g., FUStatus, FURomInterest, FUSexDesire, FUCommitted), captured only for participants who matched and continued interacting.
+Figure [1](#fig:F2) shows how participants interacted in the speed-dating design.
+Colored nodes have their own identification (in bold letters) and properties (in regular letters).
+These properties are the names of the variables as they are in the original dataset.
+Nodes connect through labeled directed links (i.e., `HAD_DATE`, `WITH`, `FOLLOWED_UP`, and `REPORTED_BY`).
+The names of these links are not in the original dataset, but our decision to name them shows a representational commitment following the principles of graph databases.
+A subtle distinction is visible between the four properties associated with the `Participant` node to the left of the `DateRating` node and the five properties associated with the `Participant` node to the right.
+As the speed-dating design implied that men and women rated each other, the role of "rater" (Part_num) and "ratee" (MatchID_clean) should be explicitly differentiated.
+Such a distinction is evident in the dataset: the first row shows that participant 1 (male) matched with participant 116 (female).
+Participant 1 evaluated Participant 116 with a score of 9 in IRLikedPartner, while row 361 shows participant 116 evaluated participant 1 with a score of 6 in IRLikedPartner.
+
+The `DateRating` node represents a single perceptual event: the impressions formed by one specific rater about one specific partner during the speed‑dating interaction (e.g., IRLikedPartner, IRSexAttract, IRCommon, IRSayYes, Yessing, Mutmatch).
+The `FollowUp` node represents week‑level longitudinal responses, including relationship status, romantic interest, sexual desire, and commitment indicators (e.g., FUStatus, FURomInterest, FUSexDesire, FUCommitted), captured only for participants who matched and continued interacting.
 
 ## Relationships as Edges
 
-Edges define how these nodes are linked and encode psychological structure directly. `HAD_DATE` edges connect Participants to the DateEvents in which they took part, indicating the rater’s perspective on that interaction. `WITH` edges connect the DateEvent back to the other participant, allowing the system to explicitly represent dyadic structure. `FOLLOWED_UP` edges link `Participants` to their `FollowUp` nodes, representing relational trajectories across weeks. Optionally, a `MUTUAL_MATCH_WITH` edge can be created between two `Participants` when the `mutmatch` property equals 1, providing a direct representation of reciprocal liking (i.e., a relationship that is invisible in rectangular data but naturally expressed in graph form).
+Edges define how these nodes are linked and encode psychological structure directly.
+The `HAD_DATE` edge connect participants to the `DateRating` in which they took part, indicating the rater’s perspective on that interaction.
+The edge labeled as `WITH` connects the `DateRating` back to the other participant, allowing the system to explicitly represent dyadic structure.
+The edge labeled as `FOLLOWED_UP` links `Participants` to their `FollowUp` node, representing relational trajectories across weeks.
+Finally, the `Participant`node to the right of the `DateRating` node receives the connection `REPORTED_BY` from the `FollowUp`node.
+This connection mirrors the fact that both participants (Part_num, and MatchID_clean) had to report their subjective assessments on the romantic parter they matched with during follow-up sessions.
 
-## Why This Matters for Psychological Research
+## Why Graph Databases Matter for Psychological Research
 
-This structure offers several methodological advantages. Psychological data retain their natural relational structure. Dyadic interactions are modeled as shared events rather than duplicated rows, preserving the topology of social and romantic processes as they occur in the real world. Temporal processes become navigable. `Follow‑up` nodes can be traversed sequentially, enabling queries such as ``How early do committed feelings emerge among mutually matched pairs?''
-or "Does initial sexual attraction predict later romantic interest?''
+The structure of Figure [1](#fig:F2) offers several methodological advantages.
+Psychological data retain their natural relational structure.
+Dyadic interactions are modeled as relationally linked perceptual events rather than duplicated rows, preserving the structure of social and romantic processes as they occur in the real world.
+Temporal processes become navigable.
+The `FollowUp` node can be traversed sequentially, enabling queries such as \`\`How early do committed feelings emerge among mutually matched pairs?'
+' or "Does initial sexual attraction predict later romantic interest?''
 
 In addition, missingness is handled structurally, not numerically.
-Participants who did not match simply lack `follow‑up` nodes; no NA encoding is required. The model is inherently extensible.
+Beyond missing values within rows, graph databases also recover entities that are entirely absent from the rectangular file.
+In the Speed-Dating dataset, 87 participants appear exclusively as targets of others' ratings (MatchID_clean) but have no rows of their own as raters (Part_num).
+A relational table cannot represent these individuals without an additional join table; the graph instantiates them as nodes automatically, preserving the full social structure of the speed-dating event.
+Participants who did not match simply lack `FollowUp`; no NA encoding is required.
+The model is inherently extensible.
 Additional constructs, such as personality traits or behavioral logs, can be attached as new nodes or properties without reconfiguring the existing database schema.
-
 In sum, LPGs allow behavioral scientists to represent complex, multi-level psychological phenomena in a way that relational tables cannot.
-The Speed‑Dating schema makes clear how impression formation, dyadic reciprocity, and longitudinal relationship development can be captured and analyzed within a single unified model.
+The Speed‑Dating schema illustrated in Figure [1](#fig:F2) makes clear how impression formation, dyadic reciprocity, and longitudinal relationship development can be captured and analyzed within a single unified model.
 
-# Why graph databases as psychological method
+# Graph Databases: Epistemic Considerations
 
-Any graph database model leverages the so-called "labeled property graph." As a computational tool it paves the way for incorporating complex systems thinking in any discipline [@Krakauer2019], and as a psychological method it opens the door for interdisciplinary collaboration.
-In psychology and behavioral sciences, complex systems thinking is not novel at all [@Luce1999; @Guastello2009].
-However, labeled property graph models and their elements have been largely overlooked.
-This gap coincides with recent reviews that promote other methodologies as potential solutions to increase intra and interdisciplinary interactions across subfields of behavior analysis in both basic and applied settings [@Elcoro2023].
+In this section, we focus not on implementation, but on the epistemic considerations of adopting graph databases in psychological research.
+Graph databases and their labeled property graph paradigm provide an infrastructure that enables the systematic incorporation of complex systems thinking into psychological inquiry.
+In psychology and the behavioral sciences, complex systems thinking is not novel [@Luce1999; @Guastello2009], although more recent work has emphasized its interdisciplinary potential [@Krakauer2019].
+This emphasis aligns with recent reviews that propose methodological innovations as a means of strengthening intra- and interdisciplinary integration across basic and applied domains of behavior analysis [@Elcoro2023].
 
-As a psychological method, labeled property graph models share some similarities with the "nomological nets" coined by @cronbach1955.
-However, labeled property graph models (also known as knowledge graphs) represent a more general purpose toolkit that transcends the seminal conception of nomological nets (see Table [1]()).
+As a psychological method, the graph database paradigm shares some similarities with the *nomological nets* originally proposed by @cronbach1955.
+Both emphasize relational structure and the systematic articulation of theoretical commitments.
+However, labeled property graph models constitute a more general-purpose representational framework that transcends the scope of classical nomological nets (see Table 1).
 
-| Feature | Knowledge graphs | Nomological nets |
+| Feature | Labeled Property Graphs | Nomological nets |
 |------------------------|------------------------|------------------------|
 | Primary field | Computer science / AI / Data engineering | Psychology / Philosophy of Science |
-| Primary goal | Data integration, search, automated reasoning. | Establishing construct validity (i.e., proving a theory). |
-| Nature of nodes | Concrete entities (e.g., "Lee J. Cronbach", "University of Illinois"). | Theoretical constructs (e.g., "introversion", "intelligence"). |
-| Nature of edges | Predicate or properties (e.g., "works_at", "collaborate_with"). | Theoretical laws or empirical correlations. |
-| Verification | Based on data consistency and retrieval accuracy | Based on statistical evidence (correlations and p-values) |
-| Scale | Can contain billions of facts (e.g., Google knowledge graph) | Usually small, focused on a specific theoretical model |
+| Primary goal | Data integration, search, automated reasoning | Establishing construct validity (i.e., theory testing) |
+| Nature of nodes | Concrete entities (e.g., "Lee J. Cronbach", "University of Illinois") | Theoretical constructs (e.g., "introversion", "intelligence") |
+| Nature of edges | Predicates or properties (e.g., "works_at", "collaborates_with") | Theoretical laws or empirical correlations |
+| Verification | Data consistency and retrieval accuracy | Statistical evidence (e.g., correlations, p-values) |
+| Scale | Potentially billions of facts | Typically small, theory-specific |
 
 : Knowledge graphs and nomological nets
 
-A methodolgical implication embedded in graph databases is their performance when handling network data structures [@Robinson2015].
-In relational databases, join-intensive queries slow down as datasets grow, whereas graph databases maintain relatively stable performance —even with millions of nodes and edges.
-From a traditional perspective, the idea of working with huge datasets might seem implausible for most psychological researchers.
-Nonetheless, big data research is no longer outside professional considerations and that explains why big data has been recently reviewed as a psychological method [@vezzoli2023].
-For example, previous works in network science has shown how to address complex behavioral phenomena such as the analysis of urban traffic at an individual level by tracking the movements of hundreds of thousands of drivers every two hours [@Gonzalez2008].
-In cases like this, graph databases excel because queries operate on localized portions of the graph rather than scanning the entire dataset.
-If edges store information such as commuting distances, queries can be designed to retrieve specific conditions (e.g., individuals who commute less than 10 miles versus persons who commute more than 20 miles). Consequently, execution time depends only on the size of the subgraph traversed, not the overall graph size.
+What distinguishes graph databases from analytic tools is that they constrain and enable psychological inquiry at the level of *representation*.
+Whereas analytic methods operate on data that have already been structured, graph databases determine how behavioral phenomena are encoded from the outset, thereby delimiting which relations, processes, and queries are epistemically viable.
 
-Another implication of graph databases is their flexibility.
-Behavioral scientists aim to connect data in ways that reflect their knowledge and expertise.
-This is why graph databases serve as the underlying infrastructure for constructing "knowledge graphs" [@Barrasa2023].
-With these knowledge graphs, researchers allow the database to evolve alongside their understanding of the behavioral phenomenon rather than being rigidly defined upfront, when knowledge is most limited.
-This is particularly important when a behavioral phenomenon lacks theoretical background or lacks replication [@burgos2025].
-Graph databases fulfill this need by providing a flexible model that adapts to changing requirements and evidence.
-Because graphs are inherently additive, new nodes, relationships, labels, and subgraphs can be introduced.
-The modifications introduced to the original graph do not imply a threat to existing queries or application functionality.
-This flexibility minimizes the need for exhaustive upfront modeling and lowers the frequency of costly migrations (particularly for companies that hire behavior data scientists in charge of analyzing customers observed behavior), thereby reducing maintenance overhead in both academic and business settings.
+This representational commitment has direct methodological consequences, particularly for research involving complex, relational, and large-scale psychological data.
+One such consequence concerns scalability.
+Because graph databases organize information around localized connections among nodes and edges, they maintain relatively stable query performance even in datasets comprising millions of entities and relationships.
+From a traditional perspective within psychology, working at this scale may appear implausible.
+However, large-scale behavioral data are now firmly within methodological consideration, as reflected in recent treatments of big data as a psychological method [@vezzoli2023].
+Prior work in network science illustrates this point clearly.
+For example, studies of urban mobility have examined individual-level behavioral trajectories by tracking the movements of hundreds of thousands of drivers at fine temporal resolutions [@Gonzalez2008].
+In such contexts, graph databases are particularly well suited because queries operate on localized subgraphs rather than requiring exhaustive scans of entire datasets.
+Performance, therefore, is not merely a technical concern but a condition for the epistemic viability of certain classes of psychological questions.
 
-A third implication of graph databases is the agility that they offer.
-Modern graph databases enable smooth development and easy system maintenance.
-Their schema-free design, combined with testable APIs and query languages, allows controlled evolution of applications.
-While the absence of rigid schemas means traditional governance mechanisms are missing, this is not a drawback.
-On the contrary, it encourages more transparent and actionable data governance.
-Typically, governance is enforced programmatically through tests that validate data models, queries, and business rules.
-This approach aligns well with agile and test-driven development practices, making graph database applications adaptable to changing business needs.
-In psychology, these aspects can be vital for the so-called "automated data collection techniques." For example, mobile applications, such as ecological momentary assessment tools, prompt users to report emotions or behaviors throughout the day, while motion sensors and radio frequency identification tags can monitor movement and location in homes or classrooms [@Bak2021].
+A second epistemically consequential feature of graph databases is their flexibility.
+Behavioral scientists routinely connect data in ways that evolve alongside theoretical commitments, empirical discoveries, and domain expertise.
+For this reason, graph databases often serve as the underlying infrastructure for constructing *knowledge graphs* [@Barrasa2023].
+Unlike rigid schemas defined in advance, knowledge graphs allow data models to evolve in tandem with scientific understanding—an especially important feature in domains characterized by limited theory, active replication efforts, or rapid evidence accumulation [@burgos2025].
+Because graph structures are inherently additive, new nodes, relationships, labels, and subgraphs can be introduced without invalidating existing representations.
+From a methodological perspective, such modifications should be understood not as ad hoc adjustments, but as legitimate indicators of scientific progress under conditions of incomplete knowledge.
 
-It is worth mentioning that relational databases acknowledge relationships, but only during modeling, where they serve as join mechanisms between tables.
-In graph databases, we often need to clarify the meaning of relationships and even qualify their strength.
-These are aspects that relational database management systems do not address explicitly [@Robinson2015].
-From this viewpoint, graph databases demand both ontological and epistemological considerations like the ones recently described in the literature of theoretical and philosophical psychology [@burgos2025].
-Roughly speaking, ontological considerations relate to traditional questions of pure ontology like what is it to be?
-what does exist?
-What is the nature of what exist?
-In contrast, epistemological considerations pertains matters of evidence, explanation, certainty and truth [@burgos2025].
-As datasets grow more complex and less uniform (provided new evidence is available), relational data management systems like Microsoft Access, PostgreSQL, or SQLite become burdened with large join tables, sparsely populated rows, and extensive null-checking logic.
-Greater interconnectedness in relational databases leads to more joins, which degrade performance and complicate adaptation to evolving requirements.
-@soto2025 has highlighted some of these limitations as "challenges to adoption." From the lenses of graph databases, however, these challenges are not even necessary.
-I will elaborate upon this particular aspect in the next section.
-As a wrap-up, labeled property graphs are not merely a technical alternative to relational schemas; they represent a methodological advance that aligns with psychology’s need for flexible, scalable, and conceptually transparent data models.
+These representational choices bring ontological and epistemological considerations to the foreground.
+Ontologically, graph databases require researchers to specify explicitly which entities exist within the model, how they relate to one another, and which transformations of those entities are permissible.
+Epistemologically, they invite reflection on what counts as evidence, which queries are meaningful, and how explanations are warranted given the structure of the graph.
+In this sense, graph databases make explicit assumptions that often remain implicit in rectangular data workflows, echoing recent calls in theoretical and philosophical psychology to treat ontology and epistemology as integral components of methodological design [@burgos2025].
+
+These considerations also have implications for psychological research that relies on automated data collection techniques.
+For example, mobile applications like ecological momentary assessment tools, prompt participants to report emotions or behaviors repeatedly throughout the day, while motion sensors and radio-frequency identification tags continuously record movement and location in naturalistic environments [@Bak2021].
+In such technology-mediated inquiries, datasets tend to grow rapidly while becoming increasingly heterogeneous.
+These data could present non-trivial challenges for relational databases in psychology.
+Although @soto2025 strongly advocates for relational databases in behavioral research, he also identifies several practical challenges to their adoption, including infrastructural requirements and specialized technical expertise.
+From the perspective advanced here, these challenges highlight the benefits of alternative data representation paradigms—such as graph databases—which align representational structure more closely with the relational nature of psychological phenomena.
+
+In sum, labeled property graphs are not merely a technical alternative to relational schemas; they represent a methodological advance that aligns with a particular psychology where researchers encourage flexible, scalable, and conceptually transparent data models.
 
 # Applying graph database in behavioral research
 
-To illustrate the application of graph databases for behavioral scientists, I revisit the Speed‑Dating dataset [@Selterman2023] which provides a replication study from the seminal article by @Eastwick2008. The general description of this replication study is available in an [OSF repository](https://osf.io/ng6cc/overview). This repo provides access to the ``speed.dating.2.zip'' file which contains the raw data in an SPSS data format (.sav). This file can be easily read in SPSS, PSPP, Jasp, Jamovi, or RStudio.
-Given the wide variety of graph database management systems in the market (e.g., Neo4j, Microsoft Azure Cosmos, Aerospike, Amazon Web Services Neptune, NebulaGraph, Memgraph, TigerGraph, Giraph), the rest of this work relies on Neo4j [@Barrasa2023].
+This section provides a step-by-step tutorial demonstrating how to (a) design a graph schema for psychological data, (b) prepare the raw dataset for import, (c) import the data into a labeled property graph using Cypher, and (d) verify that the resulting graph matches the intended schema.
+Readers with no prior experience with Neo4j or graph databases should be able to follow each step in sequence using only the materials described below.
 
-Neo4j ranks as a leading freemium software for graph database management systems and has been used in several industry sectors including retail, finance, pharmaceutics, hospitality, and electronic commerce, among others.
-Neo4j offers free and enterprise editions, which can be installed on local or server environments following official documentation.
-As the official documentation provides helpful material for newcomers, downloading and installation details are not necessary here, and the reader can consult specific details elsewhere [@vanBruggen2014].
+## STEP 1: Pre-requisites and materials
 
-## Prerrequisites and materials
+This tutorial uses the Speed-Dating replication dataset [@Selterman2023], available in the [Open Science Framework repository](https://osf.io/ng6cc/overview).
+From the Files preview menu, download speed.dating.2.zip from the Final Report option.
+The zip archive contains the raw data in SPSS format (.sav).
+This file can be opened in SPSS, PSPP, JASP, jamovi, or RStudio.
+The tutorial uses RStudio for all pre-processing steps.
 
-the Speed‑Dating dataset [@Selterman2023] which was a replication study from the original article by @Eastwick2008.
+Two software environments are required throughout the tutorial.
+RStudio is used to convert the raw dataset from SPSS format to a CSV file suitable for Neo4j.
+Neo4j Desktop is used to create the graph database instance, import the CSV, and run Cypher queries [@Barrasa2023].
+Neo4j Desktop can be downloaded free of charge from its [official website](https://neo4j.com/download/).
+The reader may consult @vanBruggen2014 for installation details across Mac, Windows, and Linux environments.
+Two R packages are required: `haven` [@Wickham2025] for reading the SPSS file, and `utils` [@RCore2025], which is included in every R installation by default and provides the write.csv() function.
+No additional R packages are needed for the tutorial.
 
-## STEP 1: Instance creation and data import
+## STEP 2: Instance creation
 
+Open Neo4j Desktop and click the Create Instance button in the upper right corner.
+Name the instance SpeedDating and set a password that is easy to recall across sessions.
+Once created, click Start instance.
+The label RUNNING in green letters should appear below the instance name, confirming that the database is active and ready to receive data.
+Before importing any data, the CSV file must be placed in a specific folder that Neo4j can access.
+With the SpeedDating instance running, click the folder icon in Neo4j Desktop to reveal the instance directory.
+Navigate to the import/ subfolder inside that directory.
+This is the only folder from which Neo4j can load CSV files using the LOAD CSV command.
+All import operations in this tutorial assume that the CSV file is located at this path (Figure [2](#fig:F4)).
 
+```{r F4, echo=FALSE, fig.cap="The SpeedDating instance running in Neo4j", fig.align="center", out.height="150px", out.width="400px", fig.pos="H"}
+knitr::include_graphics("F4.png")
+```
 
-## STEP 2: Understanding the context
+## STEP 3: Designing the Graph Schema
 
+Before writing any code, it is useful to decide how the data will be represented as a graph.
+This decision is what the graph database literature calls schema design, and it is the most consequential methodological step in the tutorial.
+A poor schema design produces a graph that is technically valid but analytically misleading; a good schema design makes the psychological structure of the data immediately visible.
 
-## STEP 3: Sketching a graph database model
+The speed-dating dataset has a three-level structure.
+At the highest level are individual participants.
+At the intermediate level are the dyadic interactions that took place during the speed-dating event, each representing the subjective impressions that one participant formed of another.
+At the lowest level are the longitudinal follow-up assessments, collected weekly over ten weeks for pairs who continued interacting after the event.
+This three-level structure maps directly onto three node types.
+A key design decision concerns the intermediate level.
+An obvious but incorrect approach would be to model a speed-dating interaction as a single shared node connecting two participants symmetrically.
+The data do not support this interpretation.
+Each participant rated every partner independently, and those ratings are asymmetric: participant 1 rated participant 116 with a score of 9 on IRLikedPartner, while participant 116 rated participant 1 with a score of 6 on the same item.
+These are two distinct perceptual events, not one shared event.
+The intermediate node is therefore called DateRating rather than DateEvent, and each DateRating node represents the impressions formed by one specific rater about one specific partner.
 
+Figure [1](#fig:F2) illustrates the resulting labeled property graph.
+It contains three node types and four directed relationships.
+Table 2 summarizes each element of the schema.
+
+| Element | Type | Description |
+|------------------------|------------------------|------------------------|
+| Participant | Node | One node per individual. Carries Part_num (rater side) or MatchID_clean (partner side), DemAge, DemEthn, and sex_M1_F2. |
+| DateRating | Node | One node per rater-partner pair. Carries Part_num, MatchID_clean, IRLikedPartner, IRSexAttract, IRCommon, IRSayYes, Yessing, and Mutmatch. Uniquely identified by the composite key Part_num + MatchID_clean. |
+| FollowUp | Node | One node per rater-partner-week triplet, created only when at least one follow-up variable is non-missing. Carries Follow_clean, FUStatus, FURomInterest, FUSexDesire, and FUCommitted. |
+| HAD_DATE | Edge | Directed edge from the rater Participant to their DateRating. Encodes who formed the impressions. |
+| WITH | Edge | Directed edge from DateRating to the partner Participant. Encodes who was evaluated. |
+| FOLLOWED_UP | Edge | Directed edge from DateRating to FollowUp. Links an impression to the longitudinal assessments that followed it. |
+| REPORTED_BY | Edge | Directed edge from FollowUp to the partner Participant (dashed in Figure 1). Makes explicit that follow-up reports are subjective assessments directed at a specific partner. |
+
+: Schema elements of the Speed-Dating labeled property graph.
+
+Two properties deserve special attention because they do not appear as columns in the original CSV file.
+The composite identifier of each `DateRating` node is constructed by concatenating Part_num and MatchID_clean into a single string of the form "Part_num_MatchID_clean" (e.g., "1_116" for participant 1 rating participant 116).
+This composite key is necessary because neither column alone uniquely identifies a dyadic perception: the same MatchID_clean value appears in the rows of many different raters.
+Similarly, the `FollowUp` node is identified by the combination of the composite rater-partner key and Follow_clean, which records the week number (1 through 10).
+Both composite identifiers are constructed during the import step and do not require any modification of the original CSV file.
+This design decision has an empirically verifiable consequence.
+In the Speed-Dating dataset, Part_num contains 309 unique values while MatchID_clean contains 378.
+Of these, 291 values appear in both columns, meaning that 87 individuals were rated by others during the speed-dating event but have no rows of their own in the rectangular file — they exist only as targets of someone else's perception.
+In a relational table, these 87 participants are structurally invisible unless a separate lookup table is created.
+In the graph, they emerge automatically as Participant nodes during import, producing the 396 nodes confirmed in Step 6.
+Their presence in the graph without a corresponding presence in the rectangular file illustrates what we mean by schema flexibility: the graph preserves entities that the tabular format omits by design.
+
+## STEP 4: Data preparation in R
+
+The original dataset is distributed as an SPSS file (.sav).
+Neo4j does not read SPSS files directly, so the first task is to convert it to CSV format using RStudio.
+The following R script reads the .sav file, replaces all missing values with empty strings (which is the format that Neo4j's LOAD CSV command expects), and writes the result to disk as speed_dating.csv.
+
+\begin{verbatim}
+# Install the haven package if not already installed
+# install.packages("haven")
+library(haven)
+# Read the SPSS file
+speed_dating <- read_sav("speed.dating.3lev.small.july25.2014.sav")
+# Convert labelled columns to plain numeric vectors
+speed_dating <- as.data.frame(lapply(speed_dating, function(x) {
+  if (inherits(x, "haven_labelled")) as.numeric(x) else x
+}))
+# Write to CSV without row numbers
+# na = "" ensures missing values appear as empty cells,
+# which is the format Neo4j expects for LOAD CSV
+write.csv(
+  speed_dating,
+  "speed_dating.csv",
+  row.names = FALSE,
+  na = ""
+)
+\end{verbatim}
+
+Two details in this script are critical for a successful import.
+First, row.names = `FALSE` prevents R from adding an unnamed index column at the start of the file.
+Neo4j rejects CSV files that contain empty column headers, so omitting the row index is mandatory.
+Second, `na = ""` replaces R's default `NA` token with an empty string.
+The Cypher import script uses trim(row.column) \<\> "" to detect missing values, and this check only works correctly when missing cells are genuinely empty rather than containing the literal text `NA`.
+Note that once the script has run, copy speed_dating.csv into the import/ folder of the SpeedDating Neo4j instance before proceeding to Step 5.
+The location of this folder was described in Step 2.
+
+## STEP 5: Data Import into Neo4j
+
+With the CSV file in the import/ folder, open Neo4j Browser by clicking the Connect button in Neo4j Desktop and then selecting Open.
+The Cypher import script below must be executed in six sequential blocks.
+Each block is a self-contained unit; paste and run one block at a time rather than submitting the entire script at once.
+If an error occurs in any block, it can be corrected and re-run without affecting the blocks that have already completed successfully.
+We recommend to visit our GitHub repo to copy and paste the following Cypher queries as they preserved the indentation that is necessary for running them without errors into Neo4j.
+
+-   Block 1 — Constraints and indexes. This block defines the uniqueness constraints that prevent duplicate nodes from being created during import. Constraints must exist before any nodes are loaded. Execute this block first.
+
+\begin{verbatim}
+:param {
+  file_path_root: 'file:///',
+  file_0: 'speed_dating.csv'
+};
+
+CREATE CONSTRAINT `participant_id_unique` IF NOT EXISTS
+  FOR (p:Participant) REQUIRE p.Part_num IS UNIQUE;
+
+CREATE CONSTRAINT `date_rating_id_unique` IF NOT EXISTS
+  FOR (d:DateRating) REQUIRE d.date_rating_id IS UNIQUE;
+
+CREATE INDEX `followup_lookup` IF NOT EXISTS
+  FOR (f:FollowUp) ON (f.follow_id);
+\end{verbatim}
+
+-   Block 2 — Participant nodes. One node is created for each unique value of Part_num. Because DemAge and DemEthn are missing for approximately 55% of participants, the ON MATCH SET clause fills in those properties only when a non-empty value is encountered, avoiding overwriting a previously recorded value with a missing one.
+
+\begin{verbatim}
+LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
+WITH row WHERE NOT toInteger(trim(row.Part_num)) IS NULL
+CALL (row) {
+  MERGE (p:Participant {Part_num: toInteger(trim(row.Part_num))})
+  ON CREATE SET
+    p.sex_M1_F2 = toFloat(trim(row.sex_M1_F2)),
+    p.DemAge    = CASE WHEN trim(row.DemAge) <> ''
+                       THEN toFloat(trim(row.DemAge)) ELSE null END,
+    p.DemEthn   = CASE WHEN trim(row.DemEthn) <> ''
+                       THEN toInteger(trim(row.DemEthn)) ELSE null END
+  ON MATCH SET
+    p.DemAge    = CASE WHEN p.DemAge  IS NULL AND trim(row.DemAge)  <> ''
+                       THEN toFloat(trim(row.DemAge)) ELSE p.DemAge END,
+    p.DemEthn   = CASE WHEN p.DemEthn IS NULL AND trim(row.DemEthn) <> ''
+                       THEN toInteger(trim(row.DemEthn)) ELSE p.DemEthn END
+} IN TRANSACTIONS OF 10000 ROWS;
+\end{verbatim}
+
+Note that MatchID_clean is the Part_num of the partner.
+Both columns draw from the same population of participants, so all participants are stored under the single property Part_num regardless of the role they played in a given interaction.
+
+-   Block 3 — The DateRating node. This node represents each unique rater-partner pair. Because the IR variables were measured once at the speed-dating event but are repeated across all ten follow-up rows in the CSV, the WHERE clause restricts loading to Follow_clean = 1, which contains the original event-level ratings. The composite identifier date_rating_id concatenates Part_num and MatchID_clean and is used in subsequent blocks to match these nodes without ambiguity.
+
+\begin{verbatim}
+LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
+WITH row WHERE toInteger(trim(row.Follow_clean)) = 1
+CALL (row) {
+  MERGE (d:DateRating {
+    date_rating_id: toString(toInteger(trim(row.Part_num)))
+                  + '_'
+                  + toString(toInteger(trim(row.MatchID_clean)))
+  })
+  ON CREATE SET
+    d.Part_num        = toInteger(trim(row.Part_num)),
+    d.MatchID_clean   = toInteger(trim(row.MatchID_clean)),
+    d.IRLikedPartner  = CASE WHEN trim(row.IRLikedPartner) <> ''
+                             THEN toFloat(trim(row.IRLikedPartner)) ELSE null END,
+    d.IRSexAttract    = CASE WHEN trim(row.IRSexAttract)   <> ''
+                             THEN toFloat(trim(row.IRSexAttract))   ELSE null END,
+    d.IRCommon        = CASE WHEN trim(row.IRCommon)       <> ''
+                             THEN toFloat(trim(row.IRCommon))       ELSE null END,
+    d.IRSayYes        = CASE WHEN trim(row.IRSayYes)       <> ''
+                             THEN toFloat(trim(row.IRSayYes))       ELSE null END,
+    d.Yessing         = CASE WHEN trim(row.yessing)        <> ''
+                             THEN toInteger(trim(row.yessing))      ELSE null END,
+    d.Mutmatch        = CASE WHEN trim(row.mutmatch)       <> ''
+                             THEN toInteger(trim(row.mutmatch))     ELSE null END
+} IN TRANSACTIONS OF 10000 ROWS;
+\end{verbatim}
+
+-   Block 4 — The FollowUp node. This node represents the rater-partner-week triplet, but only for rows where at least one follow-up variable contains a non-missing value. This prevents the graph from being inflated by approximately 26,700 structurally empty nodes that correspond to pairs who did not interact after the speed-dating event. The absence of a FollowUp node is itself informative as it indicates that no follow-up interaction occurred, without requiring any numerical encoding such as NA.
+
+\begin{verbatim}
+LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
+WITH row
+WHERE (
+  trim(row.FURomInterest) <> '' OR trim(row.FUSexDesire)  <> '' OR
+  trim(row.FUCommitted)   <> '' OR trim(row.FUStatus)     <> '' OR
+  trim(row.FUEager)       <> ''
+)
+CALL (row) {
+  MERGE (f:FollowUp {
+    follow_id: toString(toInteger(trim(row.Part_num)))
+             + '_'
+             + toString(toInteger(trim(row.MatchID_clean)))
+             + '_'
+             + toString(toInteger(trim(row.Follow_clean)))
+  })
+  ON CREATE SET
+    f.Part_num      = toInteger(trim(row.Part_num)),
+    f.MatchID_clean = toInteger(trim(row.MatchID_clean)),
+    f.Follow_clean  = toInteger(trim(row.Follow_clean)),
+    f.FUStatus       = CASE WHEN trim(row.FUStatus)      <> ''
+                            THEN toFloat(trim(row.FUStatus))      ELSE null END,
+    f.FURomInterest  = CASE WHEN trim(row.FURomInterest) <> ''
+                            THEN toFloat(trim(row.FURomInterest)) ELSE null END,
+    f.FUSexDesire    = CASE WHEN trim(row.FUSexDesire)   <> ''
+                            THEN toFloat(trim(row.FUSexDesire))   ELSE null END,
+    f.FUCommitted    = CASE WHEN trim(row.FUCommitted)   <> ''
+                            THEN toFloat(trim(row.FUCommitted))   ELSE null END,
+    f.FUEager        = CASE WHEN trim(row.FUEager)       <> ''
+                            THEN toFloat(trim(row.FUEager))       ELSE null END
+} IN TRANSACTIONS OF 10000 ROWS;
+\end{verbatim}
+
+-   Block 5 — Relationships. This block creates the four directed relationships shown in Figure [1](#fig:F2). Each MATCH statement locates previously created nodes using the same identifiers defined in Blocks 2 through 4; MERGE then creates the relationship only if it does not already exist.
+
+\begin{verbatim}
+// HAD_DATE: Participant (rater) --> DateRating
+LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
+WITH row WHERE toInteger(trim(row.Follow_clean)) = 1
+CALL (row) {
+  MATCH (p:Participant {Part_num: toInteger(trim(row.Part_num))})
+  MATCH (d:DateRating  {date_rating_id:
+    toString(toInteger(trim(row.Part_num))) + '_' +
+    toString(toInteger(trim(row.MatchID_clean)))})
+  MERGE (p)-[:HAD_DATE]->(d)
+} IN TRANSACTIONS OF 10000 ROWS;
+
+// WITH: DateRating --> Participant (partner)
+LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
+WITH row WHERE toInteger(trim(row.Follow_clean)) = 1
+CALL (row) {
+  MATCH (d:DateRating {date_rating_id:
+    toString(toInteger(trim(row.Part_num))) + '_' +
+    toString(toInteger(trim(row.MatchID_clean)))})
+  MATCH (partner:Participant {Part_num: toInteger(trim(row.MatchID_clean))})
+  MERGE (d)-[:WITH]->(partner)
+} IN TRANSACTIONS OF 10000 ROWS;
+
+// FOLLOWED_UP: DateRating --> FollowUp
+LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
+WITH row
+WHERE (
+  trim(row.FURomInterest) <> '' OR trim(row.FUSexDesire)  <> '' OR
+  trim(row.FUCommitted)   <> '' OR trim(row.FUStatus)     <> '' OR
+  trim(row.FUEager)       <> ''
+)
+CALL (row) {
+  MATCH (d:DateRating {date_rating_id:
+    toString(toInteger(trim(row.Part_num))) + '_' +
+    toString(toInteger(trim(row.MatchID_clean)))})
+  MATCH (f:FollowUp {follow_id:
+    toString(toInteger(trim(row.Part_num))) + '_' +
+    toString(toInteger(trim(row.MatchID_clean))) + '_' +
+    toString(toInteger(trim(row.Follow_clean)))})
+  MERGE (d)-[:FOLLOWED_UP {week: toInteger(trim(row.Follow_clean))}]->(f)
+} IN TRANSACTIONS OF 10000 ROWS;
+
+// REPORTED_BY: FollowUp --> Participant (partner)
+LOAD CSV WITH HEADERS FROM ($file_path_root + $file_0) AS row
+WITH row
+WHERE (
+  trim(row.FURomInterest) <> '' OR trim(row.FUSexDesire)  <> '' OR
+  trim(row.FUCommitted)   <> '' OR trim(row.FUStatus)     <> '' OR
+  trim(row.FUEager)       <> ''
+)
+CALL (row) {
+  MATCH (f:FollowUp      {follow_id:
+    toString(toInteger(trim(row.Part_num))) + '_' +
+    toString(toInteger(trim(row.MatchID_clean))) + '_' +
+    toString(toInteger(trim(row.Follow_clean)))})
+  MATCH (partner:Participant {Part_num: toInteger(trim(row.MatchID_clean))})
+  MERGE (f)-[:REPORTED_BY]->(partner)
+} IN TRANSACTIONS OF 10000 ROWS;
+\end{verbatim}
+
+-   Block 6. Verification. After all five blocks have run without errors, the following queries confirm that the graph matches the intended schema. Each query should be run separately in Neo4j Browser. The expected output for each query is shown in Table 3.
+
+\begin{verbatim}
+// Query 1: Node counts by label
+MATCH (n)
+RETURN labels(n)[0] AS label, count(n) AS total
+ORDER BY label;
+
+// Query 2: Relationship counts by type
+MATCH ()-[r]->()
+RETURN type(r) AS relationship, count(r) AS total
+ORDER BY relationship;
+
+// Query 3: Confirm asymmetric ratings for the example pair in Section 2.1
+// Participant 1 rated Participant 116 → expect IRLikedPartner = 9
+MATCH (p:Participant {Part_num: 1})-[:HAD_DATE]->(d:DateRating)-[:WITH]
+      ->(partner:Participant {Part_num: 116})
+RETURN p.Part_num AS rater, partner.Part_num AS partner,
+       d.IRLikedPartner AS score;
+
+// Query 4: Visualize mutual-match dyads with its follow-up trajectory
+MATCH (p:Participant)-[r1:HAD_DATE]->(d:DateRating {Mutmatch: 1})
+      -[r2:FOLLOWED_UP]->(f:FollowUp)
+MATCH (d)-[r3:WITH]->(partner:Participant)
+RETURN p, r1, d, r2, f, r3, partner
+LIMIT 40;
+\end{verbatim}
+
+The result of the last query in block 6 should yield a subgraph like the one illustrated in Figure [3](#fig:F5), which makes explicit that some participants formed impressions of multiple partners.
+While this fact is substantively unsurprising, its methodological implications are less often confronted.
+Multiple impressions formed by the same rater, as well as impressions directed at the same partner, induce statistical dependence among observations that cannot be accommodated by models treating dyadic outcomes as conditionally independent without appropriate random effects.
+In dyadic data analysis, crossed random-effects models decompose rater and partner variance components [@Kenny2006], thereby addressing these primary sources of dependence.
+However, additional forms of structural dependence—such as similarity-based clustering or homophily—are not rendered visible by the data structure itself and must be explicitly specified by the analyst.
+The graph representation makes such dependence patterns structurally manifest prior to model fitting, shifting the burden of justification from whether dependence should be modeled to whether it can be safely omitted.
+
+```{r F5, echo=FALSE, fig.cap="Resulting subgraph showing a sample of dyads with mutual match and follow-ups", fig.align="center", out.height="180px", out.width="350px", fig.pos="H"}
+knitr::include_graphics("F6.png")
+```
+
+Of course, at the statistical analysis stage, researchers may employ network‑analytic models such as exponential random graph models to formally estimate and test specific dependence structures [@Lusher2013].
+However, such inferential choices presuppose that these structures have already been articulated and made available for scrutiny.
+The contribution of graph database representations lies precisely at this prior stage: they render sources of dependence visible as properties of the data structure itself, before any statistical model is selected.
+In this sense, graph database management does not replace statistical network models but constrains and informs them by making certain assumptions about dependence difficult to overlook.
+
+# Methodological Implications for Psychological Research
+
+The Speed-Dating tutorial presented in Section 4 illustrates four methodological advantages of labeled property graphs that extend beyond the specific dataset used here.
+This section develops each advantage as a general principle, situates it within the broader context of psychological research methods, and identifies its implications for future work.
+
+## Ontological Transparency and the Visibility of Perceptual Asymmetry
+
+A persistent challenge in dyadic research is that the asymmetric and subjective nature of interpersonal perception is difficult to preserve in rectangular data formats.
+In a tabular structure, the fact that participant 1's rating of participant 116 and participant 116's rating of participant 1 are two distinct perceptual events —not two measurements of a shared reality— is not encoded in the data structure itself.
+It must be reconstructed at the analysis stage through careful variable naming, documentation, and researcher memory.
+The labeled property graph makes this asymmetry structurally explicit: each DateRating node is directed from a specific rater to a specific partner via HAD_DATE and WITH edges, and the directions of those edges are not interchangeable.
+
+This structural commitment has a direct empirical consequence that is verifiable within the graph.
+Among the 84 mutual-match dyads in the Speed-Dating dataset for which both perspectives were recoverable, 70.2% showed non-zero asymmetry in IRLikedPartner —even among pairs who had explicitly chosen each other.
+The mean absolute difference in liking ratings within mutual-match dyads was 1.19 points on a 9-point scale (SD = 1.29), and 27.4% of dyads showed a difference of two or more points.
+These figures are not incidental: they constitute empirical evidence that the construct the graph represents as a directed relationship (subjective liking) behaves as a directed relationship in the data.
+
+The Cypher query that recovers this asymmetry traverses the same two-hop path that the schema encodes:
+
+\begin{verbatim}
+// Query A: Perceptual asymmetry in mutual-match dyads
+MATCH (a:Participant)-[:HAD_DATE]->(d1:DateRating {Mutmatch: 1})
+-[:WITH]->(b:Participant),
+      (b)-[:HAD_DATE]->(d2:DateRating {Mutmatch: 1})-[:WITH]->(a)
+WHERE a.Part_num < b.Part_num
+  AND d1.IRLikedPartner IS NOT NULL
+  AND d2.IRLikedPartner IS NOT NULL
+RETURN a.Part_num                                      AS rater_a,
+       b.Part_num                                      AS rater_b,
+       d1.IRLikedPartner                               AS a_liked_b,
+       d2.IRLikedPartner                               AS b_liked_a,
+       abs(d1.IRLikedPartner - d2.IRLikedPartner)      AS asymmetry
+ORDER BY asymmetry DESC;
+\end{verbatim}
+
+In a rectangular format, the same computation requires a self-join on the original table, filtering by mutmatch = 1 on both sides and using two different aliases for the same variable.
+The graph query traverses existing structure; the SQL query reconstructs structure that was never represented.
+This distinction, modest in computational terms, is consequential in epistemological ones: the graph makes the researcher encounter the asymmetry as a feature of the data model, not as a derived statistic.
+
+## Structural Missingness and the Preservation of Absent Entities
+
+Rectangular data formats handle missing observations in two ways: by inserting placeholder values (typically NA or 0) or by omitting rows entirely.
+Both approaches conflate structurally distinct situations.
+A participant who attended the speed-dating event but did not match with anyone is structurally different from a participant who matched but did not respond to follow-up surveys, which is in turn structurally different from a participant who responded to some follow-up surveys but not others.
+In the CSV file used by @Selterman2023, all three situations produce the same NA encoding in the FURomInterest column.
+
+The graph handles these situations by representing absence as a structural feature rather than a numerical encoding.
+A participant without a mutual match simply lacks any outgoing `FOLLOWED_UP` edges from their `DateRating` nodes.
+A participant who dropped out after week 3 has `FollowUp` nodes for weeks 1 through 3 and no nodes for weeks 4 through 10.
+The absence of a node is not an NA; it is the absence of an entity that did not exist in the study.
+This distinction becomes analytically meaningful when modeling longitudinal attrition.
+In the Speed-Dating dataset, 1,152 `FollowUp` nodes were created from 28,160 potential rater-partner-week combinations — a 95.9% structural absence rate.
+In a multilevel model estimated from the rectangular file, this attrition is handled implicitly by the full-information maximum likelihood estimator, which assumes that missingness is a function of observed variables.
+In the graph, the researcher is confronted directly with the network structure of attrition: which dyads dropped out early, which persisted across all ten weeks, and whether dropout is clustered within particular sessions or participants.
+These questions are answerable with graph traversal queries before any statistical model is specified.
+
+## Endogenous Network Structure as a Source of Unmodeled Dependence
+
+The most consequential methodological implication of the graph representation concerns a limitation of the original analysis by @Selterman2015 that becomes structurally visible only when the data are modeled as a graph.
+The speed-dating design generates at least three sources of statistical dependence among observations: a rater effect (some participants rate all their partners more generously or more harshly than average), a partner popularity effect (some partners receive consistently higher ratings from multiple independent raters), and a dyadic reciprocity effect (mutual-match pairs show correlated ratings).
+@Selterman2015 modeled the rater effect explicitly through random intercepts at the participant level, reporting intraclass correlations between .14 and .49 for Level 2 variance in their two-level models.
+However, the partner popularity effect and the dyadic reciprocity effect were not modeled, and in the rectangular format, neither is immediately visible as a structural feature of the data.
+
+In the labeled property graph, all three sources of dependence are structurally explicit and visually evident after some cypher queries such as the one that produced Figure [3](#fig:F5).
+The rater effect corresponds to the out-degree of each Participant node via `HAD_DATE` edges.
+The partner popularity effect corresponds to the in-degree of each Participant node via `WITH` edges — the number of distinct raters who evaluated a given partner.
+The dyadic reciprocity effect corresponds to closed two-paths between mutual-match `DateRating` nodes.
+None of these requires auxiliary computation; all three are properties of the graph that can be queried directly.
+The following query makes the partner popularity structure explicit:
+
+\begin{verbatim}
+// Query B: Partner popularity — in-degree and mean received rating
+MATCH (d:DateRating)-[:WITH]->(partner:Participant)
+WITH  partner,
+      count(d)              AS n_raters,
+      avg(d.IRLikedPartner) AS mean_received_rating,
+      stdev(d.IRLikedPartner) AS sd_received_rating
+RETURN partner.Part_num    AS partner_id,
+       n_raters,
+       round(mean_received_rating, 2) AS mean_received_rating,
+       round(sd_received_rating,  2)  AS sd_received_rating
+ORDER BY mean_received_rating DESC
+LIMIT 20;
+\end{verbatim}
+
+Applying this query to the Speed-Dating dataset reveals substantial variability in partner popularity.
+Partners were evaluated by between 1 and 20 raters (M = 7.45, SD = 3.35), and the standard deviation of mean received ratings across partners was 1.18 points on the 9-point IRLikedPartner scale — approximately 41% of the total variance in that variable.
+This figure is comparable in magnitude to the Level 2 ICC reported by [@Selterman2015] for the rater effect, suggesting that the partner popularity effect is of similar size to the rater effect that was modeled.
+In a model that omits random effects for the partner, this variance is absorbed into the residual, potentially attenuating standard errors and inflating the apparent precision of fixed-effect estimates.
+The appropriate statistical model for this design is a crossed random effects model in which both the rater and the partner contribute independent sources of variance [@Kenny2006].
+Fitting this model requires first exporting the relevant variables from the graph with a traversal query that crosses the three hierarchical levels (participant, date rating, and follow-up) in a single pass.
+
+\begin{verbatim}
+// Export data for multilevel model
+MATCH (p:Participant)-[:HAD_DATE]->(d:DateRating)-[:FOLLOWED_UP]->(f:FollowUp)
+WHERE d.IRLikedPartner IS NOT NULL
+  AND f.FURomInterest  IS NOT NULL
+RETURN p.Part_num        AS participant,
+       d.MatchID_clean   AS partner,
+       p.sex_M1_F2       AS sex,
+       d.IRLikedPartner  AS initial_attraction,
+       d.Mutmatch        AS mutual_match,
+       f.Follow_clean    AS week,
+       f.FURomInterest   AS romantic_interest
+ORDER BY participant, partner, week;
+\end{verbatim}
+
+Once exported from Neo4j Browser as a CSV file (or retrieved directly using the `neo4r` package [@Fay2019], the data require two preparatory steps before model fitting: constructing a pair-level identifier and grand-mean centering the time-varying predictors.
+
+\begin{verbatim}
+library(lme4)
+library(lmerTest)
+
+# Read exported data
+dating_graph <- read.csv("query_export.csv")
+
+# Pair identifier for the partner random effect
+dating_graph$pair_id <- paste(dating_graph$participant,
+                               dating_graph$partner, sep = "_")
+
+# Grand-mean center initial attraction and week
+dating_graph$initial_attraction_c <- scale(
+  dating_graph$initial_attraction, center = TRUE, scale = FALSE)
+dating_graph$week_c <- dating_graph$week - 1
+
+# Crossed random effects model
+# Random effect 1: rater (participant) — modeled by Selterman et al.
+# Random effect 2: partner — absent in Selterman et al.
+model_crossed <- lmer(
+  romantic_interest ~
+    initial_attraction_c +
+    week_c +
+    sex +
+    initial_attraction_c:week_c +
+    (1 | participant) +
+    (1 | pair_id),
+  data    = dating_graph,
+  REML    = TRUE,
+  control = lmerControl(optimizer = "bobyqa")
+)
+
+summary(model_crossed)
+\end{verbatim}
+
+Note that we also changed (1 | partner) to (1 | pair_id) in the model. The reason is that partner is the MatchID_clean of the partner, which in this dataset are numeric IDs that could clash with participant if lme4 treats them as belonging to the same ID space. Using pair_id (i.e., the concatenation of rater and partner) ensures that the random effect of the partner is unambiguous and not confused with the effect of the rater.
+
+It is important to be precise about what this observation implies for the conclusions of @Selterman2015. Their primary finding that the association between partner characteristics and romantic interest was not moderated by participant gender is unlikely to be reversed by the addition of partner random effects, because the gender moderation test operates at a level of the model that is largely orthogonal to the random effect structure. What the omission of partner random effects does affect is the precision of all fixed-effect estimates and the correct partitioning of variance across levels. These are not trivial concerns for a paper published in a replication context, where the accurate estimation of effect sizes is central to the inferential claims.
+
+The broader methodological point extends beyond any specific modeling decision, and connects back to the contrast with nomological nets developed in Section 3. The nomological net operates at the level of constructs and their theoretical connections; its empirical operationalization presupposes the general linear model, which treats observations as conditionally independent given the construct. That presupposition is not an oversight, it is appropriate for the class of phenomena that nomological nets were designed to represent.
+But round-robin speed-dating designs do not belong to that class.
+In such designs, observations are not conditionally independent: the impression that participant $i$ forms of participant $j$ is systematically related to the impressions that all other raters form of $j$, because $j$'s popularity is a structural property of the interaction system, not a property of any individual dyad.
+
+When behavioral phenomena are structurally endogenous in this sense, the choice of data representation determines which dependence structures are epistemically available to the researcher prior to model specification. A rectangular format encodes partner popularity as latent variance distributed across residuals, that is, it treats a structural property of the system as individual-level noise. A labeled property graph encodes it as the in-degree of a node type, a property that is immediately visible, queryable, and available for deliberate modeling decisions before a single line of statistical code is written. This is not merely a difference in storage efficiency. It is a difference in what the researcher is *required to confront* before analyzing the data. The rectangular format permits, and in practice produces, model specifications that treat structural dependence as error. The graph format makes that omission a deliberate choice rather than an oversight.
+
+A researcher who works exclusively with the rectangular file can, and in at least one prominent replication did, proceed to multilevel modeling without ever confronting the partner popularity effect as a structural feature of the data. A researcher who works with the graph cannot. This asymmetry of visibility has implications that generalize beyond the speed-dating context. In any psychological study where the unit of analysis is embedded in a relational structure, whether a dyad, a clinical network, a team, or an ecological momentary assessment stream, there exists variance that is simultaneously systematic at the structural level and invisible at the individual observation level. Rectangular formats distribute that variance across residuals by default, not by design. Graph databases make the decision to model or omit it an explicit methodological commitment, visible in the schema before any statistical model is selected. That shift, from structural dependence as implicit residual to structural dependence as explicit representational choice, is the epistemological contribution of labeled property graphs as a psychological method.
+
+## Schema Flexibility and Theoretical Evolution
+
+A recurring challenge in longitudinal psychological research is that theoretical models evolve during data collection, requiring modifications to the data structure that are costly in relational databases.
+Adding a new construct, revising the operationalization of an existing variable, or connecting data from a new source typically requires altering table schemas, updating foreign key constraints, and migrating existing data.
+These operations are not free of risk because they can introduce inconsistencies and might require careful documentation to remain reproducible for other researchers.
+
+In a labeled property graph, the schema is inherently additive.
+New node types, relationship types, and properties can be introduced without modifying the existing graph structure or invalidating existing queries.
+The Speed-Dating graph illustrates this property concretely.
+The current schema includes three node types and four relationship types.
+If a researcher wished to add session-level information — for example, distinguishing the Fall 2012 from the Spring 2013 cohort, or linking participants to the specific speed-dating event they attended — this would require adding a fourth node type (e.g., `Session`) and two new relationship types (`ATTENDED` and `PART_OF`) without altering any existing node or relationship.
+Existing queries about participants, date ratings, and follow-ups would continue to execute correctly on the modified graph.
+
+This flexibility is particularly relevant for psychological research because it aligns with how theoretical models actually develop: not by replacing prior representations, but by adding new constructs and connections to an existing framework.
+From a methodological perspective, graph database schema evolution is not an ad-hoc adjustment to the data structure but a representation of genuine scientific progress — a point that connects to broader arguments about the role of ontological commitments in psychological methodology [@burgos2025].
+
+# Conclusions and Limitations {#sec6}
+
+This tutorial has demonstrated that labeled property graphs constitute a methodological paradigm that differs from the rectangular data formats dominant in psychological research not merely in storage format, but in what relational structure is made visible, queryable, and epistemically available to the researcher.
+Using the Speed-Dating replication dataset [@Selterman2023] as a running example, we showed that the graph representation preserves perceptual asymmetry as a structural feature rather than a derived statistic, represents missingness as the absence of entities rather than the presence of placeholder values, makes endogenous network dependence structurally explicit in ways that rectangular formats conceal, and accommodates theoretical evolution without invalidating existing data structures.
+Each of these features was illustrated with Cypher queries and R code that are fully reproducible from the publicly available dataset.
+
+The most substantive finding of the tutorial is not about graph databases per se, but about what becomes visible when the Speed-Dating data are represented as a graph.
+The partner popularity effect — the systematic tendency for some partners to receive consistently higher ratings from multiple independent raters — accounts for approximately 41% of the total variance in `IRLikedPartner`, a magnitude comparable to the rater effect that @Selterman2015 modeled through random intercepts at the participant level.
+In the rectangular format, this dependence structure is latent and requires auxiliary computation to detect.
+In the graph, it is an immediate consequence of the schema: the in-degree of each `Participant` node via `WITH` edges.
+This does not invalidate the primary conclusions of @Selterman2015 — their finding about the absence of gender moderation is likely robust to the addition of partner random effects — but it illustrates the epistemological argument of the tutorial: graph databases shift the burden of justification from the decision to model a dependence structure to the decision to omit it.
+A researcher working exclusively with the rectangular file can proceed to multilevel modeling without confronting the partner popularity effect as a structural feature of the data; a researcher working with the graph cannot.
+
+## Limitations
+
+Our tutorial is not free of limitations and we anticipate two types of limitations (technical and methodological) that psychological researchers should consider for further works, not only in relation to the speed-dating study, but in other empirical works.
+
+**Technical limitations.** Cypher, the query language used throughout the tutorial, has a steeper learning curve than the R syntax familiar to most psychological researchers.
+Researchers with no prior exposure to graph databases will require time to develop fluency that the tutorial alone cannot substitute.
+The connection between Neo4j and R, while achievable through packages such as `neo4r`, adds an infrastructural step that rectangular workflows do not require, and for researchers whose analyses remain within a single software environment, this overhead may outweigh the representational advantages documented here.
+The query execution times reported in Section 5.4 — between 15 and 139 milliseconds — were obtained on a dataset of 4,364 nodes and 7,936 relationships, which is too small to constitute a meaningful performance benchmark.
+The scalability advantages of graph databases over relational formats become empirically demonstrable only at dataset sizes that substantially exceed those typical in psychological research, a regime that most behavioral researchers do not currently work in.
+
+**Methodological limitations.** The multilevel model specified in Section 5.3 was presented as a Cypher-to-R pipeline without reporting fitted coefficients.
+This was a deliberate choice: the goal of the tutorial was to demonstrate the analytic workflow and the modeling decisions that the graph makes visible, rather than to reproduce or extend the substantive findings of @Selterman2015.
+Researchers who wish to use the crossed random effects specification as a template for their own work should be aware that the Speed-Dating dataset, with 167 follow-up observations distributed across 47 rater-partner pairs, is underpowered for detecting small fixed effects and does not support random slope specifications without overfitting.
+The dataset is also a convenience sample of undergraduate students recruited with course credit, which limits the generalizability of any substantive conclusions about romantic attraction to the broader dating population — a limitation that @Selterman2015 discuss at length.
+More broadly, the representational advantages of graph databases documented here are most pronounced for data with genuinely hierarchical, dyadic, or longitudinal relational structure.
+For datasets that are tidy in the sense of @Wickham2023 (i.e., where one observation per row is the natural unit of analysis) the overhead of a graph database is unlikely to be justified by the benefits.
+In those cases, however, employing relational databases as illustrated by @soto2025 might reflect a prudent choice.
+
+## Directions for Future Work
+
+Three directions seem particularly promising for extending the methodological agenda of this tutorial.
+
+First, the integration between graph databases and R deserves systematic development.
+The `neo4r` package [@Fay2019] provides a functional bridge, but a more seamless workflow — analogous to the integration between the `tidyverse` and SQL databases through `dbplyr` — would substantially lower the barrier to adoption for psychological researchers and enable the kind of iterative graph-query-to-model workflow that the tutorial describes.
+
+Second, the Social Relations Model [@Kenny2006] and its extensions provide a natural statistical framework for the crossed random effects structure that the graph makes visible.
+The combination of graph database representations with dyadic data analysis methods has not received systematic methodological treatment, and the present tutorial suggests that the two frameworks are complementary: the graph identifies which dependence structures exist in the data, and dyadic analysis methods provide the statistical tools to estimate them.
+
+Third, knowledge graphs — which extend labeled property graphs with formal ontologies and inference rules — represent a more ambitious application of graph database principles to psychological theory [@Barrasa2023].
+The nomological nets that @cronbach1955 proposed as the foundation of construct validity bear a structural resemblance to knowledge graphs, and the formal relationship between these two paradigms has not been systematically examined.
+Developing that connection could position graph databases not only as a data management tool but as a framework for the formal representation of psychological theory itself.
+
+Graph databases will not replace rectangular formats in psychological research, nor should they.
+For the large class of studies in which observations are independent, variables are well-defined, and relational structure is simple, the tabular paradigm remains the most efficient and well-supported choice.
+The contribution of this tutorial is more specific: for the growing class of psychological phenomena that are inherently relational — dyadic, longitudinal, multilevel, or network-structured — the graph database paradigm offers representational commitments that make methodological assumptions explicit, structural dependencies visible, and relational queries expressible without the intermediate step of reconstructing structure that was never preserved.
 
 \backmatter

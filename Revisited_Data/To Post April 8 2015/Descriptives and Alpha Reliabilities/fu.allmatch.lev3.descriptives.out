@@ -1,0 +1,1417 @@
+Mplus VERSION 7.11
+MUTHEN & MUTHEN
+07/23/2014   3:10 PM
+
+INPUT INSTRUCTIONS
+
+    TITLE: Level 2 Descriptives
+
+    DATA:
+    FILE IS
+  speed.dating.mplus.10.dat;
+
+    VARIABLE: NAMES ARE Part_num MatchID_clean Follow_clean
+    IRLikedPartner IRSayYes IRSexAttract
+      IRThinkCareer IRThinkAmbitious IRThinkPhys
+      IRThinkHot IRThinkFun IRThinkResponsive
+      IRThinkDependable IRThinkFriendly IRCommon
+      IRPersonality IRConnection yessing mutmatch PMexcited
+      PMSelfinit PMMatchinit FUEager FUInitiate FUEnjoy
+      FUSexDesire FUSoulMate FURomInterest FUOnlyWith
+      FUMind FUOneNight FUCasual FUSerious FUCommitted
+      FUExtentPhys FUExtentCareer FUExtentAmbitious
+      FUExtentHot FUExtentFun FUExtentRespons
+      FUExtentFriendly DemAge DemEthn FUPhysContact
+      FUInitiatePhys FUEnjoyContact FUContactBad
+      IRpatt IRepro IRpers IRrdes IRchem FUpasn FUpatt FUepro
+      FUpers FUStatus sex_M1_F2;
+
+  USEVARIABLES ARE Part_num MatchID_clean
+  FUEager
+  FUpatt FUepro FUpers;
+
+  CLUSTER = Part_num MatchID_clean;
+
+  MISSING ARE ALL (-999);
+
+   ANALYSIS:
+  TYPE=THREELEVEL BASIC;
+  ITERATIONS = 100000;
+
+  OUTPUT: SAMPSTAT STDYX;
+
+
+
+*** WARNING
+  Clusters for MATCHID_CLEAN with the same IDs have been found in different clusters
+  for PART_NUM.  These clusters are assumed to be different because clusters for
+  MATCHID_CLEAN are not allowed to appear in more than one cluster for PART_NUM.
+*** WARNING
+  Data set contains cases with missing on all variables.
+  These cases were not included in the analysis.
+  Number of cases with missing on all variables:  27006
+   2 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+Level 2 Descriptives
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        1154
+
+Number of dependent variables                                    4
+Number of independent variables                                  0
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   FUEAGER     FUPATT      FUEPRO      FUPERS
+
+Variables with special functions
+
+  Cluster variables     PART_NUM  MATCHID_
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Maximum number of iterations                                100000
+Convergence criterion                                    0.100D-05
+Maximum number of EM iterations                                500
+Convergence criteria for the EM algorithm
+  Loglikelihood change                                   0.100D-02
+  Relative loglikelihood change                          0.100D-05
+  Derivative                                             0.100D-03
+Minimum variance                                         0.100D-03
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-02
+Optimization algorithm                                         EMA
+
+Input data file(s)
+  speed.dating.mplus.10.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of MATCHID_CLEAN clusters     247
+     Number of PART_NUM clusters          144
+
+     PART_NUM Cluster 2
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      27673
+
+     PART_NUM Cluster 22
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      223689
+
+     PART_NUM Cluster 116
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      1166124
+
+     PART_NUM Cluster 174
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      1745019
+
+     PART_NUM Cluster 235
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+           10      2352290
+
+     PART_NUM Cluster 339
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            9      3398071
+
+     PART_NUM Cluster 378
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      3781280
+
+     PART_NUM Cluster 387
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      3875685
+
+     PART_NUM Cluster 457
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      4576628 4578310 4578565
+
+     PART_NUM Cluster 513
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      5134394
+
+     PART_NUM Cluster 538
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      5381570 5385512
+
+     PART_NUM Cluster 596
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      5963305
+
+     PART_NUM Cluster 698
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            7      6987673
+
+     PART_NUM Cluster 745
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      7451515 7451636
+
+     PART_NUM Cluster 789
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            6      7895325
+
+     PART_NUM Cluster 807
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            7      8074287
+
+     PART_NUM Cluster 812
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+           10      8120378
+
+     PART_NUM Cluster 894
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      8947695 8948591
+
+     PART_NUM Cluster 1013
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      10130422
+            3      10135587
+            5      10134756
+
+     PART_NUM Cluster 1083
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            7      10830482 10832265 10833932
+
+     PART_NUM Cluster 1105
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      11054941
+
+     PART_NUM Cluster 1188
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      11886083
+
+     PART_NUM Cluster 1288
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            6      12883350 12886637
+
+     PART_NUM Cluster 1570
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      15700538 15704541 15709335
+
+     PART_NUM Cluster 1601
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            8      16010682 16011789 16016733
+
+     PART_NUM Cluster 1636
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      16360745 16369413
+
+     PART_NUM Cluster 1731
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      17317673
+
+     PART_NUM Cluster 1789
+
+       Number of MATCHID_CLEAN clusters     4
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            9      17891601 17892446 17893412 17893832
+
+     PART_NUM Cluster 2091
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      20917666
+
+     PART_NUM Cluster 2265
+
+       Number of MATCHID_CLEAN clusters     4
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            9      22651083 22653859 22656733 22659386
+
+     PART_NUM Cluster 2290
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            6      22900235
+
+     PART_NUM Cluster 2294
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      22942743 22944346
+
+     PART_NUM Cluster 2406
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      24064347
+
+     PART_NUM Cluster 2446
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      24466231
+            7      24461789
+
+     PART_NUM Cluster 2467
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            8      24675685
+
+     PART_NUM Cluster 2477
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      24774702 24776337
+
+     PART_NUM Cluster 2623
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      26234756
+
+     PART_NUM Cluster 2841
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      28417089 28417568
+
+     PART_NUM Cluster 2883
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            9      28831083
+
+     PART_NUM Cluster 2897
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      28975015
+
+     PART_NUM Cluster 3071
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      30717666
+           10      30717725
+
+     PART_NUM Cluster 3088
+
+       Number of MATCHID_CLEAN clusters     7
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      30885699 30886460
+            3      30880789 30886776
+            7      30883885 30886368 30888863
+
+     PART_NUM Cluster 3305
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      33050596
+
+     PART_NUM Cluster 3483
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      34836865
+
+     PART_NUM Cluster 3545
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      35457673
+
+     PART_NUM Cluster 3608
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            9      36086366
+
+     PART_NUM Cluster 3671
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            7      36716883
+
+     PART_NUM Cluster 3689
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      36891717
+
+     PART_NUM Cluster 3719
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      37194432
+
+     PART_NUM Cluster 3859
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      38592265
+            4      38593932
+
+     PART_NUM Cluster 4267
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      42672883
+
+     PART_NUM Cluster 4325
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      43254422
+
+     PART_NUM Cluster 4332
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            8      43328488
+
+     PART_NUM Cluster 4346
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      43464818
+
+     PART_NUM Cluster 4347
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      43478429
+
+     PART_NUM Cluster 4394
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            8      43940513 43948591
+
+     PART_NUM Cluster 4422
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      44223719 44226493
+
+     PART_NUM Cluster 4437
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      44379719
+
+     PART_NUM Cluster 4462
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            6      44629798
+
+     PART_NUM Cluster 4541
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      45411570
+
+     PART_NUM Cluster 4562
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      45624523
+
+     PART_NUM Cluster 4702
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            8      47022477
+
+     PART_NUM Cluster 4783
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      47832841 47839945
+
+     PART_NUM Cluster 4823
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      48233885 48236460 48236776
+
+     PART_NUM Cluster 4951
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      49519150
+
+     PART_NUM Cluster 5015
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            8      50152897
+
+     PART_NUM Cluster 5017
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      50176366
+
+     PART_NUM Cluster 5019
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      50190174 50196883 50198644
+
+     PART_NUM Cluster 5053
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+           10      50539766
+
+     PART_NUM Cluster 5267
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      52676460 52676776
+
+     PART_NUM Cluster 5325
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            6      53250789 53256460 53256776
+
+     PART_NUM Cluster 5366
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      53668429 53669106
+
+     PART_NUM Cluster 5393
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      53931731
+
+     PART_NUM Cluster 5512
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            6      55120538 55126178
+            9      55129335
+
+     PART_NUM Cluster 5541
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      55414346
+
+     PART_NUM Cluster 5559
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            7      55596703 55599626
+
+     PART_NUM Cluster 5655
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      56550435 56558488
+
+     PART_NUM Cluster 5685
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      56850387
+
+     PART_NUM Cluster 5805
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      58058765
+            5      58052176
+
+     PART_NUM Cluster 5813
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      58130807
+
+     PART_NUM Cluster 5842
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      58428310
+
+     PART_NUM Cluster 6083
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      60831188 60839595
+
+     PART_NUM Cluster 6124
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      61246443
+            8      61240116
+
+     PART_NUM Cluster 6178
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      61785512
+
+     PART_NUM Cluster 6231
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            8      62313412
+
+     PART_NUM Cluster 6337
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            8      63371288 63372477 63379672
+
+     PART_NUM Cluster 6368
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      63687784
+           10      63683088
+
+     PART_NUM Cluster 6443
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      64436124
+           10      64430001
+
+     PART_NUM Cluster 6469
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      64698671
+
+     PART_NUM Cluster 6493
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      64936770
+           10      64934422 64937039
+
+     PART_NUM Cluster 6636
+
+       Number of MATCHID_CLEAN clusters     4
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      66365017 66368488
+            9      66363608 66366258
+
+     PART_NUM Cluster 6703
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      67035559 67037263
+
+     PART_NUM Cluster 6733
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            9      67331601 67332265 67333412
+
+     PART_NUM Cluster 6770
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      67706493
+
+     PART_NUM Cluster 6775
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      67759150
+
+     PART_NUM Cluster 6776
+
+       Number of MATCHID_CLEAN clusters     7
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      67763088 67764823 67765267 67765325 67767784 67767915
+                   67769519
+
+     PART_NUM Cluster 6839
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      68392265
+            4      68399766
+
+     PART_NUM Cluster 6865
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      68653483
+
+     PART_NUM Cluster 7039
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            8      70394325 70396493
+
+     PART_NUM Cluster 7089
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            6      70892841
+
+     PART_NUM Cluster 7105
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      71058584
+
+     PART_NUM Cluster 7142
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+           10      71426443
+
+     PART_NUM Cluster 7494
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      74940682
+
+     PART_NUM Cluster 7568
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      75682841
+
+     PART_NUM Cluster 7623
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      76236703
+            2      76238584
+
+     PART_NUM Cluster 7666
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      76662091
+           10      76663071
+
+     PART_NUM Cluster 7695
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      76950894
+
+     PART_NUM Cluster 7725
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            9      77253071
+
+     PART_NUM Cluster 7784
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      77843885 77846776
+            4      77846368
+
+     PART_NUM Cluster 7803
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      78038621 78039557
+
+     PART_NUM Cluster 7886
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      78868584
+
+     PART_NUM Cluster 7915
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      79156460 79156776
+
+     PART_NUM Cluster 7970
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      79701636 79707031
+
+     PART_NUM Cluster 8310
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      83105842
+
+     PART_NUM Cluster 8360
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      83603008
+
+     PART_NUM Cluster 8381
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            7      83816454
+
+     PART_NUM Cluster 8429
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      84291515 84294347 84295366
+
+     PART_NUM Cluster 8488
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      84885565 84886366
+            2      84889719
+
+     PART_NUM Cluster 8526
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            9      85266366
+
+     PART_NUM Cluster 8549
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      85498488
+
+     PART_NUM Cluster 8565
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      85650457 85655948
+
+     PART_NUM Cluster 8584
+
+       Number of MATCHID_CLEAN clusters     4
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            6      85845993 85847105 85847623 85847886
+
+     PART_NUM Cluster 8591
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      85910894 85914394
+
+     PART_NUM Cluster 8621
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      86210894 86217803
+            9      86216883
+
+     PART_NUM Cluster 8644
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      86445019
+            9      86449557
+
+     PART_NUM Cluster 8765
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      87655805 87659413
+
+     PART_NUM Cluster 8787
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      87873935 87876611
+
+     PART_NUM Cluster 8865
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      88658344
+
+     PART_NUM Cluster 9046
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            1      90469150
+
+     PART_NUM Cluster 9067
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      90673428
+
+     PART_NUM Cluster 9106
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            4      91064347 91068865
+
+     PART_NUM Cluster 9150
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      91500955 91504951 91506775
+
+     PART_NUM Cluster 9179
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      91794432
+            6      91798488
+
+     PART_NUM Cluster 9335
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      93351570 93355512
+
+     PART_NUM Cluster 9413
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      94131636 94138765
+
+     PART_NUM Cluster 9426
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            5      94268865
+
+     PART_NUM Cluster 9519
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            2      95196460 95196776
+
+     PART_NUM Cluster 9557
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      95577803
+            4      95578644
+
+     PART_NUM Cluster 9595
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      95956083
+
+     PART_NUM Cluster 9626
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+           10      96265559
+
+     PART_NUM Cluster 9687
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      96871627
+
+     PART_NUM Cluster 9766
+
+       Number of MATCHID_CLEAN clusters     3
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            9      97662562 97665053 97669386
+
+     PART_NUM Cluster 9945
+
+       Number of MATCHID_CLEAN clusters     1
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+            3      99454783
+
+     PART_NUM Cluster 9999
+
+       Number of MATCHID_CLEAN clusters     2
+
+         Size (s)    MATCHID_CLEAN Cluster ID with Size s
+
+           10      99992405 99995565
+
+
+     Average cluster size for MATCHID_CLEAN level        4.672
+
+     Estimated Intraclass Correlations for the Y Variables for MATCHID_CLEAN level
+
+                Intraclass              Intraclass              Intraclass
+     Variable  Correlation   Variable  Correlation   Variable  Correlation
+
+     FUEAGER      0.267      FUPATT       0.341      FUEPRO       0.240
+     FUPERS       0.135
+
+     Average cluster size for PART_NUM level        8.014
+
+     Estimated Intraclass Correlations for the Y Variables for PART_NUM level
+
+                Intraclass              Intraclass              Intraclass
+     Variable  Correlation   Variable  Correlation   Variable  Correlation
+
+     FUEAGER      0.306      FUPATT       0.434      FUEPRO       0.394
+     FUPERS       0.412
+
+
+SUMMARY OF MISSING DATA PATTERNS
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+
+
+
+RESULTS FOR BASIC ANALYSIS
+
+NOTE:  The sample statistics for within and between refer to the
+       maximum-likelihood estimated within and between covariance
+       matrices, respectively.
+
+
+     ESTIMATED SAMPLE STATISTICS FOR WITHIN
+
+
+           Means
+              FUEAGER       FUPATT        FUEPRO        FUPERS
+              ________      ________      ________      ________
+ 1              0.000         0.000         0.000         0.000
+
+
+           Covariances
+              FUEAGER       FUPATT        FUEPRO        FUPERS
+              ________      ________      ________      ________
+ FUEAGER        0.106
+ FUPATT         0.100         0.825
+ FUEPRO         0.051         0.353         1.006
+ FUPERS         0.114         0.574         0.770         1.309
+
+
+           Correlations
+              FUEAGER       FUPATT        FUEPRO        FUPERS
+              ________      ________      ________      ________
+ FUEAGER        1.000
+ FUPATT         0.339         1.000
+ FUEPRO         0.157         0.388         1.000
+ FUPERS         0.307         0.552         0.671         1.000
+
+
+     ESTIMATED SAMPLE STATISTICS FOR BETWEEN MATCHID_CLEAN
+
+
+           Means
+              FUEAGER       FUPATT        FUEPRO        FUPERS
+              ________      ________      ________      ________
+ 1              0.000         0.000         0.000         0.000
+
+
+           Covariances
+              FUEAGER       FUPATT        FUEPRO        FUPERS
+              ________      ________      ________      ________
+ FUEAGER        0.066
+ FUPATT         0.179         1.247
+ FUEPRO         0.086         0.503         0.658
+ FUPERS         0.087         0.444         0.289         0.390
+
+
+           Correlations
+              FUEAGER       FUPATT        FUEPRO        FUPERS
+              ________      ________      ________      ________
+ FUEAGER        1.000
+ FUPATT         0.623         1.000
+ FUEPRO         0.413         0.555         1.000
+ FUPERS         0.543         0.637         0.570         1.000
+
+
+     ESTIMATED SAMPLE STATISTICS FOR BETWEEN PART_NUM
+
+
+           Means
+              FUEAGER       FUPATT        FUEPRO        FUPERS
+              ________      ________      ________      ________
+ 1              0.446         5.583         6.211         6.537
+
+
+           Covariances
+              FUEAGER       FUPATT        FUEPRO        FUPERS
+              ________      ________      ________      ________
+ FUEAGER        0.076
+ FUPATT         0.125         1.588
+ FUEPRO         0.119         0.540         1.080
+ FUPERS         0.137         0.714         0.915         1.192
+
+
+           Correlations
+              FUEAGER       FUPATT        FUEPRO        FUPERS
+              ________      ________      ________      ________
+ FUEAGER        1.000
+ FUPATT         0.360         1.000
+ FUEPRO         0.416         0.412         1.000
+ FUPERS         0.456         0.519         0.806         1.000
+
+
+     MAXIMUM LOG-LIKELIHOOD VALUE FOR THE UNRESTRICTED (H1) MODEL IS -5482.588
+
+
+     Beginning Time:  15:10:49
+        Ending Time:  15:10:50
+       Elapsed Time:  00:00:01
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2013 Muthen & Muthen

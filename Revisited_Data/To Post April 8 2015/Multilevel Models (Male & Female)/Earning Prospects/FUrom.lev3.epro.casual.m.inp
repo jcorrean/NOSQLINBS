@@ -1,0 +1,44 @@
+ TITLE: Earning Prospects predicting FU Casual (Male Only)
+
+  DATA:
+  FILE IS 
+speed.dating.mplus.10.dat;
+
+  VARIABLE: NAMES ARE Part_num MatchID_clean Follow_clean 
+  IRLikedPartner IRSayYes IRSexAttract 
+    IRThinkCareer IRThinkAmbitious IRThinkPhys 
+    IRThinkHot IRThinkFun IRThinkResponsive 
+    IRThinkDependable IRThinkFriendly IRCommon 
+    IRPersonality IRConnection yessing mutmatch PMexcited 
+    PMSelfinit PMMatchinit FUEager FUInitiate FUEnjoy 
+    FUSexDesire FUSoulMate FURomInterest FUOnlyWith 
+    FUMind FUOneNight FUCasual FUSerious FUCommitted 
+    FUExtentPhys FUExtentCareer FUExtentAmbitious 
+    FUExtentHot FUExtentFun FUExtentRespons 
+    FUExtentFriendly DemAge DemEthn FUPhysContact 
+    FUInitiatePhys FUEnjoyContact FUContactBad 
+    IRpatt IRepro IRpers IRrdes IRchem FUpasn FUpatt FUepro 
+    FUpers FUStatus sex_M1_F2;
+
+    CLUSTER =Part_num MatchID_clean;
+    WITHIN = FUepro;
+
+
+USEVARIABLES ARE Part_num MatchID_clean FUepro FUCasual;
+
+!When FUStatus = 0, all FU variables = 0. Removed to avoid bias. Presumed data-entry error
+USEOBS FUStatus NE 0 AND sex_M1_F2 EQ -.5;
+
+MISSING ARE ALL (-999);
+
+ ANALYSIS:
+TYPE=THREELEVEL;
+ESTIMATOR = MLR;
+
+MODEL:
+%WITHIN%
+FUCasual ON FUepro;
+
+OUTPUT: SAMPSTAT STDYX;
+
+

@@ -1,0 +1,328 @@
+Mplus VERSION 7.11
+MUTHEN & MUTHEN
+07/23/2014   3:10 PM
+
+INPUT INSTRUCTIONS
+
+   TITLE: Level 2 Descriptives
+
+     DATA:
+    FILE IS
+  speed.dating.mplus.10.dat;
+
+    VARIABLE: NAMES ARE Part_num MatchID_clean Follow_clean
+    IRLikedPartner IRSayYes IRSexAttract
+      IRThinkCareer IRThinkAmbitious IRThinkPhys
+      IRThinkHot IRThinkFun IRThinkResponsive
+      IRThinkDependable IRThinkFriendly IRCommon
+      IRPersonality IRConnection yessing mutmatch PMexcited
+      PMSelfinit PMMatchinit FUEager FUInitiate FUEnjoy
+      FUSexDesire FUSoulMate FURomInterest FUOnlyWith
+      FUMind FUOneNight FUCasual FUSerious FUCommitted
+      FUExtentPhys FUExtentCareer FUExtentAmbitious
+      FUExtentHot FUExtentFun FUExtentRespons
+      FUExtentFriendly DemAge DemEthn FUPhysContact
+      FUInitiatePhys FUEnjoyContact FUContactBad
+      IRpatt IRepro IRpers IRrdes IRchem FUpasn FUpatt FUepro
+      FUpers FUStatus sex_M1_F2;
+
+      CLUSTER =Part_num;
+
+  USEVARIABLES ARE Part_num IRpatt IRepro IRpers
+      IRrdes IRchem yessing;
+
+
+
+   USEOBS Follow_clean EQ 1;
+
+  CLUSTER = Part_num;
+  MISSING ARE ALL (-999);
+
+   ANALYSIS:
+  TYPE=TWOLEVEL BASIC;
+
+  OUTPUT: SAMPSTAT STDYX;
+
+
+
+
+
+*** WARNING
+  Data set contains cases with missing on all variables.
+  These cases were not included in the analysis.
+  Number of cases with missing on all variables:  8
+   1 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+Level 2 Descriptives
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        2808
+
+Number of dependent variables                                    6
+Number of independent variables                                  0
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   IRPATT      IREPRO      IRPERS      IRRDES      IRCHEM      YESSING
+
+Variables with special functions
+
+  Cluster variable      PART_NUM
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Maximum number of iterations                                   100
+Convergence criterion                                    0.100D-05
+Maximum number of EM iterations                                500
+Convergence criteria for the EM algorithm
+  Loglikelihood change                                   0.100D-02
+  Relative loglikelihood change                          0.100D-05
+  Derivative                                             0.100D-03
+Minimum variance                                         0.100D-03
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization algorithm                                         EMA
+
+Input data file(s)
+  speed.dating.mplus.10.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns            13
+     Number of clusters                        307
+
+       Size (s)    Cluster ID with Size s
+
+          2        6839 8122
+          6        807
+          7        384 543 577 2 812 971 1105 1271 1690 1732 1818 1966
+                   2128 2160 2294 2453 2743 2841 3008 3213 3594 3719 3887
+                   3893 3894 3993 4201 4231 4298 4346 4495 4647 4745 4783
+                   4818 4854 4953 5321 5541 5559 5660 5993 6460 6469 6703
+                   22 6886 7089 7188 7529 7568 7623 7673 7784 7859 7881
+                   7886 8050 378 8360 8584 8671 8787 9260 9322 9626 9945
+          8        3661 5325 5393 3689 174 5656 3885 5699 5813 5842 5964
+                   414 6211 6349 6368 457 484 6493 6611 6628 6672 3986
+                   6770 6776 2372 4132 7039 7057 339 147 7454 4287 1717
+                   4325 2897 7719 4422 4487 7865 1731 4523 7915 7954 4562
+                   8112 8117 3088 8266 8310 596 8494 8565 3305 3545 8688
+                   4823 8863 8953 698 9278 3653 9519 9595 5015 9687 9868
+                   5267
+          9        4161 4838 6454 1374 4951 4220 1601 5165 8071 1627 4296
+                   682 8212 6775 2382 134 8381 2562 6953 5587 2623 1013
+                   1083 7232 7403 9046 9150 7412 1789 789 5871 3085 7633
+                   1 3185 7744
+         10        3932 1636 5366 7433 680 7494 2706 387 7618 1726 2883
+                   7666 1045 5685 4267 5805 7806 116 745 1188 544 1288
+                   6083 7970 7985 6124 4347 6231 6337 3256 4462 6443 173
+                   8344 3350 3479 8429 2176 2265 4702 1536 482 8765 6733
+                   1614 8865 2406 3720 9067 9106 9133 3859 2446 888 7031
+                   9413 9426 9452 2467 9557 5053 9620 2477 9644 9672 7105
+                   9766 9798 7142 3910
+         11        1570 3483 894 235 4541 8591 8621 8644 5512 4144 513
+                   7695 8858 4650 7725 3071 7768 3671 7803 4769 3082 5740
+                   6865 2091 9335 1014 7932 534 1375 1515 2290 538 5017
+                   6178 7229 5019 5021 4394 3412 5255
+         12        1099
+         13        4221 5655 42 9179 9188 5228 8549 2869 6636 4332 3560
+                   5746
+         14        332 3608 8488 6056 8526 4561 4705 4437 4765 9999
+         21        3428
+
+     Average cluster size        9.147
+
+     Estimated Intraclass Correlations for the Y Variables
+
+                Intraclass              Intraclass              Intraclass
+     Variable  Correlation   Variable  Correlation   Variable  Correlation
+
+     IRPATT       0.376      IREPRO       0.279      IRPERS       0.367
+     IRRDES       0.313      IRCHEM       0.267      YESSING      0.141
+
+
+
+SUMMARY OF MISSING DATA PATTERNS
+
+
+     MISSING DATA PATTERNS (x = not missing)
+
+           1  2  3  4  5  6  7  8  9 10 11 12 13
+ IRPATT    x     x  x        x  x        x     x
+ IREPRO    x     x           x        x  x
+ IRPERS    x     x              x  x  x  x
+ IRRDES    x     x  x  x  x  x  x  x  x     x  x
+ IRCHEM    x     x  x     x  x  x  x  x     x  x
+ YESSING   x  x     x  x  x  x  x  x  x  x
+
+
+     MISSING DATA PATTERN FREQUENCIES
+
+    Pattern   Frequency     Pattern   Frequency     Pattern   Frequency
+          1        2486           6          54          11           4
+          2          41           7          12          12           2
+          3         176           8          11          13           1
+          4          12           9           3
+          5           2          10           4
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              IRPATT        IREPRO        IRPERS        IRRDES        IRCHEM
+              ________      ________      ________      ________      ________
+ IRPATT         0.962
+ IREPRO         0.954         0.955
+ IRPERS         0.953         0.951         0.956
+ IRRDES         0.961         0.954         0.954         0.984
+ IRCHEM         0.961         0.954         0.954         0.983         0.983
+ YESSING        0.899         0.892         0.893         0.920         0.920
+
+
+           Covariance Coverage
+              YESSING
+              ________
+ YESSING        0.936
+
+
+
+
+
+RESULTS FOR BASIC ANALYSIS
+
+NOTE:  The sample statistics for within and between refer to the
+       maximum-likelihood estimated within and between covariance
+       matrices, respectively.
+
+
+     ESTIMATED SAMPLE STATISTICS FOR WITHIN
+
+
+           Means
+              IRPATT        IREPRO        IRPERS        IRRDES        IRCHEM
+              ________      ________      ________      ________      ________
+ 1              0.000         0.000         0.000         0.000         0.000
+
+
+           Means
+              YESSING
+              ________
+ 1              0.000
+
+
+           Covariances
+              IRPATT        IREPRO        IRPERS        IRRDES        IRCHEM
+              ________      ________      ________      ________      ________
+ IRPATT         3.253
+ IREPRO         0.553         2.361
+ IRPERS         0.840         0.766         1.478
+ IRRDES         2.248         0.637         1.094         2.482
+ IRCHEM         1.590         0.723         1.181         1.784         2.458
+ YESSING        0.339         0.097         0.151         0.326         0.261
+
+
+           Covariances
+              YESSING
+              ________
+ YESSING        0.173
+
+
+           Correlations
+              IRPATT        IREPRO        IRPERS        IRRDES        IRCHEM
+              ________      ________      ________      ________      ________
+ IRPATT         1.000
+ IREPRO         0.199         1.000
+ IRPERS         0.383         0.410         1.000
+ IRRDES         0.791         0.263         0.571         1.000
+ IRCHEM         0.562         0.300         0.620         0.722         1.000
+ YESSING        0.453         0.151         0.300         0.498         0.401
+
+
+           Correlations
+              YESSING
+              ________
+ YESSING        1.000
+
+
+     ESTIMATED SAMPLE STATISTICS FOR BETWEEN
+
+
+           Means
+              IRPATT        IREPRO        IRPERS        IRRDES        IRCHEM
+              ________      ________      ________      ________      ________
+ 1              4.766         6.519         6.579         5.103         4.897
+
+
+           Means
+              YESSING
+              ________
+ 1              0.278
+
+
+           Covariances
+              IRPATT        IREPRO        IRPERS        IRRDES        IRCHEM
+              ________      ________      ________      ________      ________
+ IRPATT         1.957
+ IREPRO         0.238         0.913
+ IRPERS         0.286         0.779         0.858
+ IRRDES         0.974         0.576         0.635         1.129
+ IRCHEM         0.960         0.399         0.481         0.745         0.893
+ YESSING        0.104         0.029         0.029         0.081         0.062
+
+
+           Covariances
+              YESSING
+              ________
+ YESSING        0.028
+
+
+           Correlations
+              IRPATT        IREPRO        IRPERS        IRRDES        IRCHEM
+              ________      ________      ________      ________      ________
+ IRPATT         1.000
+ IREPRO         0.178         1.000
+ IRPERS         0.221         0.881         1.000
+ IRRDES         0.656         0.567         0.646         1.000
+ IRCHEM         0.726         0.441         0.550         0.742         1.000
+ YESSING        0.442         0.179         0.184         0.453         0.387
+
+
+           Correlations
+              YESSING
+              ________
+ YESSING        1.000
+
+
+     MAXIMUM LOG-LIKELIHOOD VALUE FOR THE UNRESTRICTED (H1) MODEL IS -23989.938
+
+
+     Beginning Time:  15:10:54
+        Ending Time:  15:10:55
+       Elapsed Time:  00:00:01
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2013 Muthen & Muthen
