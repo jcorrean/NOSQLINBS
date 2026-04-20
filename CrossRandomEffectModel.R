@@ -5,18 +5,31 @@ library(lmerTest)
 library(readr)
 speed_dating <- read_csv("Untitled/speed_dating.csv")
 
-# Pair identifier for the partner random effect
-speed_dating$pair_id <- paste(speed_dating$Part_num,
-                              speed_dating$MatchID_clean, sep = "_")
+library(haven)
+library(lme4)
+library(lmerTest)
+library(dplyr)
 
-# Grand-mean center initial attraction and week
-speed_dating$initial_attraction_c <- scale(
-  speed_dating$initial_attraction, center = TRUE, scale = FALSE)
-speed_dating$week_c <- speed_dating$week - 1
+speed_dating <- read_sav("Untitled/speed.dating.3lev.small.july25.2014.sav")
 
-# Crossed random effects model
-# Random effect 1: rater (participant) — modeled by Selterman et al.
-# Random effect 2: partner — absent in Selterman et al.
+# Filtrar solo filas con datos de follow-up e IR disponibles
+dating_graph <- speed_dating %>%
+  filter(!is.na(IRLikedPartner), !is.na(FURomInterest)) %>%
+  select(participant = Part_num,
+         partner     = MatchID_clean,
+         sex         = sex_M1_F2,
+         initial_attraction = IRLikedPartner,
+         mutual_match = mutmatch,
+         week        = Follow_clean,
+         romantic_interest  = FURomInterest)
+
+dating_graph$pair_id <- paste(dating_graph$participant,
+                              dating_graph$partner, sep = "_")
+
+dating_graph$initial_attraction_c <- scale(
+  dating_graph$initial_attraction, center = TRUE, scale = FALSE)
+dating_graph$week_c <- dating_graph$week - 1
+
 model_crossed <- lmer(
   romantic_interest ~
     initial_attraction_c +
@@ -25,7 +38,7 @@ model_crossed <- lmer(
     initial_attraction_c:week_c +
     (1 | participant) +
     (1 | pair_id),
-  data    = speed_dating,
+  data    = dating_graph,
   REML    = TRUE,
   control = lmerControl(optimizer = "bobyqa")
 )
