@@ -1,0 +1,565 @@
+---
+title: "Supplementary Material"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+---
+# STEP 1: Original data loading
+
+```{r}
+library(haven)
+speed_dating <- read_sav("speed.dating.3lev.small.july25.2014.sav")
+speed_dating <- as.data.frame(lapply(speed_dating, function(x) {
+if (inherits(x, "haven_labelled")) {
+as.numeric(x)
+} else {
+x
+}}))
+write.csv(speed_dating,"speed_dating.csv",row.names = FALSE, na = "")
+```
+
+
+# Applying Graph Databases in Behavioral Research
+
+This section provides a reproducible workflow demonstrating how to:
+
+1. Design a graph schema for psychological data.
+2. Prepare the raw dataset in R.
+3. Import the data into Neo4j.
+4. Verify the graph structure and execute analytical Cypher queries.
+5. Export data and fit the crossed random-effects model reported in Table 3.
+
+All code shown below was used to generate the analyses reported in the manuscript.
+
+# STEP 1: Schema Design
+
+The Speed-Dating dataset was represented using three node types and four relationship types.
+
+Node types:
+
+- Participant
+- DateRating
+- FollowUp
+
+Relationship types:
+
+- HAD_DATE
+- WITH
+- FOLLOWED_UP
+- REPORTED_BY
+
+DateRating nodes represent directed perceptual events from a rater toward a partner.
+
+FollowUp nodes represent week-level longitudinal assessments.
+
+# STEP 2: Data Preparation in R
+
+```{r}
+library(haven)
+
+speed_dating <- read_sav(
+  "speed.dating.3lev.small.july25.2014.sav"
+)
+
+speed_dating <- as.data.frame(
+  lapply(speed_dating, function(x) {
+    if (inherits(x, "haven_labelled")) {
+      as.numeric(x)
+    } else {
+      x
+    }
+  })
+)
+
+write.csv(
+  speed_dating,
+  "speed_dating.csv",
+  row.names = FALSE,
+  na = ""
+)
+```
+
+# STEP 3: Import into Neo4j
+
+## Constraints
+
+```cypher
+CREATE CONSTRAINT participant_unique IF NOT EXISTS
+FOR (p:Participant)
+REQUIRE p.Part_num IS UNIQUE;
+
+CREATE CONSTRAINT daterating_unique IF NOT EXISTS
+FOR (d:DateRating)
+REQUIRE d.date_rating_id IS UNIQUE;
+
+CREATE INDEX followup_lookup IF NOT EXISTS
+FOR (f:FollowUp)
+ON (f.follow_id);
+```
+
+## Participant Nodes
+
+Participants are instantiated from both `Part_num`
+and `MatchID_clean`.
+
+```cypher
+LOAD CSV WITH HEADERS
+FROM 'file:///speed_dating.csv' AS row
+
+WITH row
+WHERE trim(row.Part_num) <> ""
+
+MERGE (p:Participant {
+  Part_num: toInteger(row.Part_num)
+});
+```
+
+```cypher
+LOAD CSV WITH HEADERS
+FROM 'file:///speed_dating.csv' AS row
+
+WITH row
+WHERE trim(row.MatchID_clean) <> ""
+
+MERGE (p:Participant {
+  Part_num: toInteger(row.MatchID_clean)
+});
+```
+
+## DateRating Nodes
+
+```cypher
+LOAD CSV WITH HEADERS
+FROM 'file:///speed_dating.csv' AS row
+
+WITH row
+WHERE toInteger(row.Follow_clean)=1
+
+MERGE (d:DateRating {
+  date_rating_id:
+    row.Part_num + '_' +
+    row.MatchID_clean
+})
+
+SET
+d.Part_num = toInteger(row.Part_num),
+d.MatchID_clean = toInteger(row.MatchID_clean),
+d.IRLikedPartner =
+  toFloat(row.IRLikedPartner),
+d.IRSexAttract =
+  toFloat(row.IRSexAttract),
+d.IRCommon =
+  toFloat(row.IRCommon),
+d.IRSayYes =
+  toFloat(row.IRSayYes),
+d.Yessing =
+  toInteger(row.yessing),
+d.Mutmatch =
+  toInteger(row.mutmatch);
+```
+
+## FollowUp Nodes
+
+```cypher
+LOAD CSV WITH HEADERS
+FROM 'file:///speed_dating.csv' AS row
+
+WITH row
+
+WHERE
+trim(row.FURomInterest) <> ''
+OR trim(row.FUSexDesire) <> ''
+OR trim(row.FUCommitted) <> ''
+OR trim(row.FUStatus) <> ''
+
+MERGE (f:FollowUp {
+
+follow_id:
+row.Part_num + '_'
++ row.MatchID_clean + '_'
++ row.Follow_clean
+
+});
+```
+
+## Relationships
+
+```cypher
+MATCH (p:Participant),
+      (d:DateRating)
+...
+```
+
+(Insert repository version here.)
+
+# STEP 4: Verification and Analytical Queries
+
+## Verification Query 1
+
+DateRating node count
+
+```cypher
+MATCH (d:DateRating)
+RETURN count(d) AS date_ratings;
+```
+
+Expected result:
+
+```text
+2816
+```
+
+---
+
+## Verification Query 2
+
+FollowUp node count
+
+```cypher
+MATCH (f:FollowUp)
+RETURN count(f) AS followups;
+```
+
+Expected result:
+
+```text
+1152
+```
+
+---
+
+## Query A:
+Perceptual Asymmetry in Mutual-Match Dyads
+
+```cypher
+// Query A: Perceptual asymmetry in mutual-match dyads
+MATCH (a:Participant)-[:HAD_DATE]->(d1:DateRating {Mutmatch: 1})
+      -[:WITH]->(b:Participant),
+      (b)-[:HAD_DATE]->(d2:DateRating {Mutmatch: 1})-[:WITH]->(a)
+WHERE a.Part_num < b.Part_num
+  AND d1.IRLikedPartner IS NOT NULL
+  AND d2.IRLikedPartner IS NOT NULL
+RETURN a.Part_num                                      AS rater_a,
+       b.Part_num                                      AS rater_b,
+       d1.IRLikedPartner                               AS a_liked_b,
+       d2.IRLikedPartner                               AS b_liked_a,
+       abs(d1.IRLikedPartner - d2.IRLikedPartner)      AS asymmetry
+ORDER BY asymmetry DESC;
+```
+
+Expected results reported in manuscript:
+
+```text
+83 mutual-match dyads
+71.1% non-zero asymmetry
+Mean = 1.19
+SD = 1.29
+27.7% ≥ 2 points
+```
+
+---
+
+## Query B:
+DateRating Nodes
+
+```cypher
+// Query B: DateRating Nodes
+MATCH (d:DateRating)
+RETURN count(d) AS date_ratings;
+```
+
+Expected:
+
+```text
+2816
+```
+
+---
+
+## Query C:
+FollowUp Nodes
+
+```cypher
+// Query C: FollowUp Node Count
+MATCH (f:FollowUp)
+RETURN count(f) AS followups;
+```
+
+Expected:
+
+```text
+1152
+```
+
+---
+
+## Query D:
+Structural Absence Rate
+
+```cypher
+// Query D: Structural Absence Rate
+MATCH (d:DateRating)
+WITH count(d) AS n_dates
+
+MATCH (f:FollowUp)
+RETURN n_dates,
+       n_dates * 10 AS potential_combinations,
+       count(f) AS realized_followups,
+       round(
+         1000.0 * ((n_dates * 10) - count(f))
+         / (n_dates * 10)
+       ) / 10 AS absence_rate;
+```
+
+Expected output:
+
+```text
+28160 potential combinations
+1152 realized FollowUp nodes
+95.9% structural absence
+```
+
+---
+
+## Query E:
+Partner Exposure
+
+```cypher
+// Query E: Partner in-degree and mean received rating
+MATCH (d:DateRating)-[:WITH]->(partner:Participant)
+WITH  partner,
+      count(d)              AS n_raters,
+      avg(d.IRLikedPartner) AS mean_received_rating,
+      stdev(d.IRLikedPartner) AS sd_received_rating
+RETURN partner.Part_num    AS partner_id,
+       n_raters,
+       round(mean_received_rating, 2) AS mean_received_rating,
+       round(sd_received_rating,  2)  AS sd_received_rating
+ORDER BY mean_received_rating DESC;
+```
+
+Expected descriptive results:
+
+```text
+1 to 20 raters
+Mean = 7.45
+SD = 3.35
+```
+
+---
+
+# STEP 5: Export and Statistical Evaluation
+
+## Query F
+
+```cypher
+// Query F: Export data for multilevel model
+MATCH (p:Participant)-[:HAD_DATE]->(d:DateRating)-[:FOLLOWED_UP]->(f:FollowUp)
+WHERE d.IRLikedPartner IS NOT NULL
+  AND f.FURomInterest  IS NOT NULL
+RETURN p.Part_num        AS participant,
+       d.MatchID_clean   AS partner,
+       p.sex_M1_F2       AS sex,
+       d.IRLikedPartner  AS initial_attraction,
+       d.Mutmatch        AS mutual_match,
+       f.Follow_clean    AS week,
+       f.FURomInterest   AS romantic_interest
+ORDER BY participant, partner, week;
+```
+
+Export as:
+
+```text
+query_export.csv
+```
+
+# Crossed Random-Effects Model
+
+```{r}
+library(lme4)
+library(lmerTest)
+
+dating_graph <- read.csv(
+  "query_export.csv"
+)
+
+dating_graph$participant <-
+  factor(
+    dating_graph$participant
+  )
+
+dating_graph$partner <-
+  factor(
+    dating_graph$partner
+  )
+
+dating_graph$initial_attraction_c <-
+  scale(
+    dating_graph$initial_attraction,
+    center = TRUE,
+    scale = FALSE
+  )
+
+dating_graph$week_c <-
+  dating_graph$week - 1
+
+model_crossed <- lmer(
+
+romantic_interest ~
+
+initial_attraction_c +
+week_c +
+sex +
+
+initial_attraction_c:
+week_c +
+
+(1 | participant) +
+(1 | partner),
+
+data = dating_graph,
+
+REML = TRUE,
+
+control =
+  lmerControl(
+    optimizer = "bobyqa"
+  )
+)
+
+summary(model_crossed)
+```
+
+# Reproducing Table 3
+
+```{r}
+coef(
+  summary(model_crossed)
+)
+```
+
+```{r}
+VarCorr(model_crossed)
+```
+
+```{r}
+nobs(model_crossed)
+```
+
+```{r}
+length(
+  unique(
+    dating_graph$participant
+  )
+)
+```
+
+```{r}
+length(
+  unique(
+    dating_graph$partner
+  )
+)
+```
+
+```{r}
+length(
+  unique(
+    paste(
+      dating_graph$participant,
+      dating_graph$partner
+    )
+  )
+)
+```
+
+```{r}
+isSingular(
+  model_crossed
+)
+```
+
+Expected outputs:
+
+```text
+N observations = 167
+N participants = 40
+N partners = 43
+N rater-partner pairs = 47
+
+Participant variance = 0.98
+Partner variance = 0.00
+Residual variance = 1.16
+```K
+
+
+
+
+# Analysis 1: Crossed random-effects model
+
+In this part, we loaded the data exported from query D in Neo4j. 
+
+```{r, }
+library(lme4)
+library(lmerTest)
+dating_graph <- read.csv("query_export.csv")
+dating_graph$participant <- factor(dating_graph$participant)
+dating_graph$partner     <- factor(dating_graph$partner)
+dating_graph$initial_attraction_c <- scale(
+ dating_graph$initial_attraction,
+ center = TRUE,
+ scale = FALSE
+)
+
+dating_graph$week_c <- dating_graph$week - 1
+model_crossed <- lmer(
+ romantic_interest ~
+  initial_attraction_c +
+  week_c +
+  sex +
+  initial_attraction_c:week_c +
+  (1 | participant) +
+  (1 | partner),
+ data = dating_graph,
+ REML = TRUE,
+ control = lmerControl(optimizer = "bobyqa")
+)
+
+summary(model_crossed)
+```
+
+Now, we can show other statistics
+
+```{r}
+fixed_effects <- data.frame(
+ coef(summary(model_crossed))
+)
+
+fixed_effects
+
+variance_components <- as.data.frame(
+ VarCorr(model_crossed)
+)
+
+variance_components
+
+# Number of observations
+nobs(model_crossed)
+
+# Participants
+length(unique(dating_graph$participant))
+
+# Partners
+length(unique(dating_graph$partner))
+
+# Unique rater-partner pairs
+length(unique(
+ paste(
+  dating_graph$participant,
+  dating_graph$partner
+ )
+))
+
+```
+
