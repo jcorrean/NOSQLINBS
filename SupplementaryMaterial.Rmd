@@ -1,11 +1,20 @@
 ---
-title: "Supplementary Material"
+title: "Labeled Property Graphs as a Methodological Framework"
+subtitle: "Supplementary Material"
+author: "Juan C. Correa <a href='https://orcid.org/0000-0002-0301-5641' target='blank'><img src='https://orcid.org/sites/default/files/images/orcid_16x16.png' alt='ORCID iD' style='vertical-align: middle; margin-left: 3px;'/></a>"
 output:
   html_document:
     df_print: paged
   html_notebook: default
+bibliography: Untitled/bibliography.bib   # Ruta a tu archivo BibTeX
+csl: Untitled/apa.csl
 ---
-# STEP 1: Original data loading
+Our tutorial focuses on the phenomenon of sex differences in mate preferences [@Eastwick2008] and its Speed-Dating replication dataset
+[@Selterman2015; @Selterman2023].
+
+# STEP 1: Original data source, preprocesing and loading
+
+The original dataset is available in the following  [OSF repository](https://osf.io/ng6cc/overview). In the Files Preview menu, the reader will find the speed.dating.syntax.2.zip file. This zip file contains several files, but the dataset is a .sav file called "speed.dating.3lev.small.july25.2014.sav". We use RStudio to open this .sav file and export it as a standard coma separated values format (.csv) as the following syntax shows
 
 ```{r}
 library(haven)
@@ -19,18 +28,7 @@ x
 write.csv(speed_dating,"speed_dating.csv",row.names = FALSE, na = "")
 ```
 
-
-# Applying Graph Databases in Behavioral Research
-
-This section provides a reproducible workflow demonstrating how to:
-
-1. Design a graph schema for psychological data.
-2. Prepare the raw dataset in R.
-3. Import the data into Neo4j.
-4. Verify the graph structure and execute analytical Cypher queries.
-5. Export data and fit the crossed random-effects model reported in Table 3.
-
-All code shown below was used to generate the analyses reported in the manuscript.
+Once exported this file, we use this "speed_dating.csv" as our input file in Neo4j and design our graph schema. 
 
 # STEP 1: Schema Design
 
@@ -49,9 +47,9 @@ Relationship types:
 - FOLLOWED_UP
 - REPORTED_BY
 
-DateRating nodes represent directed perceptual events from a rater toward a partner.
+DateRating nodes represent directed perceptual events from a rater toward a partner. FollowUp nodes represent week-level longitudinal assessments. Our suggested schema look like as the following figure:
 
-FollowUp nodes represent week-level longitudinal assessments.
+![A labeled property graph of the speed-dating dataset by Selterman et al. (2023)](Untitled/F2.png)
 
 # STEP 2: Data Preparation in R
 
@@ -563,3 +561,4 @@ length(unique(
 
 ```
 
+# References
