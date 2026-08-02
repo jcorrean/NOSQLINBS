@@ -22,18 +22,10 @@ model_crossed2 <- lmer(
  control = lmerControl(optimizer = "bobyqa")
 )
 summary(model_crossed2)
-
-length(unique(
- paste(dating_graph2$participant,
-       dating_graph2$partner)
-))
-
-library(knitr)
-
-kable(
- fixed_effects,
- format = "latex",
- digits = 2,
- booktabs = TRUE,
- caption = "Crossed random-effects model: Fixed effects"
-)
+length(unique(paste(
+ dating_graph2$participant,
+ dating_graph2$partner
+)))
+nrow(dating_graph2)
+length(unique(dating_graph2$partner))
+length(unique(dating_graph2$participant))
