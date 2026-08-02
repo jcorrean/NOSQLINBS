@@ -1,10 +1,5 @@
 library(lme4)
 library(lmerTest)
-
-# Read exported data
-library(readr)
-speed_dating <- read_csv("Untitled/speed_dating.csv")
-
 library(haven)
 library(lme4)
 library(lmerTest)
@@ -44,3 +39,7 @@ model_crossed <- lmer(
 )
 
 summary(model_crossed)
+
+nrow(dating_graph)
+length(unique(dating_graph$partner))
+length(unique(dating_graph$participant))
