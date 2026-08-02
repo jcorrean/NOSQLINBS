@@ -2,6 +2,7 @@
 title: "Labeled Property Graphs as a Methodological Framework"
 subtitle: "Supplementary Material"
 author: "Juan C. Correa <a href='https://orcid.org/0000-0002-0301-5641' target='blank'><img src='https://orcid.org/sites/default/files/images/orcid_16x16.png' alt='ORCID iD' style='vertical-align: middle; margin-left: 3px;'/></a>"
+date: "August 2, 2026"
 output:
   html_document:
     df_print: paged
