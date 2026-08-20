@@ -10,7 +10,7 @@ output:
 bibliography: Untitled/bibliography.bib   # Ruta a tu archivo BibTeX
 csl: Untitled/apa.csl
 ---
-Our tutorial focuses on the phenomenon of sex differences in mate preferences [@Eastwick2008] and its Speed-Dating replication dataset
+This is the supplementary material for our work titled "Labeled Property Graphs as a Methodological Framework" published in Suma Psicologica. Our tutorial focuses on the phenomenon of sex differences in mate preferences [@Eastwick2008] and its Speed-Dating replication dataset
 [@Selterman2015; @Selterman2023].
 
 # STEP 1: Original data source, preprocesing and loading

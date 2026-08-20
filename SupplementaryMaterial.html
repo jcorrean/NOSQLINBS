@@ -1654,10 +1654,12 @@ Framework</h1>
 </div>
 
 
-<p>Our tutorial focuses on the phenomenon of sex differences in mate
-preferences <span class="citation">(Eastwick &amp; Finkel, 2008)</span>
-and its Speed-Dating replication dataset <span class="citation">(D. F.
-Selterman et al., 2015; D. F. Selterman et al., 2023)</span>.</p>
+<p>This is the supplementary material for our work titled “Labeled
+Property Graphs as a Methodological Framework” published in Suma
+Psicologica. Our tutorial focuses on the phenomenon of sex differences
+in mate preferences <span class="citation">(Eastwick &amp; Finkel,
+2008)</span> and its Speed-Dating replication dataset <span class="citation">(D. F. Selterman et al., 2015; D. F. Selterman et al.,
+2023)</span>.</p>
 <div id="step-1-original-data-source-preprocesing-and-loading" class="section level1">
 <h1>STEP 1: Original data source, preprocesing and loading</h1>
 <p>The original dataset is available in the following <a href="https://osf.io/ng6cc/overview">OSF repository</a>. In the Files
@@ -2062,13 +2064,13 @@ control =
   summary(model_crossed)
 )</code></pre>
 <pre><code>##                                Estimate Std. Error        df    t value
-## (Intercept)                  3.59151958 0.22317423  59.50573 16.0928955
+## (Intercept)                  3.59151958 0.22317423  59.50573 16.0928956
 ## initial_attraction_c        -0.02013170 0.10951201 153.57060 -0.1838309
 ## week_c                       0.08641314 0.03431088 156.22450  2.5185342
-## sex                          0.56069859 0.37537890  32.09996  1.4936870
+## sex                          0.56069859 0.37537889  32.09996  1.4936870
 ## initial_attraction_c:week_c  0.03798891 0.01968684 153.37157  1.9296599
 ##                                 Pr(&gt;|t|)
-## (Intercept)                 2.399924e-23
+## (Intercept)                 2.399921e-23
 ## initial_attraction_c        8.543886e-01
 ## week_c                      1.279073e-02
 ## sex                         1.450229e-01
@@ -2198,7 +2200,7 @@ model_crossed &lt;- lmer(
 fixed_effects</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Estimate"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Std..Error"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["t.value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr...t.."],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"3.59151958","2":"0.22317423","3":"59.50573","4":"16.0928955","5":"2.399924e-23","_rn_":"(Intercept)"},{"1":"-0.02013170","2":"0.10951201","3":"153.57060","4":"-0.1838309","5":"8.543886e-01","_rn_":"initial_attraction_c"},{"1":"0.08641314","2":"0.03431088","3":"156.22450","4":"2.5185342","5":"1.279073e-02","_rn_":"week_c"},{"1":"0.56069859","2":"0.37537890","3":"32.09996","4":"1.4936870","5":"1.450229e-01","_rn_":"sex"},{"1":"0.03798891","2":"0.01968684","3":"153.37157","4":"1.9296599","5":"5.549485e-02","_rn_":"initial_attraction_c:week_c"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Estimate"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Std..Error"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["t.value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr...t.."],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"3.59151958","2":"0.22317423","3":"59.50573","4":"16.0928956","5":"2.399921e-23","_rn_":"(Intercept)"},{"1":"-0.02013170","2":"0.10951201","3":"153.57060","4":"-0.1838309","5":"8.543886e-01","_rn_":"initial_attraction_c"},{"1":"0.08641314","2":"0.03431088","3":"156.22450","4":"2.5185342","5":"1.279073e-02","_rn_":"week_c"},{"1":"0.56069859","2":"0.37537889","3":"32.09996","4":"1.4936870","5":"1.450229e-01","_rn_":"sex"},{"1":"0.03798891","2":"0.01968684","3":"153.37157","4":"1.9296599","5":"5.549485e-02","_rn_":"initial_attraction_c:week_c"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code>variance_components &lt;- as.data.frame(
@@ -2208,7 +2210,7 @@ fixed_effects</code></pre>
 variance_components</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["grp"],"name":[1],"type":["chr"],"align":["left"]},{"label":["var1"],"name":[2],"type":["chr"],"align":["left"]},{"label":["var2"],"name":[3],"type":["chr"],"align":["left"]},{"label":["vcov"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["sdcor"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"partner","2":"(Intercept)","3":"NA","4":"0.0000000","5":"0.0000000"},{"1":"participant","2":"(Intercept)","3":"NA","4":"0.9805036","5":"0.9902038"},{"1":"Residual","2":"NA","3":"NA","4":"1.1646645","5":"1.0791962"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["grp"],"name":[1],"type":["chr"],"align":["left"]},{"label":["var1"],"name":[2],"type":["chr"],"align":["left"]},{"label":["var2"],"name":[3],"type":["chr"],"align":["left"]},{"label":["vcov"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["sdcor"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"partner","2":"(Intercept)","3":"NA","4":"0.0000000","5":"0.0000000"},{"1":"participant","2":"(Intercept)","3":"NA","4":"0.9805035","5":"0.9902038"},{"1":"Residual","2":"NA","3":"NA","4":"1.1646645","5":"1.0791962"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code># Number of observations
